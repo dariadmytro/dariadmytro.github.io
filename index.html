@@ -1147,6 +1147,157 @@
 .pill.pill-yes span:hover{ border-color: rgba(34, 197, 94, 0.45); }
 .pill.pill-no  span:hover{ border-color: rgba(239, 68, 68, 0.45); }
 
+/* ===== THANK YOU POPUP (premium) ===== */
+.thankyou-overlay{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background: radial-gradient(1200px 800px at 50% 35%, rgba(255,255,255,0.10), rgba(0,0,0,0.65));
+  backdrop-filter: blur(6px);
+  z-index: 10000;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity .35s ease;
+}
+.thankyou-overlay.show{
+  opacity:1;
+  pointer-events:auto;
+}
+.thankyou-card{
+  position:relative;
+  width:min(520px, 92vw);
+  border-radius: 24px;
+  padding: 34px 26px 22px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.22);
+  box-shadow: 0 30px 90px rgba(0,0,0,0.35);
+  overflow:hidden;
+  transform: translateY(10px) scale(0.98);
+  filter: blur(6px);
+  opacity:0;
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), filter .45s ease, opacity .45s ease;
+}
+.thankyou-overlay.show .thankyou-card{
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  opacity:1;
+}
+.thankyou-glow{
+  position:absolute;
+  inset:-40%;
+  background: conic-gradient(from 210deg, rgba(255,255,255,0), rgba(255,255,255,0.18), rgba(255,255,255,0));
+  animation: thankyouSweep 2.4s ease-in-out infinite;
+  opacity:.7;
+  pointer-events:none;
+}
+@keyframes thankyouSweep{
+  0%{ transform: translate(-12%, -6%) rotate(0deg); }
+  50%{ transform: translate(10%, 6%) rotate(40deg); }
+  100%{ transform: translate(-12%, -6%) rotate(0deg); }
+}
+.thankyou-inner{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  color: rgba(255,255,255,0.92);
+}
+.thankyou-mark{
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 14px;
+  border-radius: 999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.22);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.20);
+  animation: thankyouPop .6s cubic-bezier(.2,.9,.2,1) both;
+}
+@keyframes thankyouPop{
+  from{ transform: translateY(8px) scale(0.92); opacity:0; }
+  to{ transform: translateY(0) scale(1); opacity:1; }
+}
+.thankyou-mark span{
+  font-family: "Great Vibes", cursive;
+  font-size: 40px;
+  color: var(--amber-light);
+  line-height:1;
+}
+.thankyou-title{
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(30px, 4.6vw, 44px);
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+.thankyou-text{
+  font-size: 15px;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.88);
+  max-width: 420px;
+  margin: 0 auto 18px;
+}
+.thankyou-actions{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top: 10px;
+}
+.thankyou-btn{
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.24);
+  background: rgba(255,255,255,0.10);
+  color: rgba(255,255,255,0.92);
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor:pointer;
+  transition: transform .18s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease;
+  min-width: 170px;
+}
+.thankyou-btn.primary{
+  background: rgba(184,137,90,0.30);
+  border-color: rgba(212,180,138,0.45);
+  box-shadow: 0 14px 34px rgba(184,137,90,0.15);
+}
+.thankyou-btn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.32);
+}
+.thankyou-btn.primary:hover{
+  background: rgba(184,137,90,0.38);
+  border-color: rgba(212,180,138,0.60);
+}
+
+.thankyou-hearts{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+}
+.thankyou-heart{
+  position:absolute;
+  left:50%;
+  bottom:-20px;
+  transform: translateX(-50%);
+  opacity:0;
+  font-size: 18px;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.35));
+  animation: floatHeart 1.8s ease-out forwards;
+}
+@keyframes floatHeart{
+  0%{ transform: translateX(var(--dx,0px)) translateY(0) scale(0.9); opacity:0; }
+  15%{ opacity:1; }
+  100%{ transform: translateX(var(--dx,0px)) translateY(var(--dy,-220px)) scale(1.25); opacity:0; }
+}
+
 </style>
     </head>
     <body>
@@ -1756,14 +1907,13 @@ function openEnvelope(){
 
                 const name = document.getElementById("guestName").value.trim();
                 const attendEl = document.querySelector('input[name="attend"]:checked');
-                const attend = attendEl ? attendEl.value : "";
-
-                if (!name) {
+                 const attend = attendEl ? attendEl.value : "";
+if (!name) {
                     alert("Будь ласка, введіть ваше ім'я");
                     return;
                 }
                 if (!attend) {
-                    alert("Будь ласка, оберіть чи плануєте бути");
+                    alert("Будь ласка, оберіть чи плануєте бути (Так/Ні)");
                     return;
                 }
 
@@ -1781,6 +1931,7 @@ function openEnvelope(){
 
                     form.style.display = "none";
                     document.getElementById("formSuccess").classList.add("show");
+                    showThankYou();
                 } catch (e) {
                     alert("Не вдалося відправити. Спробуйте ще раз 🙏");
                 }
@@ -1801,6 +1952,71 @@ function openEnvelope(){
         if (i.checked) none.checked = false;
     }));
 })();
+// ===== Thank You Popup (premium) =====
+function burstHearts(){
+  const wrap = document.getElementById("thankyouHearts");
+  if(!wrap) return;
+  wrap.innerHTML = "";
+  const hearts = ["♡","♥","❦"];
+  for(let i=0;i<14;i++){
+    const el = document.createElement("div");
+    el.className = "thankyou-heart";
+    el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    const dx = (Math.random()*2-1) * 160;        // -160..160
+    const dy = - (160 + Math.random()*180);      // -160..-340
+    const size = 16 + Math.random()*16;          // 16..32
+    el.style.left = (20 + Math.random()*60) + "%";
+    el.style.setProperty("--dx", dx.toFixed(0)+"px");
+    el.style.setProperty("--dy", dy.toFixed(0)+"px");
+    el.style.fontSize = size.toFixed(0)+"px";
+    el.style.animationDelay = (Math.random()*0.18).toFixed(2)+"s";
+    el.style.color = (Math.random() > 0.55) ? "rgba(212,180,138,0.92)" : "rgba(255,255,255,0.85)";
+    wrap.appendChild(el);
+  }
+}
+
+function showThankYou(){
+  const ov = document.getElementById("thankyouOverlay");
+  if(!ov) return;
+  ov.classList.add("show");
+  ov.setAttribute("aria-hidden","false");
+  burstHearts();
+}
+
+function closeThankYou(){
+  const ov = document.getElementById("thankyouOverlay");
+  if(!ov) return;
+  ov.classList.remove("show");
+  ov.setAttribute("aria-hidden","true");
+}
+
+// close by clicking on backdrop + ESC
+document.addEventListener("click", (e) => {
+  const ov = document.getElementById("thankyouOverlay");
+  if(!ov || !ov.classList.contains("show")) return;
+  if(e.target === ov) closeThankYou();
+});
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape") closeThankYou();
+});
+
 </script>
-    </body>
+    <!-- THANK YOU POPUP -->
+<div class="thankyou-overlay" id="thankyouOverlay" aria-hidden="true">
+  <div class="thankyou-card" role="dialog" aria-modal="true" aria-label="Дякуємо за відповідь">
+    <div class="thankyou-glow"></div>
+    <div class="thankyou-hearts" id="thankyouHearts"></div>
+
+    <div class="thankyou-inner">
+      <div class="thankyou-mark"><span>♡</span></div>
+      <div class="thankyou-title">Дякуємо!</div>
+      <div class="thankyou-text">Дякуємо, це дуже важливо для нас!</div>
+      <div class="thankyou-actions">
+        <button class="thankyou-btn primary" type="button" onclick="closeThankYou()">Закрити</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
 </html>
