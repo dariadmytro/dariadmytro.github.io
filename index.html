@@ -1755,7 +1755,8 @@ function openEnvelope(){
                 event.preventDefault();
 
                 const name = document.getElementById("guestName").value.trim();
-                const attend = document.getElementById("guestAttend").value;
+                const attendEl = document.querySelector('input[name="attend"]:checked');
+                const attend = attendEl ? attendEl.value : "";
 
                 if (!name) {
                     alert("Будь ласка, введіть ваше ім'я");
