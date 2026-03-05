@@ -1451,15 +1451,16 @@
                         <div class="form-group">
                             <label class="form-label"
                                 >Чи плануєте бути на весіллі?</label
-                            ><select class="form-select" id="guestAttend" name="attend">
-                                <option value="" disabled selected>
-                                    Оберіть відповідь
-                                </option>
-                                <option value="yes">
-                                    Так, із задоволенням!
-                                </option>
-                                <option value="no">На жаль, не зможу</option>
-                            </select>
+                            <div class="pill-group" role="radiogroup" aria-label="Присутність">
+                                <label class="pill pill--yes">
+                                <input type="radio" name="attend" value="yes" required />
+                                <span>Так, із задоволенням!</span>
+                                <</label>
+
+                                <label class="pill pill--no">
+                                 <input type="radio" name="attend" value="no" />
+                                <span>На жаль, не зможу</span>
+                            </label>
                         </div>
                         <div class="form-group">
                             <label class="form-label"
