@@ -6,18 +6,44 @@
 <title>Дарія & Дмитро – Запрошення</title>
 
 <style>
+  /* Background slideshow */
+  .bg {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: center/cover no-repeat;
+    transform: scale(1.02);
+    transition: opacity 900ms ease;
+    opacity: 1;
+  }
+  .bg-overlay{
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(0,0,0,0.40); /* затемнення, щоб текст читався */
+  }
+
   body{
     margin:0;
     font-family: Arial, sans-serif;
     text-align:center;
-    background: linear-gradient(135deg,#f8e1e7,#ffffff);
-    color:#333;
+    color:#1f1f1f;
   }
 
   .container{
-    padding:40px 20px;
-    max-width:800px;
-    margin:auto;
+    padding:28px 16px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* Main card */
+  .card{
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    padding: 26px 18px;
   }
 
   h1{font-size:36px;margin:0 0 6px;}
@@ -29,7 +55,7 @@
     font-weight:bold;
   }
 
-  .map{ margin-top:25px; }
+  .map{ margin-top:22px; }
   .map iframe{
     width:100%;
     height:320px;
@@ -41,7 +67,7 @@
   .map-btn{
     padding:10px 20px;
     border:none;
-    border-radius:8px;
+    border-radius:10px;
     background:#b45a76;
     color:white;
     font-size:16px;
@@ -50,206 +76,239 @@
 
   /* RSVP block */
   .rsvp{
-    margin-top:50px;
-    padding:25px;
-    background:white;
+    margin-top:28px;
+    padding:20px;
+    background: rgba(255,255,255,0.92);
     border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    box-shadow:0 5px 15px rgba(0,0,0,0.10);
     text-align:left;
   }
-
   .rsvp h2{
     text-align:center;
-    margin:0 0 18px;
+    margin:0 0 14px;
     font-weight:700;
   }
-
   .rsvp label.title{
     display:block;
-    margin-top:14px;
+    margin-top:12px;
     font-weight:700;
   }
-
   .rsvp input[type="text"]{
     width:100%;
     padding:10px;
     margin-top:6px;
     border:1px solid #ddd;
-    border-radius:8px;
+    border-radius:10px;
     font-size:14px;
     box-sizing:border-box;
   }
-
   .options{
     margin-top:8px;
     display:flex;
     flex-direction:column;
     gap:10px;
   }
-
   .option{
     display:flex;
     align-items:center;
     gap:10px;
     padding:10px 12px;
     border:1px solid #eee;
-    border-radius:10px;
+    border-radius:12px;
     cursor:pointer;
     user-select:none;
+    background: rgba(255,255,255,0.75);
   }
-
   .option input{
     transform: scale(1.15);
     cursor:pointer;
   }
-
   .option span{
     font-size:14px;
   }
-
   .rsvp button{
-    margin-top:18px;
+    margin-top:16px;
     width:100%;
     padding:12px;
     background:#b45a76;
     border:none;
-    border-radius:10px;
+    border-radius:12px;
     color:white;
     font-size:16px;
     cursor:pointer;
   }
-
   .note{
     margin-top:10px;
     font-size:13px;
     opacity:0.75;
     text-align:center;
   }
+
+  /* Small tweaks for mobile */
+  @media (max-width: 420px){
+    h1{font-size:30px;}
+    .timer{font-size:24px;}
+    .map iframe{height:280px;}
+  }
 </style>
 </head>
 
 <body>
-<div class="container">
+  <!-- Background layers -->
+  <div class="bg" id="bg"></div>
+  <div class="bg-overlay"></div>
 
-  <h1>💍 Daria & Dmytro</h1>
-  <h2>01.08.2026•15:00</h2>
+  <div class="container">
+    <div class="card">
 
-  <p>Ми будемо раді бачити Вас на нашому весіллі ❤️</p>
+      <h1>💍 Daria & Dmytro</h1>
+      <h2>01 серпня 2026 • 15:00</h2>
 
-  <p style="margin-top:25px; font-size:22px; margin-bottom:0;">
-    ✨ До нашого весілля залишилось всього ✨
-  </p>
+      <p>Ми будемо раді бачити вас на нашому весіллі ❤️</p>
 
-  <div class="timer" id="countdown"></div>
+      <p style="margin-top:22px; font-size:20px; margin-bottom:0;">
+        ✨ До нашого весілля залишилось всього ✨
+      </p>
 
-  <p style="margin-top:30px; margin-bottom:10px;">
-    📍 Ресторан «RoseMarine», Кривий Ріг
-  </p>
+      <div class="timer" id="countdown"></div>
 
-  <div class="map">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d944.540017657618!2d33.441354649990835!3d47.96418157398037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40db1f003f286b05%3A0xf99a77aa010cfefb!2z0KDQtdGB0YLQvtGA0LDQvSAi0JzQsNCz0LXQu9C70LDQvSIu!5e0!3m2!1sru!2sua!4v1772679365465!5m2!1sru!2sua"
-      loading="lazy"
-      allowfullscreen=""
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </div>
+      <p style="margin-top:24px; margin-bottom:10px;">
+        📍 Ресторан «RoseMarine», Кривий Ріг
+      </p>
 
-  <div class="open-map">
-    <button class="map-btn" onclick="openMap()">Відкрити карту</button>
-  </div>
-
-  <!-- RSVP FORM -->
-  <div class="rsvp" id="rsvp">
-    <h2>Підтвердіть вашу присутність</h2>
-
-    <!-- ЗАМІНИ XXXXX НА СВІЙ Formspree ID -->
-    <form action="https://formspree.io/f/xeerjolk" method="POST">
-
-      <label class="title">Імʼя та прізвище</label>
-      <input type="text" name="name" required />
-
-      <label class="title">Чи будете присутні на весіллі?</label>
-      <div class="options">
-        <label class="option">
-          <input type="radio" name="attendance" value="Так, буду" required />
-          <span>Так, буду</span>
-        </label>
-
-        <label class="option">
-          <input type="radio" name="attendance" value="На жаль, не зможу" />
-          <span>На жаль, не зможу</span>
-        </label>
+      <div class="map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d944.540017657618!2d33.441354649990835!3d47.96418157398037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40db1f003f286b05%3A0xf99a77aa010cfefb!2z0KDQtdGB0YLQvtGA0LDQvSAi0JzQsNCz0LXQu9C70LDQvSIu!5e0!3m2!1sru!2sua!4v1772679365465!5m2!1sru!2sua"
+          loading="lazy"
+          allowfullscreen=""
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
       </div>
 
-      <label class="title">Який алкоголь ви оберете? (можна декілька)</label>
-      <div class="options">
-        <label class="option">
-          <input type="checkbox" name="alcohol[]" value="Вино" />
-          <span>Вино</span>
-        </label>
-
-        <label class="option">
-          <input type="checkbox" name="alcohol[]" value="Горілка" />
-          <span>Горілка</span>
-        </label>
-
-        <label class="option">
-          <input type="checkbox" name="alcohol[]" value="Коньяк" />
-          <span>Коньяк</span>
-        </label>
-
-        <label class="option">
-          <input type="checkbox" name="alcohol[]" value="Шампанське" />
-          <span>Шампанське</span>
-        </label>
-
-        <label class="option">
-          <input type="checkbox" name="alcohol[]" value="Не вживаю алкоголь" />
-          <span>Не вживаю алкоголь</span>
-        </label>
+      <div class="open-map">
+        <button class="map-btn" onclick="openMap()">Відкрити карту</button>
       </div>
 
-      <button type="submit">Підтвердити</button>
-      <div class="note">Після відправки відповідь буде збережена.</div>
-    </form>
-  </div>
+      <!-- RSVP FORM -->
+      <div class="rsvp" id="rsvp">
+        <h2>Підтвердіть вашу присутність</h2>
 
-</div>
+        <!-- ЗАМІНИ XXXXX НА СВІЙ Formspree ID -->
+        <form action="https://formspree.io/f/XXXXX" method="POST">
+          <input type="hidden" name="_subject" value="RSVP — Daria & Dmytro" />
+
+          <label class="title">Імʼя та прізвище</label>
+          <input type="text" name="name" required />
+
+          <label class="title">Чи будете присутні на весіллі?</label>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="attendance" value="Так, буду" required />
+              <span>Так, буду</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="attendance" value="На жаль, не зможу" />
+              <span>На жаль, не зможу</span>
+            </label>
+          </div>
+
+          <label class="title">Який алкоголь ви оберете? (можна декілька)</label>
+          <div class="options">
+            <label class="option">
+              <input type="checkbox" name="alcohol[]" value="Вино" />
+              <span>Вино</span>
+            </label>
+            <label class="option">
+              <input type="checkbox" name="alcohol[]" value="Горілка" />
+              <span>Горілка</span>
+            </label>
+            <label class="option">
+              <input type="checkbox" name="alcohol[]" value="Коньяк" />
+              <span>Коньяк</span>
+            </label>
+            <label class="option">
+              <input type="checkbox" name="alcohol[]" value="Шампанське" />
+              <span>Шампанське</span>
+            </label>
+            <label class="option">
+              <input type="checkbox" name="alcohol[]" value="Не вживаю алкоголь" />
+              <span>Не вживаю алкоголь</span>
+            </label>
+          </div>
+
+          <button type="submit">Підтвердити</button>
+          <div class="note">Після відправки відповідь буде збережена.</div>
+        </form>
+      </div>
+
+    </div>
+  </div>
 
 <script>
-function openMap() {
-  const lat = "47.96447237791111";
-  const lng = "33.441974116157695";
-  const label = encodeURIComponent("RoseMarine, Кривий Ріг");
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  // 1) Map button (iOS -> Apple Maps, others -> Google)
+  function openMap() {
+    const lat = "47.96447237791111";
+    const lng = "33.441974116157695";
+    const label = encodeURIComponent("RoseMarine, Кривий Ріг");
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-  if (isIOS) {
-    window.open(`https://maps.apple.com/?q=${label}&ll=${lat},${lng}&z=17`);
-  } else {
-    window.open(`https://www.google.com/maps?q=${lat},${lng}`);
+    if (isIOS) {
+      window.open(`https://maps.apple.com/?q=${label}&ll=${lat},${lng}&z=17`);
+    } else {
+      window.open(`https://www.google.com/maps?q=${lat},${lng}`);
+    }
   }
-}
 
-const weddingDate = new Date("August 1, 2026 15:00:00").getTime();
+  // 2) Countdown
+  const weddingDate = new Date("August 1, 2026 15:00:00").getTime();
+  setInterval(function () {
+    const now = new Date().getTime();
+    const distance = weddingDate - now;
 
-const countdown = setInterval(function () {
-  const now = new Date().getTime();
-  const distance = weddingDate - now;
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const el = document.getElementById("countdown");
+    if (!el) return;
 
-  document.getElementById("countdown").innerHTML =
-    days + " днів " + hours + " год " + minutes + " хв " + seconds + " сек ";
+    if (distance < 0) {
+      el.innerHTML = "💍 Сьогодні наше весілля!";
+      return;
+    }
 
-  if (distance < 0) {
-    clearInterval(countdown);
-    document.getElementById("countdown").innerHTML = "💍 Сьогодні наше весілля!";
+    el.innerHTML = days + " днів " + hours + " год " + minutes + " хв " + seconds + " сек ";
+  }, 1000);
+
+  // 3) Background slideshow
+  const photos = [
+    "images/photo1.jpg",
+    "images/photo2.jpg",
+    "images/photo3.jpg"
+    // додаси більше: "images/photo4.jpg"
+  ];
+
+  const bg = document.getElementById("bg");
+  let i = 0;
+
+  function setBg(index){
+    bg.style.opacity = 0;
+    setTimeout(() => {
+      bg.style.backgroundImage = `url('${photos[index]}')`;
+      bg.style.opacity = 1;
+    }, 350);
   }
-}, 1000);
+
+  // старт
+  setBg(i);
+
+  // міняти кожні 7 секунд
+  setInterval(() => {
+    i = (i + 1) % photos.length;
+    setBg(i);
+  }, 7000);
 </script>
 
 </body>
