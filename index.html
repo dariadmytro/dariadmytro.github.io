@@ -1,418 +1,576 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Дарія & Дмитро – Запрошення</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>xeerjolk — Wedding</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Elegant fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
 
-<style>
-:root{
---accent:#b45a76;
---glass1:rgba(255,255,255,0.18);
---glass2:rgba(255,255,255,0.12);
-}
+  <style>
+    :root{
+      --bg:#0b0b0f;
+      --text:#f5f2ea;
+      --muted: rgba(245,242,234,.72);
+      --glass: rgba(255,255,255,.06);
+      --glassBorder: rgba(255,255,255,.10);
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius: 20px;
+    }
 
-*{box-sizing:border-box;}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      overflow:hidden; /* до відкриття */
+      font-family:"Cormorant Garamond", serif;
+    }
 
-body{
-margin:0;
-font-family:"Montserrat",Arial,sans-serif;
-color:#1f1f1f;
-text-align:center;
-}
+    /* MAIN SITE */
+    .site{
+      position:fixed;
+      inset:0;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 28px 18px 60px;
+      opacity:0;
+      transform: scale(.985);
+      transition: opacity .45s ease, transform .6s ease;
+    }
+    .site.open{
+      opacity:1;
+      transform: scale(1);
+    }
+    .wrap{
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    header{
+      padding: 18px 0 10px;
+      text-align:center;
+    }
+    .names{
+      font-family:"Great Vibes", cursive;
+      font-size: clamp(44px, 7vw, 86px);
+      letter-spacing: .5px;
+      line-height: 1.05;
+      margin: 0 0 6px;
+      text-shadow: 0 10px 40px rgba(0,0,0,.35);
+    }
+    .date{
+      font-weight:300;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin:0;
+      font-size: 14px;
+    }
 
-/* background slideshow */
-.bg{
-position:fixed;
-inset:0;
-z-index:-2;
-background-position:center;
-background-size:cover;
-background-repeat:no-repeat;
-transform:scale(1.1);
-transition:opacity 1s ease;
-}
-.bg-overlay{
-position:fixed;
-inset:0;
-z-index:-1;
-background:rgba(0,0,0,0.35);
-}
+    .card{
+      margin-top: 18px;
+      background: var(--glass);
+      border: 1px solid var(--glassBorder);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      backdrop-filter: blur(10px);
+    }
 
-/* layout */
-.container{
-padding:30px 16px;
-max-width:850px;
-margin:auto;
-}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    @media (min-width: 860px){
+      .grid{ grid-template-columns: 1.2fr .8fr; }
+    }
 
-.card{
-background:var(--glass1);
-backdrop-filter:blur(12px);
-border:1px solid rgba(255,255,255,0.25);
-border-radius:18px;
-box-shadow:0 10px 30px rgba(0,0,0,0.18);
-padding:26px 18px;
-opacity:0;
-transform:translateY(18px);
-transition:opacity 800ms ease,transform 800ms ease;
-}
-.card.revealed{
-opacity:1;
-transform:translateY(0);
-}
+    h2{
+      margin: 2px 0 8px;
+      font-weight: 400;
+      letter-spacing:.03em;
+      font-size: 22px;
+    }
+    p{
+      margin: 8px 0;
+      color: rgba(245,242,234,.92);
+      font-weight: 300;
+      font-size: 18px;
+      line-height: 1.55;
+    }
 
-/* titles */
-.hero-title{
-font-family:"Great Vibes",cursive;
-font-size:54px;
-margin:0;
-}
-.hero-sub{margin-top:6px;}
-.timer{
-font-size:28px;
-margin-top:14px;
-font-weight:bold;
-}
+    .pillRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 10px;
+    }
+    .pill{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      font-size: 15px;
+      color: rgba(245,242,234,.92);
+      font-weight: 300;
+      letter-spacing:.02em;
+    }
 
-/* map */
-.map iframe{
-width:100%;
-height:320px;
-border:0;
-border-radius:12px;
-}
-.map-btn{
-margin-top:12px;
-padding:10px 20px;
-border:none;
-border-radius:10px;
-background:var(--accent);
-color:white;
-font-size:16px;
-cursor:pointer;
-}
+    .btnRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 12px;
+    }
+    .btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(245,242,234,.92);
+      color:#0b0b0f;
+      font-family: inherit;
+      font-weight: 500;
+      letter-spacing:.02em;
+      box-shadow: 0 16px 50px rgba(0,0,0,.35);
+      transition: transform .12s ease, opacity .12s ease;
+    }
+    .btn:active{ transform: scale(.98); opacity:.95; }
+    .btn.secondary{
+      background: rgba(255,255,255,.10);
+      color: rgba(245,242,234,.95);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: none;
+      backdrop-filter: blur(10px);
+    }
+    .smallNote{
+      margin-top: 10px;
+      font-size: 15px;
+      color: rgba(245,242,234,.75);
+      font-weight: 300;
+    }
 
-/* RSVP */
-.rsvp{
-margin-top:30px;
-padding:20px;
-background:var(--glass2);
-border:1px solid rgba(255,255,255,0.25);
-border-radius:12px;
-text-align:left;
-position:relative;
-}
-.rsvp::before{
-content:"";
-position:absolute;
-top:10px;
-left:10px;
-width:42px;
-height:42px;
-background:url("images/rings.png") no-repeat center;
-background-size:contain;
-}
-.rsvp h2{
-text-align:center;
-margin:0 0 12px;
-padding-left:50px;
-}
-.rsvp input[type="text"]{
-width:100%;
-padding:10px;
-margin-top:6px;
-border-radius:10px;
-border:1px solid #ddd;
-}
-.option{
-display:flex;
-align-items:center;
-gap:10px;
-padding:10px;
-margin-top:6px;
-background:rgba(255,255,255,0.1);
-border-radius:10px;
-}
-.rsvp button{
-margin-top:16px;
-width:100%;
-padding:12px;
-background:var(--accent);
-border:none;
-border-radius:12px;
-color:white;
-font-size:16px;
-cursor:pointer;
-}
-.rsvp button:disabled{
-opacity:0.7;
-cursor:not-allowed;
-}
+    /* COVER OVERLAY */
+    .cover{
+      position:fixed;
+      inset:0;
+      z-index: 50;
+      display:grid;
+      place-items:center;
+      background: #000; /* fallback */
+      touch-action: none;
+      user-select:none;
+      -webkit-user-select:none;
+      overflow:hidden;
+    }
 
-/* success box */
-.success{
-display:none;
-margin-top:14px;
-padding:14px;
-border-radius:12px;
-background:rgba(255,255,255,0.14);
-border:1px solid rgba(255,255,255,0.25);
-text-align:center;
-}
-.success.show{display:block;}
+    /* Фото шаром нижче */
+    .coverPhoto{
+      position:absolute;
+      inset:0;
+      z-index: 0; /* <<< ФІКС: фото не перекриває текст */
+      background:
+        radial-gradient(1200px 800px at 50% 20%, rgba(0,0,0,.05), rgba(0,0,0,.75)),
+        url("cover.jpg") center/cover no-repeat;
+      will-change: clip-path, transform, filter;
+      filter: saturate(1.02) contrast(1.03);
+      clip-path: inset(0 0 0 0 round 0px); /* закрито */
+      transform: scale(1.02);
+      transition: transform .8s ease;
+    }
 
-/* calendar */
-.mini-cal{
-max-width:340px;
-margin:18px auto 10px;
-padding:14px;
-background:rgba(255,255,255,0.10);
-border-radius:16px;
-}
-.cal-grid{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:6px;
-}
-.day{
-padding:8px 0;
-border-radius:12px;
-background:rgba(255,255,255,0.08);
-}
-.day.heart{position:relative;}
-.day.heart::after{
-content:"❤";
-position:absolute;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#ff3b3b;
-animation:heartbeat 1.6s infinite;
-}
-@keyframes heartbeat{
-0%{transform:scale(1)}
-25%{transform:scale(1.15)}
-50%{transform:scale(1)}
-75%{transform:scale(1.15)}
-100%{transform:scale(1)}
-}
+    /* Текст вище */
+    .coverUI{
+      position:relative;
+      z-index: 2; /* <<< ФІКС: текст завжди зверху */
+      width:min(720px, 92vw);
+      text-align:center;
+      padding: 22px 16px;
+      pointer-events:none;
+    }
+    .hintTitle{
+      font-family:"Great Vibes", cursive;
+      font-size: clamp(46px, 8vw, 90px);
+      margin: 0 0 10px;
+      text-shadow: 0 16px 60px rgba(0,0,0,.60);
+    }
+    .hintSub{
+      margin: 0 0 14px;
+      font-weight:300;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: rgba(245,242,234,.88);
+      font-size: 13px;
+      text-shadow: 0 10px 40px rgba(0,0,0,.55);
+    }
+    .swipeHint{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.30);
+      border: 1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.50);
+      font-weight:300;
+      color: rgba(245,242,234,.95);
+      letter-spacing:.02em;
+      text-shadow: 0 10px 30px rgba(0,0,0,.55);
+    }
+    .arrow{
+      width: 18px;
+      height: 18px;
+      display:inline-block;
+      border-left: 2px solid rgba(245,242,234,.92);
+      border-bottom: 2px solid rgba(245,242,234,.92);
+      transform: rotate(135deg);
+      animation: updown 1.15s ease-in-out infinite;
+      opacity:.95;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.6));
+    }
+    @keyframes updown{
+      0%,100%{ transform: translateY(0) rotate(135deg); opacity:.90; }
+      50%{ transform: translateY(-6px) rotate(135deg); opacity:1; }
+    }
 
-/* intro curtain */
-.intro{
-position:fixed;
-inset:0;
-z-index:9999;
-overflow:hidden;
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
-}
-.curtain{position:absolute;inset:0;}
-.curtain-panel{
-position:absolute;top:0;bottom:0;width:50%;
-background-image:url("images/photo1.jpg");
-background-repeat:no-repeat;
-background-size:200% 100%;
-transition:transform 900ms cubic-bezier(.2,.9,.2,1);
-}
-.curtain-panel.left{left:0;background-position:0% center;}
-.curtain-panel.right{right:0;background-position:100% center;}
-.intro.open .curtain-panel.left{transform:translateX(-105%);}
-.intro.open .curtain-panel.right{transform:translateX(105%);}
+    .progress{
+      position: fixed;
+      left: 50%;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      width: min(360px, 86vw);
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.22);
+      overflow:hidden;
+      z-index: 3; /* <<< над фото */
+      pointer-events:none;
+    }
+    .bar{
+      height:100%;
+      width:0%;
+      background: rgba(245,242,234,.95);
+      border-radius: 999px;
+      transition: width .08s linear;
+    }
 
-.intro-title{
-font-family:"Great Vibes",cursive;
-font-size:70px;
-}
-.swipe{
-margin-top:30px;
-animation:swipeMove 1.8s infinite;
-}
-@keyframes swipeMove{
-0%{transform:translateY(0)}
-50%{transform:translateY(-12px)}
-100%{transform:translateY(0)}
-}
-</style>
+    .cover.opening .coverPhoto{ transform: scale(1.04); }
+    .cover.opened{ pointer-events:none; }
+    .cover.opened .coverUI,
+    .cover.opened .progress{
+      opacity:0;
+      transition: opacity .25s ease;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .arrow{ animation:none; }
+      .site, .coverPhoto{ transition:none !important; }
+      .bar{ transition:none !important; }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="intro" id="intro">
-  <div class="curtain">
-    <div class="curtain-panel left"></div>
-    <div class="curtain-panel right"></div>
-  </div>
-  <div>
-    <h1 class="intro-title">Daria & Dmytro</h1>
-    <p>01 серпня 2026</p>
-    <div class="swipe">⬆ свайпніть вгору</div>
-  </div>
-</div>
+  <!-- Site content -->
+  <main class="site" id="site">
+    <div class="wrap">
+      <header>
+        <h1 class="names" id="namesText">Імʼя & Імʼя</h1>
+        <p class="date" id="dateText">00 · 00 · 2026</p>
+      </header>
 
-<div class="bg" id="bg"></div>
-<div class="bg-overlay"></div>
+      <section class="card">
+        <div class="grid">
+          <div>
+            <h2>Запрошення</h2>
+            <p>
+              Ми будемо раді розділити з вами наш день ❤️
+              Нижче — місце, час і кнопки для календаря.
+            </p>
 
-<div class="container">
-<div class="card" id="mainCard">
+            <div class="pillRow">
+              <div class="pill" id="locPill">📍 Локація: (вставиш адресу)</div>
+              <div class="pill" id="timePill">🕒 Час: (вставиш час)</div>
+            </div>
 
-<h1 class="hero-title">Daria & Dmytro</h1>
-<div class="hero-sub">01 серпня 2026 • 15:00</div>
+            <div class="btnRow" style="margin-top:14px">
+              <a class="btn" id="googleCalBtn" href="#" target="_blank" rel="noopener">Додати в Google Calendar</a>
+              <button class="btn secondary" id="icsBtn" type="button">Завантажити .ics</button>
+            </div>
 
-<p>Ми будемо раді бачити вас на нашому весіллі ❤️</p>
+            <div class="smallNote" id="calNote">
+              Якщо Google-кнопка не відкривається в Instagram браузері — натисни “…” → Відкрити в браузері.
+            </div>
+          </div>
 
-<div class="mini-cal">
-  <div class="cal-grid">
-    <div></div><div></div><div></div><div></div><div></div>
-    <div class="day heart">1</div>
-    <div class="day">2</div>
-  </div>
-</div>
+          <div>
+            <h2>Контакти</h2>
+            <p>Наречений: +380 …</p>
+            <p>Наречена: +380 …</p>
+            <p class="smallNote">P.S. Тут можна додати RSVP (підтвердження присутності).</p>
+          </div>
+        </div>
+      </section>
 
-<div class="timer" id="countdown"></div>
+      <section class="card">
+        <h2>Дрес-код</h2>
+        <p>Опціонально — пастельні/нейтральні кольори. (змінюється як хочеш)</p>
+      </section>
 
-<p>📍 Ресторан «RoseMarine», Кривий Ріг</p>
+      <section class="card">
+        <h2>Таймінг</h2>
+        <p>16:00 — збір гостей</p>
+        <p>17:00 — церемонія</p>
+        <p>18:00 — вечеря</p>
+      </section>
+    </div>
+  </main>
 
-<div class="map">
-  <iframe src="https://www.google.com/maps?q=47.96447237791111,33.441974116157695&z=17&output=embed"></iframe>
-</div>
+  <!-- Cover overlay -->
+  <section class="cover" id="cover" aria-label="Cover">
+    <div class="coverPhoto" id="coverPhoto" role="img" aria-label="Cover photo"></div>
 
-<button class="map-btn" onclick="openMap()">Відкрити карту</button>
+    <div class="coverUI">
+      <h2 class="hintTitle">xeerjolk</h2>
+      <p class="hintSub">wedding invite</p>
+      <div class="swipeHint">
+        <span class="arrow" aria-hidden="true"></span>
+        <span>Swipe up to open</span>
+      </div>
+    </div>
 
-<div class="rsvp">
-<h2>Підтвердіть вашу присутність</h2>
+    <div class="progress" aria-hidden="true">
+      <div class="bar" id="bar"></div>
+    </div>
+  </section>
 
-<form id="rsvpForm" action="https://formspree.io/f/xeerjolk" method="POST">
+  <script>
+    /**********************
+     * 1) COVER SWIPE
+     **********************/
+    const cover = document.getElementById('cover');
+    const coverPhoto = document.getElementById('coverPhoto');
+    const site = document.getElementById('site');
+    const bar = document.getElementById('bar');
 
-<label>Імʼя та прізвище</label>
-<input type="text" name="name" required>
+    let startY = null;
+    let current = 0; // 0..1
+    let opened = false;
 
-<label>Чи будете присутні?</label>
-<label class="option"><input type="radio" name="attendance" value="Буду" required>Буду</label>
-<label class="option"><input type="radio" name="attendance" value="Не зможу">Не зможу</label>
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-<label>Який алкоголь оберете? (можна декілька)</label>
-<label class="option"><input type="checkbox" name="alcohol[]" value="Вино">Вино</label>
-<label class="option"><input type="checkbox" name="alcohol[]" value="Горілка">Горілка</label>
-<label class="option"><input type="checkbox" name="alcohol[]" value="Коньяк">Коньяк</label>
-<label class="option"><input type="checkbox" name="alcohol[]" value="Шампанське">Шампанське</label>
+    function setProgress(p){
+      current = clamp(p, 0, 1);
+      bar.style.width = (current * 100).toFixed(1) + '%';
 
-<button id="sendBtn" type="submit">Підтвердити</button>
+      // "шторка": верх і низ з’їжджають
+      const cut = (current * 50); // 0..50%
+      coverPhoto.style.clipPath = `inset(${cut}% 0% ${cut}% 0%)`;
 
-<div class="success" id="successBox">Дякуємо! Ми отримали вашу відповідь ❤️</div>
-<div class="success" id="errorBox">Щось пішло не так 😕 Спробуйте ще раз.</div>
-
-</form>
-</div>
-
-</div>
-</div>
-
-<script>
-/* intro */
-const intro=document.getElementById("intro");
-const mainCard=document.getElementById("mainCard");
-
-function hideIntro(){
-intro.classList.add("open");
-mainCard.classList.add("revealed");
-setTimeout(()=>{intro.style.display="none"},1200);
-}
-
-let startY=0;
-intro.addEventListener("touchstart",e=>{ startY=e.touches[0].clientY; }, {passive:true});
-intro.addEventListener("touchmove",e=>{ if(startY-e.touches[0].clientY>50) hideIntro(); }, {passive:true});
-window.addEventListener("wheel",e=>{ if(e.deltaY>10) hideIntro(); }, {passive:true});
-
-/* map */
-function openMap(){
-  const lat="47.96447237791111";
-  const lng="33.441974116157695";
-  const label=encodeURIComponent("RoseMarine, Кривий Ріг");
-  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
-
-  if(isIOS){
-    window.open(`https://maps.apple.com/?q=${label}&ll=${lat},${lng}&z=17`);
-  }else{
-    window.open(`https://www.google.com/maps?q=${lat},${lng}`);
-  }
-}
-
-/* countdown */
-const weddingDate=new Date("August 1, 2026 15:00:00").getTime();
-setInterval(()=>{
-  const now=new Date().getTime();
-  const d=weddingDate-now;
-
-  const days=Math.floor(d/(1000*60*60*24));
-  const hours=Math.floor((d%(1000*60*60*24))/(1000*60*60));
-  const minutes=Math.floor((d%(1000*60*60))/(1000*60));
-  const seconds=Math.floor((d%(1000*60))/1000);
-
-  document.getElementById("countdown").innerHTML =
-    d<0 ? "💍 Сьогодні наше весілля!" : (days+" днів "+hours+" год "+minutes+" хв "+seconds+" сек ");
-},1000);
-
-/* background photos */
-const photos=["images/photo1.jpg","images/photo2.jpg","images/photo3.jpg"];
-const bg=document.getElementById("bg");
-let i=0;
-
-function setBg(){
-  bg.style.opacity=0;
-  setTimeout(()=>{
-    bg.style.backgroundImage=`url('${photos[i]}')`;
-    bg.style.opacity=1;
-    i=(i+1)%photos.length;
-  },300);
-}
-setBg();
-setInterval(setBg,7000);
-
-/* RSVP submit (no redirect) */
-const form = document.getElementById("rsvpForm");
-const sendBtn = document.getElementById("sendBtn");
-const successBox = document.getElementById("successBox");
-const errorBox = document.getElementById("errorBox");
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  successBox.classList.remove("show");
-  errorBox.classList.remove("show");
-
-  sendBtn.disabled = true;
-  sendBtn.textContent = "Відправляємо...";
-
-  try{
-    const formData = new FormData(form);
-
-    const res = await fetch(form.action, {
-      method: "POST",
-      body: formData,
-      headers: { "Accept": "application/json" }
-    });
-
-    if(res.ok){
-      successBox.classList.add("show");
-      form.reset();
-    }else{
-      errorBox.classList.add("show");
+      cover.style.background = `rgba(0,0,0,${0.35 + current*0.35})`;
     }
-  }catch(err){
-    errorBox.classList.add("show");
-  }finally{
-    sendBtn.disabled = false;
-    sendBtn.textContent = "Підтвердити";
-  }
-});
-</script>
 
+    function openSite(){
+      if(opened) return;
+      opened = true;
+
+      cover.classList.add('opening');
+
+      coverPhoto.style.transition = 'clip-path .55s ease, transform .8s ease';
+      bar.style.transition = 'width .2s ease';
+
+      setProgress(1);
+      site.classList.add('open');
+
+      setTimeout(() => {
+        cover.classList.add('opened');
+        cover.style.transition = 'opacity .45s ease';
+        cover.style.opacity = '0';
+        setTimeout(() => {
+          cover.remove();
+          document.body.style.overflow = 'auto';
+        }, 520);
+      }, 420);
+
+      if (navigator.vibrate) navigator.vibrate(18);
+    }
+
+    function resetCover(){
+      coverPhoto.style.transition = 'clip-path .35s ease';
+      bar.style.transition = 'width .2s ease';
+      setProgress(0);
+    }
+
+    function onStart(y){
+      if(opened) return;
+      startY = y;
+      coverPhoto.style.transition = 'none';
+      bar.style.transition = 'none';
+    }
+
+    function onMove(y){
+      if(opened || startY === null) return;
+      const dy = startY - y; // свайп вгору => +
+      const screen = Math.max(window.innerHeight, 600);
+      const p = dy / (screen * 0.35); // ~35% висоти
+      setProgress(p);
+    }
+
+    function onEnd(){
+      if(opened) return;
+      if(current > 0.62) openSite();
+      else resetCover();
+      startY = null;
+    }
+
+    // Touch
+    cover.addEventListener('touchstart', (e) => {
+      if(e.touches && e.touches[0]) onStart(e.touches[0].clientY);
+    }, {passive:true});
+
+    cover.addEventListener('touchmove', (e) => {
+      if(e.touches && e.touches[0]) onMove(e.touches[0].clientY);
+    }, {passive:true});
+
+    cover.addEventListener('touchend', onEnd, {passive:true});
+
+    // Mouse drag
+    let mouseDown = false;
+    cover.addEventListener('mousedown', (e) => { mouseDown = true; onStart(e.clientY); });
+    window.addEventListener('mousemove', (e) => { if(mouseDown) onMove(e.clientY); });
+    window.addEventListener('mouseup', () => { if(mouseDown){ mouseDown = false; onEnd(); } });
+
+    setProgress(0);
+
+    /**********************
+     * 2) CALENDAR (Google + ICS) — без помилок
+     **********************/
+    // Налаштування події (поміняй під себе)
+    const WEDDING_EVENT = {
+      title: "Весілля — Імʼя & Імʼя",
+      location: "Локація: (встав адресу)",
+      description: "Запрошення на весілля 💛\nДеталі на сайті.",
+      // ДАТА/ЧАС (Europe/Kyiv)
+      // Формат: YYYY-MM-DD та HH:MM (24h)
+      startDate: "2026-08-20",
+      startTime: "16:00",
+      endDate:   "2026-08-20",
+      endTime:   "23:00",
+      tzid: "Europe/Kyiv"
+    };
+
+    // Допоміжні: парс часу локально, конвертація в UTC для Google/ICS
+    function pad2(n){ return String(n).padStart(2,'0'); }
+
+    function localDateTimeToUTCString(dateStr, timeStr){
+      // dateStr: YYYY-MM-DD, timeStr: HH:MM
+      const [Y,M,D] = dateStr.split('-').map(Number);
+      const [h,m] = timeStr.split(':').map(Number);
+      // Створюємо як "локальний час пристрою" — але нам треба стабільно.
+      // Найбільш безпечно: створити Date в UTC на основі локального "як є" не вийде без бібліотек.
+      // Тому робимо так:
+      // 1) Створюємо дату як ISO без Z (локальна)
+      // 2) Беремо її як Date, потім виводимо UTC-компоненти.
+      const d = new Date(Y, M-1, D, h, m, 0);
+
+      const y = d.getUTCFullYear();
+      const mo = pad2(d.getUTCMonth()+1);
+      const da = pad2(d.getUTCDate());
+      const hh = pad2(d.getUTCHours());
+      const mm = pad2(d.getUTCMinutes());
+      const ss = pad2(d.getUTCSeconds());
+      return `${y}${mo}${da}T${hh}${mm}${ss}Z`;
+    }
+
+    function buildGoogleCalendarUrl(ev){
+      const startUTC = localDateTimeToUTCString(ev.startDate, ev.startTime);
+      const endUTC   = localDateTimeToUTCString(ev.endDate, ev.endTime);
+
+      const base = "https://calendar.google.com/calendar/render?action=TEMPLATE";
+      const params = new URLSearchParams({
+        text: ev.title || "Wedding",
+        dates: `${startUTC}/${endUTC}`,
+        details: ev.description || "",
+        location: ev.location || ""
+      });
+      return `${base}&${params.toString()}`;
+    }
+
+    function escapeICSText(s){
+      // За правилами iCalendar: коми, крапка з комою, бекслеш, перенос рядка
+      return String(s || "")
+        .replace(/\\/g, "\\\\")
+        .replace(/\n/g, "\\n")
+        .replace(/,/g, "\\,")
+        .replace(/;/g, "\\;");
+    }
+
+    function buildICS(ev){
+      const dtStart = localDateTimeToUTCString(ev.startDate, ev.startTime);
+      const dtEnd   = localDateTimeToUTCString(ev.endDate, ev.endTime);
+      const uid = `wedding-${Date.now()}@xeerjolk`;
+
+      const lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//xeerjolk//Wedding//UA",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH",
+        "BEGIN:VEVENT",
+        `UID:${uid}`,
+        `DTSTAMP:${localDateTimeToUTCString(ev.startDate, "00:00")}`,
+        `DTSTART:${dtStart}`,
+        `DTEND:${dtEnd}`,
+        `SUMMARY:${escapeICSText(ev.title)}`,
+        `LOCATION:${escapeICSText(ev.location)}`,
+        `DESCRIPTION:${escapeICSText(ev.description)}`,
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ];
+      return lines.join("\r\n");
+    }
+
+    function downloadFile(filename, content, mime){
+      const blob = new Blob([content], {type: mime});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // Прив'язка кнопок — без помилок навіть якщо елемент не знайдений
+    const googleBtn = document.getElementById('googleCalBtn');
+    const icsBtn = document.getElementById('icsBtn');
+    const locPill = document.getElementById('locPill');
+    const timePill = document.getElementById('timePill');
+
+    // Виведемо в UI дані (щоб не забути)
+    if(locPill) locPill.textContent = "📍 " + (WEDDING_EVENT.location || "Локація");
+    if(timePill) timePill.textContent = `🕒 ${WEDDING_EVENT.startDate} ${WEDDING_EVENT.startTime} — ${WEDDING_EVENT.endTime}`;
+
+    if(googleBtn){
+      googleBtn.href = buildGoogleCalendarUrl(WEDDING_EVENT);
+    }
+    if(icsBtn){
+      icsBtn.addEventListener('click', () => {
+        const ics = buildICS(WEDDING_EVENT);
+        downloadFile("wedding.ics", ics, "text/calendar;charset=utf-8");
+      });
+    }
+  </script>
 </body>
 </html>
