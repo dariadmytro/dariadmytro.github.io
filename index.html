@@ -5,410 +5,566 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Дарія & Дмитро – Запрошення</title>
 
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
---accent:#b45a76;
---glass1:rgba(255,255,255,0.18);
---glass2:rgba(255,255,255,0.12);
+  --accent:#b45a76;
+  --glass1: rgba(255,255,255,0.18);
+  --glass2: rgba(255,255,255,0.12);
 }
 
-*{box-sizing:border-box;}
-
-body{
-margin:0;
-font-family:"Montserrat",Arial,sans-serif;
-color:#1f1f1f;
-text-align:center;
-}
-
-/* background slideshow */
+*{ box-sizing:border-box; }
 
 .bg{
-position:fixed;
-inset:0;
-z-index:-2;
-background-position:center;
-background-size:cover;
-background-repeat:no-repeat;
-transform:scale(1.1);
-transition:opacity 1s ease;
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  transform:scale(1.1);
+  transition:opacity 1s ease;
 }
-
 .bg-overlay{
-position:fixed;
-inset:0;
-z-index:-1;
-background:rgba(0,0,0,0.35);
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:rgba(0,0,0,0.35);
 }
 
-/* layout */
+body{
+  margin:0;
+  font-family: "Montserrat", Arial, sans-serif;
+  color:#1f1f1f;
+  text-align:center;
+}
 
 .container{
-padding:30px 16px;
-max-width:850px;
-margin:auto;
+  padding:30px 16px;
+  max-width:850px;
+  margin:auto;
 }
 
+/* Main card */
 .card{
-background:var(--glass1);
-backdrop-filter:blur(12px);
-border:1px solid rgba(255,255,255,0.25);
-border-radius:18px;
-box-shadow:0 10px 30px rgba(0,0,0,0.18);
-padding:26px 18px;
-opacity:0;
-transform:translateY(18px);
-transition:opacity 800ms ease,transform 800ms ease;
+  background:var(--glass1);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.25);
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.18);
+  padding:26px 18px;
+  opacity:0;                 /* fade in after intro */
+  transform: translateY(18px);
+  transition: opacity 800ms ease, transform 800ms ease;
 }
-
 .card.revealed{
-opacity:1;
-transform:translateY(0);
+  opacity:1;
+  transform: translateY(0);
 }
 
-/* titles */
-
+/* Titles */
 .hero-title{
-font-family:"Great Vibes",cursive;
-font-size:54px;
-margin:0;
+  font-family: "Great Vibes", cursive;
+  font-size:54px;
+  margin:0;
+  letter-spacing:1px;
 }
-
 .hero-sub{
-margin-top:6px;
+  font-weight:400;
+  margin-top:6px;
+  opacity:0.95;
 }
 
 .timer{
-font-size:28px;
-margin-top:14px;
-font-weight:bold;
+  font-size:28px;
+  margin-top:14px;
+  font-weight:700;
 }
 
-/* map */
-
+/* Map */
+.map{ margin-top:25px; }
 .map iframe{
-width:100%;
-height:320px;
-border:0;
-border-radius:12px;
+  width:100%;
+  height:320px;
+  border:0;
+  border-radius:12px;
 }
-
 .map-btn{
-margin-top:12px;
-padding:10px 20px;
-border:none;
-border-radius:10px;
-background:var(--accent);
-color:white;
-font-size:16px;
-cursor:pointer;
+  margin-top:12px;
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
+  background:var(--accent);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
 }
 
 /* RSVP */
-
 .rsvp{
-margin-top:30px;
-padding:20px;
-background:var(--glass2);
-border:1px solid rgba(255,255,255,0.25);
-border-radius:12px;
-text-align:left;
-position:relative;
+  margin-top:30px;
+  padding:20px;
+  background:var(--glass2);
+  border:1px solid rgba(255,255,255,0.25);
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  text-align:left;
+  position:relative;
 }
 
 .rsvp::before{
-content:"";
-position:absolute;
-top:10px;
-left:10px;
-width:42px;
-height:42px;
-background:url("images/rings.png") no-repeat center;
-background-size:contain;
+  content:"";
+  position:absolute;
+  top:10px;
+  left:10px;
+  width:42px;
+  height:42px;
+  background:url("images/rings.png") no-repeat center;
+  background-size:contain;
+  opacity:0.95;
+  pointer-events:none;
 }
 
 .rsvp h2{
-text-align:center;
-margin:0 0 12px;
-padding-left:50px;
+  text-align:center;
+  margin:0 0 12px;
+  padding-left:50px;
+  font-weight:700;
+}
+
+.rsvp label{
+  display:block;
+  margin-top:12px;
+  font-weight:700;
 }
 
 .rsvp input[type="text"]{
-width:100%;
-padding:10px;
-margin-top:6px;
-border-radius:10px;
-border:1px solid #ddd;
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border-radius:10px;
+  border:1px solid #ddd;
+}
+
+.options{
+  margin-top:10px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
 
 .option{
-display:flex;
-align-items:center;
-gap:10px;
-padding:10px;
-margin-top:6px;
-background:rgba(255,255,255,0.1);
-border-radius:10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.10);
 }
+
+.option input{ transform:scale(1.15); }
 
 .rsvp button{
-margin-top:16px;
-width:100%;
-padding:12px;
-background:var(--accent);
-border:none;
-border-radius:12px;
-color:white;
-font-size:16px;
-cursor:pointer;
+  margin-top:16px;
+  width:100%;
+  padding:12px;
+  background:var(--accent);
+  border:none;
+  border-radius:12px;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
 }
 
-/* calendar */
-
+/* Mini calendar */
 .mini-cal{
-max-width:340px;
-margin:18px auto 10px;
-padding:14px;
-background:rgba(255,255,255,0.10);
-border-radius:16px;
+  max-width:340px;
+  margin:18px auto 10px;
+  padding:14px 14px 12px;
+  background:rgba(255,255,255,0.10);
+  border:1px solid rgba(255,255,255,0.22);
+  border-radius:16px;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 8px 22px rgba(0,0,0,0.12);
 }
-
+.cal-title{
+  font-weight:700;
+  margin-bottom:10px;
+}
 .cal-grid{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:6px;
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
 }
-
+.dow{
+  font-size:12px;
+  opacity:0.85;
+  padding:6px 0;
+}
 .day{
-padding:8px 0;
-border-radius:12px;
-background:rgba(255,255,255,0.08);
+  padding:9px 0;
+  border-radius:12px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12);
+  font-size:14px;
 }
+.day.empty{ background:transparent; border:none; }
 
 .day.heart{
-position:relative;
+  position:relative;
+  font-weight:800;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.28);
 }
+.day.heart span{ position:relative; z-index:2; }
 
 .day.heart::after{
-content:"❤";
-position:absolute;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#ff3b3b;
-animation:heartbeat 1.6s infinite;
+  content:"❤";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  color:#ff3b3b;
+  animation:heartbeat 1.6s infinite;
+  z-index:1;
 }
-
 @keyframes heartbeat{
-0%{transform:scale(1)}
-25%{transform:scale(1.15)}
-50%{transform:scale(1)}
-75%{transform:scale(1.15)}
-100%{transform:scale(1)}
+  0%{transform:scale(1);}
+  25%{transform:scale(1.15);}
+  50%{transform:scale(1);}
+  75%{transform:scale(1.15);}
+  100%{transform:scale(1);}
 }
 
-/* intro curtain */
-
+/* INTRO (cover) */
 .intro{
-position:fixed;
-inset:0;
-z-index:9999;
-overflow:hidden;
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#fff;
 }
 
+/* Curtain reveal */
 .curtain{
-position:absolute;
-inset:0;
+  position:absolute;
+  inset:0;
+  z-index:1;
+  overflow:hidden;
 }
 
 .curtain-panel{
-position:absolute;
-top:0;
-bottom:0;
-width:50%;
-background-image:url("images/photo1.jpg");
-background-repeat:no-repeat;
-background-size:200% 100%;
-transition:transform 900ms cubic-bezier(.2,.9,.2,1);
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:50%;
+  background:url("images/photo1.jpg") center/cover no-repeat;
+  filter:brightness(0.72);
+  transition: transform 900ms cubic-bezier(.2,.9,.2,1);
 }
 
 .curtain-panel.left{
-left:0;
-background-position:0% center;
+  left:0;
+  background-position: 35% center;
 }
 
 .curtain-panel.right{
-right:0;
-background-position:100% center;
+  right:0;
+  background-position: 65% center;
 }
 
-.intro.open .curtain-panel.left{
-transform:translateX(-105%);
+.intro-grad{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  background: radial-gradient(circle at 50% 35%, rgba(0,0,0,0.15), rgba(0,0,0,0.55));
 }
 
-.intro.open .curtain-panel.right{
-transform:translateX(105%);
+.intro-content{
+  position:relative;
+  z-index:3;
+  padding: 18px;
+  transition: opacity 500ms ease, transform 500ms ease;
 }
 
 .intro-title{
-font-family:"Great Vibes",cursive;
-font-size:70px;
+  font-family:"Great Vibes", cursive;
+  font-size:70px;
+  margin:0;
+}
+
+.intro-date{
+  margin-top:8px;
+  font-size:18px;
+  letter-spacing:1px;
+  opacity:0.95;
 }
 
 .swipe{
-margin-top:30px;
-animation:swipeMove 1.8s infinite;
+  margin-top:38px;
+  font-size:16px;
+  opacity:0.95;
+  animation: swipeMove 1.8s infinite;
 }
 
 @keyframes swipeMove{
-0%{transform:translateY(0)}
-50%{transform:translateY(-12px)}
-100%{transform:translateY(0)}
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+  100%{transform:translateY(0)}
 }
 
+/* When opening */
+.intro.open .curtain-panel.left{ transform: translateX(-105%); }
+.intro.open .curtain-panel.right{ transform: translateX(105%); }
+
+.intro.open .intro-content{
+  opacity:0;
+  transform: translateY(-10px);
+}
+
+.intro.open{
+  opacity:0;
+  transition: opacity 600ms ease 600ms;
+  pointer-events:none;
+}
+
+@media (max-width:420px){
+  .hero-title{font-size:46px;}
+  .intro-title{font-size:56px;}
+  .timer{font-size:24px;}
+  .map iframe{height:280px;}
+}
 </style>
 </head>
 
 <body>
 
+<!-- Intro screen with curtain -->
 <div class="intro" id="intro">
-
-<div class="curtain">
-<div class="curtain-panel left"></div>
-<div class="curtain-panel right"></div>
+  <div class="curtain">
+    <div class="curtain-panel left"></div>
+    <div class="curtain-panel right"></div>
+  </div>
+  <div class="intro-grad"></div>
+  <div class="intro-content">
+    <h1 class="intro-title">Daria & Dmytro</h1>
+    <div class="intro-date">01 • 08 • 2026</div>
+    <div class="swipe">⬆ свайпніть вгору</div>
+  </div>
 </div>
 
-<div>
-<h1 class="intro-title">Daria & Dmytro</h1>
-<p>01 серпня 2026</p>
-<div class="swipe">⬆ свайпніть вгору</div>
-</div>
-
-</div>
-
+<!-- Background slideshow behind everything -->
 <div class="bg" id="bg"></div>
 <div class="bg-overlay"></div>
 
 <div class="container">
-<div class="card" id="mainCard">
+  <div class="card" id="mainCard">
 
-<h1 class="hero-title">Daria & Dmytro</h1>
-<div class="hero-sub">01 серпня 2026 • 15:00</div>
+    <h1 class="hero-title">Daria & Dmytro</h1>
+    <div class="hero-sub">01 серпня 2026 • 15:00</div>
 
-<p>Ми будемо раді бачити вас на нашому весіллі ❤️</p>
+    <p style="margin-top:14px;">Ми будемо раді бачити вас на нашому весіллі ❤️</p>
 
-<div class="mini-cal">
-<div class="cal-grid">
-<div></div><div></div><div></div><div></div><div></div>
-<div class="day heart">1</div>
-<div class="day">2</div>
-</div>
-</div>
+    <p style="margin-top:18px;font-size:18px;margin-bottom:0;">
+      ✨ До нашого весілля залишилось всього ✨
+    </p>
 
-<div class="timer" id="countdown"></div>
+    <div class="mini-cal">
+      <div class="cal-title">Серпень 2026</div>
 
-<p>📍 Ресторан «RoseMarine», Кривий Ріг</p>
+      <div class="cal-grid">
+        <div class="dow">Пн</div><div class="dow">Вт</div><div class="dow">Ср</div>
+        <div class="dow">Чт</div><div class="dow">Пт</div><div class="dow">Сб</div><div class="dow">Нд</div>
+      </div>
 
-<div class="map">
-<iframe src="https://www.google.com/maps?q=47.96447237791111,33.441974116157695&z=17&output=embed"></iframe>
-</div>
+      <div class="cal-grid" style="margin-top:6px;">
+        <div class="day empty"></div><div class="day empty"></div><div class="day empty"></div>
+        <div class="day empty"></div><div class="day empty"></div>
+        <div class="day heart"><span>1</span></div>
+        <div class="day">2</div>
 
-<button class="map-btn" onclick="openMap()">Відкрити карту</button>
+        <div class="day">3</div><div class="day">4</div><div class="day">5</div>
+        <div class="day">6</div><div class="day">7</div><div class="day">8</div><div class="day">9</div>
 
-<div class="rsvp">
-<h2>Підтвердіть вашу присутність</h2>
+        <div class="day">10</div><div class="day">11</div><div class="day">12</div>
+        <div class="day">13</div><div class="day">14</div><div class="day">15</div><div class="day">16</div>
 
-<form action="https://formspree.io/f/xeerjolk" method="POST">
+        <div class="day">17</div><div class="day">18</div><div class="day">19</div>
+        <div class="day">20</div><div class="day">21</div><div class="day">22</div><div class="day">23</div>
 
-<label>Імʼя та прізвище</label>
-<input type="text" name="name" required>
+        <div class="day">24</div><div class="day">25</div><div class="day">26</div>
+        <div class="day">27</div><div class="day">28</div><div class="day">29</div><div class="day">30</div>
 
-<label>Чи будете присутні?</label>
+        <div class="day">31</div>
+      </div>
+    </div>
 
-<label class="option"><input type="radio" name="attendance" value="Буду">Буду</label>
-<label class="option"><input type="radio" name="attendance" value="Не зможу">Не зможу</label>
+    <div class="timer" id="countdown"></div>
 
-<label>Який алкоголь оберете?</label>
+    <p style="margin-top:25px;">
+      📍 Ресторан «RoseMarine», Кривий Ріг
+    </p>
 
-<label class="option"><input type="checkbox" name="alcohol[]" value="Вино">Вино</label>
-<label class="option"><input type="checkbox" name="alcohol[]" value="Горілка">Горілка</label>
-<label class="option"><input type="checkbox" name="alcohol[]" value="Коньяк">Коньяк</label>
-<label class="option"><input type="checkbox" name="alcohol[]" value="Шампанське">Шампанське</label>
+    <div class="map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d944.540017657618!2d33.441354649990835!3d47.96418157398037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40db1f003f286b05%3A0xf99a77aa010cfefb!2z0KDQtdGB0YLQvtGA0LDQvSAi0JzQsNCz0LXQu9C70LDQvSIu!5e0!3m2!1sru!2sua!4v1772679365465!5m2!1sru!2sua"
+        loading="lazy"
+        allowfullscreen=""
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
 
-<button type="submit">Підтвердити</button>
+    <button class="map-btn" onclick="openMap()">Відкрити карту</button>
 
-</form>
-</div>
+    <div class="rsvp">
+      <h2>Підтвердіть вашу присутність</h2>
 
-</div>
+      <!-- ЗАМІНИ XXXXX НА СВІЙ Formspree ID -->
+      <form action="https://formspree.io/f/XXXXX" method="POST">
+        <input type="hidden" name="_subject" value="RSVP — Daria & Dmytro">
+
+        <label>Імʼя та прізвище</label>
+        <input type="text" name="name" required>
+
+        <label>Чи будете присутні?</label>
+        <div class="options">
+          <label class="option">
+            <input type="radio" name="attendance" value="Буду" required>
+            <span>Буду</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="attendance" value="Не зможу">
+            <span>Не зможу</span>
+          </label>
+        </div>
+
+        <label>Який алкоголь оберете? (можна декілька)</label>
+        <div class="options">
+          <label class="option">
+            <input type="checkbox" name="alcohol[]" value="Вино">
+            <span>Вино</span>
+          </label>
+          <label class="option">
+            <input type="checkbox" name="alcohol[]" value="Горілка">
+            <span>Горілка</span>
+          </label>
+          <label class="option">
+            <input type="checkbox" name="alcohol[]" value="Коньяк">
+            <span>Коньяк</span>
+          </label>
+          <label class="option">
+            <input type="checkbox" name="alcohol[]" value="Шампанське">
+            <span>Шампанське</span>
+          </label>
+          <label class="option">
+            <input type="checkbox" name="alcohol[]" value="Не вживаю алкоголь">
+            <span>Не вживаю алкоголь</span>
+          </label>
+        </div>
+
+        <button type="submit">Підтвердити</button>
+      </form>
+    </div>
+
+  </div>
 </div>
 
 <script>
-
-const intro=document.getElementById("intro");
-const mainCard=document.getElementById("mainCard");
-
-function hideIntro(){
-intro.classList.add("open");
-mainCard.classList.add("revealed");
-setTimeout(()=>{intro.style.display="none"},1200);
-}
-
-let startY=0;
-
-intro.addEventListener("touchstart",e=>{
-startY=e.touches[0].clientY;
-});
-
-intro.addEventListener("touchmove",e=>{
-if(startY-e.touches[0].clientY>50) hideIntro();
-});
-
-window.addEventListener("wheel",e=>{
-if(e.deltaY>10) hideIntro();
-});
-
 function openMap(){
-window.open("https://www.google.com/maps?q=47.96447237791111,33.441974116157695");
+  const lat="47.96447237791111";
+  const lng="33.441974116157695";
+  const label=encodeURIComponent("RoseMarine, Кривий Ріг");
+  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+
+  if(isIOS){
+    window.open(`https://maps.apple.com/?q=${label}&ll=${lat},${lng}&z=17`);
+  }else{
+    window.open(`https://www.google.com/maps?q=${lat},${lng}`);
+  }
 }
 
+/* Countdown */
 const weddingDate=new Date("August 1, 2026 15:00:00").getTime();
 
-setInterval(()=>{
-const now=new Date().getTime();
-const d=weddingDate-now;
+setInterval(function(){
+  const now=new Date().getTime();
+  const distance=weddingDate-now;
 
-const days=Math.floor(d/(1000*60*60*24));
-const hours=Math.floor((d%(1000*60*60*24))/(1000*60*60));
-const minutes=Math.floor((d%(1000*60*60))/(1000*60));
-const seconds=Math.floor((d%(1000*60))/1000);
+  const days=Math.floor(distance/(1000*60*60*24));
+  const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+  const minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+  const seconds=Math.floor((distance%(1000*60))/1000);
 
-document.getElementById("countdown").innerHTML=
-days+" днів "+hours+" год "+minutes+" хв "+seconds+" сек ";
+  const el = document.getElementById("countdown");
+  if(distance<0){
+    el.innerHTML="💍 Сьогодні наше весілля!";
+    return;
+  }
+  el.innerHTML = days+" днів "+hours+" год "+minutes+" хв "+seconds+" сек ";
 },1000);
 
+/* Background slideshow */
 const photos=["images/photo1.jpg","images/photo2.jpg","images/photo3.jpg"];
 const bg=document.getElementById("bg");
 let i=0;
 
-function setBg(){
-bg.style.backgroundImage=`url(${photos[i]})`;
-i=(i+1)%photos.length;
+function setBg(index){
+  bg.style.opacity=0;
+  setTimeout(()=>{
+    bg.style.backgroundImage=`url('${photos[index]}')`;
+    bg.style.opacity=1;
+  },300);
+}
+setBg(i);
+setInterval(()=>{
+  i=(i+1)%photos.length;
+  setBg(i);
+},7000);
+
+/* Intro swipe + curtain reveal (NO CLICK) */
+const intro = document.getElementById("intro");
+const mainCard = document.getElementById("mainCard");
+
+function hideIntro(){
+  if(intro.classList.contains("open")) return;
+  intro.classList.add("open");
+  mainCard.classList.add("revealed");
+  setTimeout(()=>{ intro.style.display="none"; }, 1400);
 }
 
-setBg();
-setInterval(setBg,7000);
+/* swipe up on mobile */
+let touchStartY=0;
+intro.addEventListener("touchstart",(e)=>{
+  touchStartY = e.touches[0].clientY;
+},{passive:true});
 
+intro.addEventListener("touchmove",(e)=>{
+  const y = e.touches[0].clientY;
+  if(touchStartY - y > 50){
+    hideIntro();
+  }
+},{passive:true});
+
+/* scroll on desktop */
+window.addEventListener("wheel",(e)=>{
+  if(e.deltaY > 10){
+    hideIntro();
+  }
+},{passive:true});
 </script>
 
 </body>
