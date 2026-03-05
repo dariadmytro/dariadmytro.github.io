@@ -86,10 +86,12 @@ h2 { font-weight: normal; }
 function openMap() {
   const lat = "47.96418157398037";
   const lng = "33.441354649990835";
+  const label = encodeURIComponent("RoseMarine, Кривий Ріг");
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   if (isIOS) {
-    window.open(`https://maps.apple.com/?ll=${lat},${lng}`);
+    // q + ll = зʼявляється пін з підписом
+    window.open(`https://maps.apple.com/?q=${label}&ll=${lat},${lng}&z=17`);
   } else {
     window.open(`https://www.google.com/maps?q=${lat},${lng}`);
   }
