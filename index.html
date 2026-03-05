@@ -269,12 +269,20 @@
             }
 
             .main-content {
-                opacity: 0;
-                transition: opacity 1s ease 0.4s;
-            }
-            .main-content.visible {
-                opacity: 1;
-            }
+    opacity: 0;
+    filter: blur(14px);
+    transform: translateY(10px);
+    transition:
+        opacity 0.9s ease 0.35s,
+        filter 0.9s ease 0.35s,
+        transform 0.9s ease 0.35s;
+    will-change: opacity, filter, transform;
+}
+.main-content.visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+}
 
             /* ===== HERO: SPLIT DATE+PHOTO (like max-wedding-invitation) ===== */
             .hero-split {
@@ -939,7 +947,28 @@
             }
 
             
-            /* ENVELOPE OPEN ANIMATION */
+            /* PREMIUM LIGHT SWEEP ON OPEN */
+.envelope-overlay::before{
+    content:"";
+    position:absolute;
+    inset:-20%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0) 55%),
+                linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.10) 35%, rgba(255,255,255,0) 70%);
+    transform: translateX(-25%) rotate(8deg);
+    opacity: 0;
+    pointer-events:none;
+    transition: opacity 0.45s ease;
+}
+.envelope-overlay.opening::before{
+    opacity: 1;
+    animation: sweepLight 0.85s ease both;
+}
+@keyframes sweepLight{
+    0%{ transform: translateX(-35%) rotate(8deg); }
+    100%{ transform: translateX(20%) rotate(8deg); }
+}
+
+/* ENVELOPE OPEN ANIMATION */
             .envelope-card {
                 transform-origin: center;
                 transition:
@@ -1512,18 +1541,91 @@
         </div>
 
         <script>
-            function openEnvelope() {
-                const envelope = document.getElementById("envelope");
-                const main = document.getElementById("mainContent");
+            function playOpenSound(){
+    // WebAudio: paper whoosh + gentle bell
+    try{
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const t0 = ctx.currentTime + 0.02;
 
-                envelope.classList.add("opening");
+        // --- Whoosh (noise through filters) ---
+        const bufferSize = Math.floor(ctx.sampleRate * 1.1);
+        const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = noiseBuffer.getChannelData(0);
+        for(let i=0;i<bufferSize;i++){
+            data[i] = (Math.random()*2 - 1) * 0.30;
+        }
+        const noise = ctx.createBufferSource();
+        noise.buffer = noiseBuffer;
 
-                setTimeout(() => {
-                    envelope.classList.add("hidden");
-                    main.classList.add("visible");
-                    document.body.style.overflow = "auto";
-                }, 650);
-            }
+        const bp = ctx.createBiquadFilter();
+        bp.type = "bandpass";
+        bp.frequency.setValueAtTime(900, t0);
+        bp.Q.setValueAtTime(0.75, t0);
+
+        const hp = ctx.createBiquadFilter();
+        hp.type = "highpass";
+        hp.frequency.setValueAtTime(180, t0);
+
+        const whooshGain = ctx.createGain();
+        whooshGain.gain.setValueAtTime(0.0001, t0);
+        whooshGain.gain.exponentialRampToValueAtTime(0.26, t0 + 0.07);
+        whooshGain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.80);
+
+        noise.connect(bp);
+        bp.connect(hp);
+        hp.connect(whooshGain);
+        whooshGain.connect(ctx.destination);
+        noise.start(t0);
+        noise.stop(t0 + 0.9);
+
+        // --- Bell (two sines + decay) ---
+        const bell = ctx.createOscillator();
+        bell.type = "sine";
+        bell.frequency.setValueAtTime(1046.5, t0 + 0.10);
+
+        const bell2 = ctx.createOscillator();
+        bell2.type = "sine";
+        bell2.frequency.setValueAtTime(1568.0, t0 + 0.10);
+
+        const bellGain = ctx.createGain();
+        bellGain.gain.setValueAtTime(0.0001, t0 + 0.10);
+        bellGain.gain.exponentialRampToValueAtTime(0.10, t0 + 0.14);
+        bellGain.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.25);
+
+        const bellLP = ctx.createBiquadFilter();
+        bellLP.type = "lowpass";
+        bellLP.frequency.setValueAtTime(6500, t0 + 0.10);
+
+        bell.connect(bellLP);
+        bell2.connect(bellLP);
+        bellLP.connect(bellGain);
+        bellGain.connect(ctx.destination);
+
+        bell.start(t0 + 0.10);
+        bell2.start(t0 + 0.10);
+        bell.stop(t0 + 1.35);
+        bell2.stop(t0 + 1.35);
+
+        setTimeout(()=>ctx.close(), 1700);
+    }catch(e){
+        // ignore (unsupported or blocked)
+    }
+}
+
+function openEnvelope(){
+    const envelope = document.getElementById("envelope");
+    const main = document.getElementById("mainContent");
+
+    playOpenSound();
+    envelope.classList.add("opening");
+
+    setTimeout(()=>{
+        envelope.classList.add("hidden");
+        main.classList.add("visible");
+        document.body.style.overflow = "auto";
+    }, 650);
+}
             document.body.style.overflow = "hidden";
             function updateCountdown() {
                 const w = new Date("2026-08-01T15:00:00"),
