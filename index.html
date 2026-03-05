@@ -149,6 +149,74 @@ h2{
   font-size:16px;
   cursor:pointer;
 }
+
+  /* Mini calendar */
+.mini-cal{
+  max-width: 340px;
+  margin: 18px auto 10px;
+  padding: 14px 14px 12px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+
+.cal-title{
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.cal-grid{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.dow{
+  font-size: 12px;
+  opacity: 0.8;
+  padding: 6px 0;
+}
+
+.day{
+  padding: 9px 0;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  font-size: 14px;
+}
+
+.day.empty{
+  background: transparent;
+  border: none;
+}
+
+.day.heart{
+  position: relative;
+  font-weight: 800;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.28);
+}
+
+.day.heart span{
+  position: relative;
+  z-index: 2;
+}
+
+.day.heart::after{
+  content: "❤";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  opacity: 0.35; /* “обведено” сердечком */
+  z-index: 1;
+}
 </style>
 </head>
 
