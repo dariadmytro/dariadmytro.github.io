@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Дарія & Дмитро – Запрошення</title>
 
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -16,9 +15,16 @@
   --glass1: rgba(255,255,255,0.18);
   --glass2: rgba(255,255,255,0.12);
 }
-
 *{ box-sizing:border-box; }
 
+body{
+  margin:0;
+  font-family:"Montserrat", Arial, sans-serif;
+  color:#1f1f1f;
+  text-align:center;
+}
+
+/* Background slideshow behind everything */
 .bg{
   position:fixed;
   inset:0;
@@ -36,13 +42,6 @@
   background:rgba(0,0,0,0.35);
 }
 
-body{
-  margin:0;
-  font-family: "Montserrat", Arial, sans-serif;
-  color:#1f1f1f;
-  text-align:center;
-}
-
 .container{
   padding:30px 16px;
   max-width:850px;
@@ -58,7 +57,7 @@ body{
   border-radius:18px;
   box-shadow:0 10px 30px rgba(0,0,0,0.18);
   padding:26px 18px;
-  opacity:0;                 /* fade in after intro */
+  opacity:0;
   transform: translateY(18px);
   transition: opacity 800ms ease, transform 800ms ease;
 }
@@ -69,22 +68,13 @@ body{
 
 /* Titles */
 .hero-title{
-  font-family: "Great Vibes", cursive;
+  font-family:"Great Vibes", cursive;
   font-size:54px;
   margin:0;
   letter-spacing:1px;
 }
-.hero-sub{
-  font-weight:400;
-  margin-top:6px;
-  opacity:0.95;
-}
-
-.timer{
-  font-size:28px;
-  margin-top:14px;
-  font-weight:700;
-}
+.hero-sub{ font-weight:400; margin-top:6px; opacity:0.95; }
+.timer{ font-size:28px; margin-top:14px; font-weight:700; }
 
 /* Map */
 .map{ margin-top:25px; }
@@ -105,84 +95,6 @@ body{
   cursor:pointer;
 }
 
-/* RSVP */
-.rsvp{
-  margin-top:30px;
-  padding:20px;
-  background:var(--glass2);
-  border:1px solid rgba(255,255,255,0.25);
-  border-radius:12px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.08);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  text-align:left;
-  position:relative;
-}
-
-.rsvp::before{
-  content:"";
-  position:absolute;
-  top:10px;
-  left:10px;
-  width:42px;
-  height:42px;
-  background:url("images/rings.png") no-repeat center;
-  background-size:contain;
-  opacity:0.95;
-  pointer-events:none;
-}
-
-.rsvp h2{
-  text-align:center;
-  margin:0 0 12px;
-  padding-left:50px;
-  font-weight:700;
-}
-
-.rsvp label{
-  display:block;
-  margin-top:12px;
-  font-weight:700;
-}
-
-.rsvp input[type="text"]{
-  width:100%;
-  padding:10px;
-  margin-top:6px;
-  border-radius:10px;
-  border:1px solid #ddd;
-}
-
-.options{
-  margin-top:10px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.option{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.10);
-}
-
-.option input{ transform:scale(1.15); }
-
-.rsvp button{
-  margin-top:16px;
-  width:100%;
-  padding:12px;
-  background:var(--accent);
-  border:none;
-  border-radius:12px;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-}
-
 /* Mini calendar */
 .mini-cal{
   max-width:340px;
@@ -195,20 +107,9 @@ body{
   -webkit-backdrop-filter:blur(12px);
   box-shadow:0 8px 22px rgba(0,0,0,0.12);
 }
-.cal-title{
-  font-weight:700;
-  margin-bottom:10px;
-}
-.cal-grid{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:6px;
-}
-.dow{
-  font-size:12px;
-  opacity:0.85;
-  padding:6px 0;
-}
+.cal-title{ font-weight:700; margin-bottom:10px; }
+.cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+.dow{ font-size:12px; opacity:0.85; padding:6px 0; }
 .day{
   padding:9px 0;
   border-radius:12px;
@@ -217,7 +118,6 @@ body{
   font-size:14px;
 }
 .day.empty{ background:transparent; border:none; }
-
 .day.heart{
   position:relative;
   font-weight:800;
@@ -225,7 +125,6 @@ body{
   border:1px solid rgba(255,255,255,0.28);
 }
 .day.heart span{ position:relative; z-index:2; }
-
 .day.heart::after{
   content:"❤";
   position:absolute;
@@ -246,7 +145,73 @@ body{
   100%{transform:scale(1);}
 }
 
-/* INTRO (cover) */
+/* RSVP */
+.rsvp{
+  margin-top:30px;
+  padding:20px;
+  background:var(--glass2);
+  border:1px solid rgba(255,255,255,0.25);
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  text-align:left;
+  position:relative;
+}
+.rsvp::before{
+  content:"";
+  position:absolute;
+  top:10px;
+  left:10px;
+  width:42px;
+  height:42px;
+  background:url("images/rings.png") no-repeat center;
+  background-size:contain;
+  opacity:0.95;
+  pointer-events:none;
+}
+.rsvp h2{
+  text-align:center;
+  margin:0 0 12px;
+  padding-left:50px;
+  font-weight:700;
+}
+.rsvp label{ display:block; margin-top:12px; font-weight:700; }
+.rsvp input[type="text"]{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border-radius:10px;
+  border:1px solid #ddd;
+}
+.options{
+  margin-top:10px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.option{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.10);
+}
+.option input{ transform:scale(1.15); }
+.rsvp button{
+  margin-top:16px;
+  width:100%;
+  padding:12px;
+  background:var(--accent);
+  border:none;
+  border-radius:12px;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* ✅ INTRO (ONE PHOTO) */
 .intro{
   position:fixed;
   inset:0;
@@ -257,56 +222,38 @@ body{
   justify-content:center;
   text-align:center;
   color:#fff;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Curtain reveal */
-.curtain{
+/* One background photo */
+.intro-photo{
   position:absolute;
   inset:0;
-  z-index:1;
-  overflow:hidden;
-}
-
-.curtain-panel{
-  position:absolute;
-  top:0;
-  bottom:0;
-  width:50%;
   background:url("images/photo1.jpg") center/cover no-repeat;
-  filter:brightness(0.72);
-  transition: transform 900ms cubic-bezier(.2,.9,.2,1);
+  filter:brightness(0.75);
+  z-index:1;
 }
 
-.curtain-panel.left{
-  left:0;
-  background-position: 35% center;
-}
-
-.curtain-panel.right{
-  right:0;
-  background-position: 65% center;
-}
-
+/* Overlay for readability */
 .intro-grad{
   position:absolute;
   inset:0;
   z-index:2;
-  background: radial-gradient(circle at 50% 35%, rgba(0,0,0,0.15), rgba(0,0,0,0.55));
+  background: radial-gradient(circle at 50% 35%, rgba(0,0,0,0.12), rgba(0,0,0,0.62));
 }
 
+/* Content */
 .intro-content{
   position:relative;
-  z-index:3;
-  padding: 18px;
+  z-index:4;
+  padding:18px;
   transition: opacity 500ms ease, transform 500ms ease;
 }
-
 .intro-title{
   font-family:"Great Vibes", cursive;
   font-size:70px;
   margin:0;
 }
-
 .intro-date{
   margin-top:8px;
   font-size:18px;
@@ -314,33 +261,57 @@ body{
   opacity:0.95;
 }
 
+/* Swipe hint visibility */
 .swipe{
-  margin-top:38px;
+  margin-top:30px;
   font-size:16px;
-  opacity:0.95;
+  opacity:0.98;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  border-radius:999px;
+  background:rgba(0,0,0,0.35);
+  border:1px solid rgba(255,255,255,0.22);
+  box-shadow:0 8px 20px rgba(0,0,0,0.22);
+  text-shadow:0 2px 10px rgba(0,0,0,0.55);
   animation: swipeMove 1.8s infinite;
 }
-
 @keyframes swipeMove{
   0%{transform:translateY(0)}
-  50%{transform:translateY(-12px)}
+  50%{transform:translateY(-10px)}
   100%{transform:translateY(0)}
 }
+.swipe small{ display:block; font-size:12px; opacity:0.9; }
 
-/* When opening */
-.intro.open .curtain-panel.left{ transform: translateX(-105%); }
-.intro.open .curtain-panel.right{ transform: translateX(105%); }
-
-.intro.open .intro-content{
-  opacity:0;
-  transform: translateY(-10px);
-}
-
-.intro.open{
-  opacity:0;
-  transition: opacity 600ms ease 600ms;
+/* ✅ Curtain mask (not two photos) */
+.curtain-mask{
+  position:absolute;
+  inset:0;
+  z-index:3;
   pointer-events:none;
 }
+.curtain-mask::before,
+.curtain-mask::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:50%;
+  background:rgba(0,0,0,0.28);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition: transform 900ms cubic-bezier(.2,.9,.2,1);
+  will-change: transform;
+}
+.curtain-mask::before{ left:0; }
+.curtain-mask::after{ right:0; }
+
+/* Opening animations */
+.intro.open .curtain-mask::before{ transform: translateX(-105%); }
+.intro.open .curtain-mask::after{ transform: translateX(105%); }
+.intro.open .intro-content{ opacity:0; transform: translateY(-10px); }
+.intro.open{ opacity:0; transition: opacity 600ms ease 600ms; pointer-events:none; }
 
 @media (max-width:420px){
   .hero-title{font-size:46px;}
@@ -353,21 +324,27 @@ body{
 
 <body>
 
-<!-- Intro screen with curtain -->
-<div class="intro" id="intro">
-  <div class="curtain">
-    <div class="curtain-panel left"></div>
-    <div class="curtain-panel right"></div>
-  </div>
+<!-- ✅ Intro (one photo) -->
+<div class="intro" id="intro" role="button" aria-label="Відкрити запрошення">
+  <div class="intro-photo"></div>
   <div class="intro-grad"></div>
+  <div class="curtain-mask"></div>
+
   <div class="intro-content">
     <h1 class="intro-title">Daria & Dmytro</h1>
     <div class="intro-date">01 • 08 • 2026</div>
-    <div class="swipe">⬆ свайпніть вгору</div>
+
+    <div class="swipe">
+      <span>⬆</span>
+      <div>
+        свайпніть вгору або торкніться
+        <small>на ПК: колесо / Enter</small>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- Background slideshow behind everything -->
+<!-- Background slideshow -->
 <div class="bg" id="bg"></div>
 <div class="bg-overlay"></div>
 
@@ -421,7 +398,7 @@ body{
 
     <div class="map">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d944.540017657618!2d33.441354649990835!3d47.96418157398037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40db1f003f286b05%3A0xf99a77aa010cfefb!2z0KDQtdGB0YLQvtGA0LDQvSAi0JzQsNCz0LXQu9C70LDQvSIu!5e0!3m2!1sru!2sua!4v1772679365465!5m2!1sru!2sua"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d944.540017657618!2d33.441354649990835!3d47.96418157398037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40db1f003f286b05%3A0xf99a77aa010cfefb!2z0KDQtdGB0YLQvtGA0LDQvSAi0JzQsNCz0LXQu9C70LDQvCIu!5e0!3m2!1sru!2sua!4v1772679365465!5m2!1sru!2sua"
         loading="lazy"
         allowfullscreen=""
         referrerpolicy="no-referrer-when-downgrade">
@@ -454,26 +431,11 @@ body{
 
         <label>Який алкоголь оберете? (можна декілька)</label>
         <div class="options">
-          <label class="option">
-            <input type="checkbox" name="alcohol[]" value="Вино">
-            <span>Вино</span>
-          </label>
-          <label class="option">
-            <input type="checkbox" name="alcohol[]" value="Горілка">
-            <span>Горілка</span>
-          </label>
-          <label class="option">
-            <input type="checkbox" name="alcohol[]" value="Коньяк">
-            <span>Коньяк</span>
-          </label>
-          <label class="option">
-            <input type="checkbox" name="alcohol[]" value="Шампанське">
-            <span>Шампанське</span>
-          </label>
-          <label class="option">
-            <input type="checkbox" name="alcohol[]" value="Не вживаю алкоголь">
-            <span>Не вживаю алкоголь</span>
-          </label>
+          <label class="option"><input type="checkbox" name="alcohol[]" value="Вино"><span>Вино</span></label>
+          <label class="option"><input type="checkbox" name="alcohol[]" value="Горілка"><span>Горілка</span></label>
+          <label class="option"><input type="checkbox" name="alcohol[]" value="Коньяк"><span>Коньяк</span></label>
+          <label class="option"><input type="checkbox" name="alcohol[]" value="Шампанське"><span>Шампанське</span></label>
+          <label class="option"><input type="checkbox" name="alcohol[]" value="Не вживаю алкоголь"><span>Не вживаю алкоголь</span></label>
         </div>
 
         <button type="submit">Підтвердити</button>
@@ -484,6 +446,13 @@ body{
 </div>
 
 <script>
+function vibrateSoft(){
+  // ✅ Small vibration on supported mobile devices
+  if (navigator.vibrate) {
+    navigator.vibrate(18); // маленька вібрація
+  }
+}
+
 function openMap(){
   const lat="47.96447237791111";
   const lng="33.441974116157695";
@@ -497,54 +466,62 @@ function openMap(){
   }
 }
 
-/* Countdown */
-const weddingDate=new Date("August 1, 2026 15:00:00").getTime();
-
-setInterval(function(){
-  const now=new Date().getTime();
-  const distance=weddingDate-now;
-
-  const days=Math.floor(distance/(1000*60*60*24));
-  const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-  const minutes=Math.floor((distance%(1000*60*60))/(1000*60));
-  const seconds=Math.floor((distance%(1000*60))/1000);
-
+/* Countdown (stable) */
+const weddingDate = new Date("2026-08-01T15:00:00+03:00").getTime();
+function updateCountdown(){
+  const now = Date.now();
+  const distance = weddingDate - now;
   const el = document.getElementById("countdown");
-  if(distance<0){
-    el.innerHTML="💍 Сьогодні наше весілля!";
+  if(!el) return;
+
+  if(distance <= 0){
+    el.textContent = "💍 Сьогодні наше весілля!";
     return;
   }
-  el.innerHTML = days+" днів "+hours+" год "+minutes+" хв "+seconds+" сек ";
-},1000);
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
+  el.textContent = `${days} днів ${hours} год ${minutes} хв ${seconds} сек`;
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
 
 /* Background slideshow */
-const photos=["images/photo1.jpg","images/photo2.jpg","images/photo3.jpg"];
-const bg=document.getElementById("bg");
-let i=0;
+const photos = ["images/photo1.jpg","images/photo2.jpg","images/photo3.jpg"];
+const bg = document.getElementById("bg");
+let i = 0;
 
 function setBg(index){
-  bg.style.opacity=0;
+  if(!bg) return;
+  bg.style.opacity = 0;
   setTimeout(()=>{
-    bg.style.backgroundImage=`url('${photos[index]}')`;
-    bg.style.opacity=1;
+    bg.style.backgroundImage = `url('${photos[index]}')`;
+    bg.style.opacity = 1;
   },300);
 }
 setBg(i);
 setInterval(()=>{
-  i=(i+1)%photos.length;
+  i = (i+1) % photos.length;
   setBg(i);
 },7000);
 
-/* Intro swipe + curtain reveal (NO CLICK) */
+/* Intro open: swipe + click + keys + wheel */
 const intro = document.getElementById("intro");
 const mainCard = document.getElementById("mainCard");
 
 function hideIntro(){
+  if(!intro || !mainCard) return;
   if(intro.classList.contains("open")) return;
+
+  vibrateSoft(); // ✅ vibrate when opening
   intro.classList.add("open");
   mainCard.classList.add("revealed");
   setTimeout(()=>{ intro.style.display="none"; }, 1400);
 }
+
+/* click/tap */
+intro.addEventListener("click", hideIntro);
 
 /* swipe up on mobile */
 let touchStartY=0;
@@ -565,6 +542,13 @@ window.addEventListener("wheel",(e)=>{
     hideIntro();
   }
 },{passive:true});
+
+/* keyboard */
+window.addEventListener("keydown", (e)=>{
+  if(e.key === "Enter" || e.key === " "){
+    hideIntro();
+  }
+});
 </script>
 
 </body>
