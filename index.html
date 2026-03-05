@@ -230,11 +230,11 @@ body{
   position:absolute;
   inset:0;
   background:url("images/photo1.jpg") center/cover no-repeat;
-  filter:brightness(0.75);
+  filter:brightness(0.78);
   z-index:1;
 }
 
-/* Overlay for readability */
+/* Overlay gradient for text readability */
 .intro-grad{
   position:absolute;
   inset:0;
@@ -245,7 +245,7 @@ body{
 /* Content */
 .intro-content{
   position:relative;
-  z-index:4;
+  z-index:6;
   padding:18px;
   transition: opacity 500ms ease, transform 500ms ease;
 }
@@ -284,32 +284,71 @@ body{
 }
 .swipe small{ display:block; font-size:12px; opacity:0.9; }
 
-/* ✅ Curtain mask (not two photos) */
-.curtain-mask{
+/* ✅ GLASS CURTAINS (premium) */
+.glass-curtains{
   position:absolute;
   inset:0;
-  z-index:3;
+  z-index:4;
   pointer-events:none;
 }
-.curtain-mask::before,
-.curtain-mask::after{
-  content:"";
+
+.glass-panel{
   position:absolute;
   top:0;
   bottom:0;
   width:50%;
-  background:rgba(0,0,0,0.28);
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
+  overflow:hidden;
   transition: transform 900ms cubic-bezier(.2,.9,.2,1);
   will-change: transform;
+  /* glass base */
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.18),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
 }
-.curtain-mask::before{ left:0; }
-.curtain-mask::after{ right:0; }
+
+/* subtle highlight streak */
+.glass-panel::before{
+  content:"";
+  position:absolute;
+  inset:-40% -20%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.00) 35%,
+    rgba(255,255,255,0.22) 50%,
+    rgba(255,255,255,0.00) 65%
+  );
+  transform: rotate(6deg);
+  opacity:0.9;
+}
+
+/* slight darker edge */
+.glass-panel::after{
+  content:"";
+  position:absolute;
+  top:0; bottom:0;
+  width:18px;
+  opacity:0.65;
+}
+
+.glass-left{ left:0; border-right:none; }
+.glass-left::after{
+  right:0;
+  background: linear-gradient(to left, rgba(0,0,0,0.28), rgba(0,0,0,0));
+}
+
+.glass-right{ right:0; border-left:none; }
+.glass-right::after{
+  left:0;
+  background: linear-gradient(to right, rgba(0,0,0,0.28), rgba(0,0,0,0));
+}
 
 /* Opening animations */
-.intro.open .curtain-mask::before{ transform: translateX(-105%); }
-.intro.open .curtain-mask::after{ transform: translateX(105%); }
+.intro.open .glass-left{ transform: translateX(-105%); }
+.intro.open .glass-right{ transform: translateX(105%); }
 .intro.open .intro-content{ opacity:0; transform: translateY(-10px); }
 .intro.open{ opacity:0; transition: opacity 600ms ease 600ms; pointer-events:none; }
 
@@ -324,11 +363,15 @@ body{
 
 <body>
 
-<!-- ✅ Intro (one photo) -->
+<!-- ✅ Intro (one photo + glass curtains) -->
 <div class="intro" id="intro" role="button" aria-label="Відкрити запрошення">
   <div class="intro-photo"></div>
   <div class="intro-grad"></div>
-  <div class="curtain-mask"></div>
+
+  <div class="glass-curtains">
+    <div class="glass-panel glass-left"></div>
+    <div class="glass-panel glass-right"></div>
+  </div>
 
   <div class="intro-content">
     <h1 class="intro-title">Daria & Dmytro</h1>
@@ -337,8 +380,7 @@ body{
     <div class="swipe">
       <span>⬆</span>
       <div>
-        свайпніть вгору або торкніться
-        <small>на ПК: колесо / Enter</small>
+        <small>⬆Свайпніть в гору⬆</small>
       </div>
     </div>
   </div>
@@ -411,7 +453,7 @@ body{
       <h2>Підтвердіть вашу присутність</h2>
 
       <!-- ЗАМІНИ XXXXX НА СВІЙ Formspree ID -->
-      <form action="https://formspree.io/f/XXXXX" method="POST">
+      <form action="https://formspree.io/f/xeerjolk" method="POST">
         <input type="hidden" name="_subject" value="RSVP — Daria & Dmytro">
 
         <label>Імʼя та прізвище</label>
@@ -447,10 +489,8 @@ body{
 
 <script>
 function vibrateSoft(){
-  // ✅ Small vibration on supported mobile devices
-  if (navigator.vibrate) {
-    navigator.vibrate(18); // маленька вібрація
-  }
+  // Працює не у всіх браузерах (iOS Safari часто блокує), але на Android зазвичай ок
+  if (navigator.vibrate) navigator.vibrate(18);
 }
 
 function openMap(){
@@ -514,7 +554,7 @@ function hideIntro(){
   if(!intro || !mainCard) return;
   if(intro.classList.contains("open")) return;
 
-  vibrateSoft(); // ✅ vibrate when opening
+  vibrateSoft();
   intro.classList.add("open");
   mainCard.classList.add("revealed");
   setTimeout(()=>{ intro.style.display="none"; }, 1400);
