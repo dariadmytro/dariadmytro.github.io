@@ -7,46 +7,57 @@
 
 <style>
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: linear-gradient(135deg, #f8e1e7, #ffffff);
-    color: #333;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: linear-gradient(135deg, #f8e1e7, #ffffff);
+  color: #333;
 }
 
 .container {
-    padding: 40px 20px;
-    max-width: 800px;
-    margin: auto;
+  padding: 40px 20px;
+  max-width: 800px;
+  margin: auto;
 }
 
 h1 { font-size: 36px; }
 h2 { font-weight: normal; }
 
 .timer {
-    font-size: 28px;
-    margin-top: 20px;
-    font-weight: bold;
+  font-size: 28px;
+  margin-top: 20px;
+  font-weight: bold;
 }
 
 .map { margin-top: 25px; }
 .map iframe {
-    width: 100%;
-    height: 320px;
-    border: 0;
-    border-radius: 12px;
+  width: 100%;
+  height: 320px;
+  border: 0;
+  border-radius: 12px;
 }
 
 .open-map { margin-top: 12px; }
 
 .map-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    background: #b45a76;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #b45a76;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-wrap {
+  margin-top: 45px;
+}
+
+.form-wrap iframe {
+  width: 100%;
+  height: 760px; /* можна змінити якщо буде обрізати */
+  border: 0;
+  border-radius: 12px;
 }
 </style>
 </head>
@@ -54,31 +65,41 @@ h2 { font-weight: normal; }
 <body>
 <div class="container">
 
-<h1>💍 Daria & Dmytro</h1>
-<h2>01 серпня 2026 • 15:00</h2>
+  <h1>💍 Daria & Dmytro</h1>
+  <h2>01 серпня 2026 • 15:00</h2>
 
-<p>Ми будемо раді бачити вас на нашому весіллі ❤️</p>
+  <p>Ми будемо раді бачити вас на нашому весіллі ❤️</p>
 
-<p style="margin-top:25px; font-size:22px;">
-✨ До нашого весілля залишилось всього ✨
-</p>
+  <p style="margin-top:25px; font-size:22px;">
+    ✨ До нашого весілля залишилось всього ✨
+  </p>
 
-<div class="timer" id="countdown"></div>
+  <div class="timer" id="countdown"></div>
 
-<p style="margin-top:30px;">📍 Ресторан «RoseMarine», Кривий Ріг</p>
+  <p style="margin-top:30px;">📍 Ресторан «RoseMarine», Кривий Ріг</p>
 
-<div class="map">
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d944.540017657618!2d33.441354649990835!3d47.96418157398037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40db1f003f286b05%3A0xf99a77aa010cfefb!2z0KDQtdGB0YLQvtGA0LDQvSAi0JzQsNCz0LXQu9C70LDQvSIu!5e0!3m2!1sru!2sua!4v1772679365465!5m2!1sru!2sua"
-    allowfullscreen=""
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
-</div>
+  <div class="map">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d944.540017657618!2d33.441354649990835!3d47.96418157398037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40db1f003f286b05%3A0xf99a77aa010cfefb!2z0KDQtdGB0YLQvtGA0LDQvSAi0JzQsNCz0LXQu9C70LDQvSIu!5e0!3m2!1sru!2sua!4v1772679365465!5m2!1sru!2sua"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
 
-<div class="open-map">
-  <button class="map-btn" onclick="openMap()">Відкрити карту</button>
-</div>
+  <div class="open-map">
+    <button class="map-btn" onclick="openMap()">Відкрити карту</button>
+  </div>
+
+  <div class="form-wrap">
+    <h2 style="margin-top:50px;">Підтвердіть вашу присутність</h2>
+
+    <!-- ВАЖЛИВО: тут src — ТІЛЬКИ посилання -->
+    <iframe
+      src="https://docs.google.com/forms/d/e/1FAIpQLSecFkUhCzTr3y4e2FpFqtzMs-MckDG9JsWJWSwzh2mTQJ2BbQ/viewform?embedded=true">
+      Завантаження…
+    </iframe>
+  </div>
 
 </div>
 
@@ -90,7 +111,6 @@ function openMap() {
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   if (isIOS) {
-    // q + ll = зʼявляється пін з підписом
     window.open(`https://maps.apple.com/?q=${label}&ll=${lat},${lng}&z=17`);
   } else {
     window.open(`https://www.google.com/maps?q=${lat},${lng}`);
@@ -120,14 +140,3 @@ const countdown = setInterval(function() {
 
 </body>
 </html>
-<h2 style="margin-top:50px;">Підтвердіть вашу присутність</h2>
-
-<iframe 
-src="<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSecFkUhCzTr3y4e2FpFqtzMs-MckDG9JsWJWSwzh2mTQJ2BbQ/viewform?embedded=true" width="640" height="933" frameborder="0" marginheight="0" marginwidth="0">Загрузка…</iframe>"
-width="100%" 
-height="600" 
-frameborder="0"
-marginheight="0"
-marginwidth="0">
-Завантаження…
-</iframe>
