@@ -506,15 +506,18 @@ function hideIntro(){
 }
 
 let touchStartY=0;
+
 intro.addEventListener("touchstart",(e)=>{
-  touchStartY = e.touches[0].clientY;
+touchStartY = e.touches[0].clientY;
 },{passive:true});
 
 intro.addEventListener("touchmove",(e)=>{
-  const y = e.touches[0].clientY;
-  if(touchStartY - y > 50){
-    hideIntro();
-  }
+const y = e.touches[0].clientY;
+
+if(touchStartY - y > 50){
+hideIntro();
+}
+
 },{passive:true});
 
 /* Also allow tap to enter */
