@@ -58,7 +58,7 @@ body{
   border-radius:18px;
   box-shadow:0 10px 30px rgba(0,0,0,0.18);
   padding:26px 18px;
-  opacity:0;                 /* will fade in after intro */
+  opacity:0;                 /* fade in after intro */
   transform: translateY(18px);
   transition: opacity 800ms ease, transform 800ms ease;
 }
@@ -129,6 +129,7 @@ body{
   background:url("images/rings.png") no-repeat center;
   background-size:contain;
   opacity:0.95;
+  pointer-events:none;
 }
 
 .rsvp h2{
@@ -256,50 +257,89 @@ body{
   justify-content:center;
   text-align:center;
   color:#fff;
-  transition: opacity 700ms ease, transform 700ms ease;
 }
-.intro.hidden{
-  opacity:0;
-  transform: translateY(-10px);
-  pointer-events:none;
-}
-.intro-bg{
+
+/* Curtain reveal */
+.curtain{
   position:absolute;
   inset:0;
+  z-index:1;
+  overflow:hidden;
+}
+
+.curtain-panel{
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:50%;
   background:url("images/photo1.jpg") center/cover no-repeat;
   filter:brightness(0.72);
+  transition: transform 900ms cubic-bezier(.2,.9,.2,1);
 }
+
+.curtain-panel.left{
+  left:0;
+  background-position: 35% center;
+}
+
+.curtain-panel.right{
+  right:0;
+  background-position: 65% center;
+}
+
 .intro-grad{
   position:absolute;
   inset:0;
+  z-index:2;
   background: radial-gradient(circle at 50% 35%, rgba(0,0,0,0.15), rgba(0,0,0,0.55));
 }
+
 .intro-content{
   position:relative;
-  z-index:2;
+  z-index:3;
   padding: 18px;
+  transition: opacity 500ms ease, transform 500ms ease;
 }
+
 .intro-title{
   font-family:"Great Vibes", cursive;
   font-size:70px;
   margin:0;
 }
+
 .intro-date{
   margin-top:8px;
   font-size:18px;
   letter-spacing:1px;
   opacity:0.95;
 }
+
 .swipe{
   margin-top:38px;
   font-size:16px;
   opacity:0.95;
   animation: swipeMove 1.8s infinite;
 }
+
 @keyframes swipeMove{
   0%{transform:translateY(0)}
   50%{transform:translateY(-12px)}
   100%{transform:translateY(0)}
+}
+
+/* When opening */
+.intro.open .curtain-panel.left{ transform: translateX(-105%); }
+.intro.open .curtain-panel.right{ transform: translateX(105%); }
+
+.intro.open .intro-content{
+  opacity:0;
+  transform: translateY(-10px);
+}
+
+.intro.open{
+  opacity:0;
+  transition: opacity 600ms ease 600ms;
+  pointer-events:none;
 }
 
 @media (max-width:420px){
@@ -313,9 +353,12 @@ body{
 
 <body>
 
-<!-- Intro screen -->
+<!-- Intro screen with curtain -->
 <div class="intro" id="intro">
-  <div class="intro-bg"></div>
+  <div class="curtain">
+    <div class="curtain-panel left"></div>
+    <div class="curtain-panel right"></div>
+  </div>
   <div class="intro-grad"></div>
   <div class="intro-content">
     <h1 class="intro-title">Daria & Dmytro</h1>
@@ -492,46 +535,36 @@ setInterval(()=>{
   setBg(i);
 },7000);
 
-/* Intro swipe + smooth reveal */
+/* Intro swipe + curtain reveal (NO CLICK) */
 const intro = document.getElementById("intro");
 const mainCard = document.getElementById("mainCard");
 
 function hideIntro(){
-  if(intro.classList.contains("hidden")) return;
-  intro.classList.add("hidden");
-  setTimeout(()=>{
-    intro.style.display="none";
-  },750);
+  if(intro.classList.contains("open")) return;
+  intro.classList.add("open");
   mainCard.classList.add("revealed");
+  setTimeout(()=>{ intro.style.display="none"; }, 1400);
 }
 
+/* swipe up on mobile */
 let touchStartY=0;
-
 intro.addEventListener("touchstart",(e)=>{
-touchStartY = e.touches[0].clientY;
+  touchStartY = e.touches[0].clientY;
 },{passive:true});
 
 intro.addEventListener("touchmove",(e)=>{
-const y = e.touches[0].clientY;
-
-if(touchStartY - y > 50){
-hideIntro();
-}
-
+  const y = e.touches[0].clientY;
+  if(touchStartY - y > 50){
+    hideIntro();
+  }
 },{passive:true});
 
-/* Also allow tap to enter */
-intro.addEventListener("click", hideIntro);
-
-/* Reveal if user scrolls */
-window.addEventListener("scroll",()=>{
-  if(window.scrollY > 30) hideIntro();
-});
-
-/* If guest is on desktop without scrolling, show main after small delay (optional) */
-setTimeout(()=>{ /* keep intro until action; comment out if you don't want */
-  // mainCard.classList.add("revealed");
-}, 1200);
+/* scroll on desktop */
+window.addEventListener("wheel",(e)=>{
+  if(e.deltaY > 10){
+    hideIntro();
+  }
+},{passive:true});
 </script>
 
 </body>
