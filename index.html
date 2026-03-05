@@ -6,7 +6,6 @@
 <title>Дарія & Дмитро – Запрошення</title>
 
 <style>
-
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -21,13 +20,8 @@ body {
     margin: auto;
 }
 
-h1 {
-    font-size: 36px;
-}
-
-h2 {
-    font-weight: normal;
-}
+h1 { font-size: 36px; }
+h2 { font-weight: normal; }
 
 .timer {
     font-size: 28px;
@@ -35,10 +29,7 @@ h2 {
     font-weight: bold;
 }
 
-.map {
-    margin-top: 25px;
-}
-
+.map { margin-top: 25px; }
 .map iframe {
     width: 100%;
     height: 320px;
@@ -46,21 +37,21 @@ h2 {
     border-radius: 12px;
 }
 
-.open-map {
-    margin-top: 10px;
-}
+.open-map { margin-top: 12px; }
 
-.open-map a {
-    text-decoration: none;
-    color: #b45a76;
-    font-weight: bold;
+.map-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #b45a76;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
-
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
 <h1>💍 Daria & Dmytro</h1>
@@ -77,52 +68,52 @@ h2 {
 <p style="margin-top:30px;">📍 Ресторан «RoseMarine», Кривий Ріг</p>
 
 <div class="map">
-<iframe
-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d944.540017657618!2d33.441354649990835!3d47.96418157398037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40db1f003f286b05%3A0xf99a77aa010cfefb!2z0KDQtdGB0YLQvtGA0LDQvSAi0JzQsNCz0LXQu9C70LDQvSIu!5e0!3m2!1sru!2sua!4v1772679365465!5m2!1sru!2sua"
-allowfullscreen=""
-loading="lazy"
-referrerpolicy="no-referrer-when-downgrade">
-</iframe>
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d944.540017657618!2d33.441354649990835!3d47.96418157398037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40db1f003f286b05%3A0xf99a77aa010cfefb!2z0KDQtdGB0YLQvtGA0LDQvSAi0JzQsNCz0LXQu9C70LDQvSIu!5e0!3m2!1sru!2sua!4v1772679365465!5m2!1sru!2sua"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
 </div>
 
 <div class="open-map">
-  <a href="https://maps.apple.com/?q=RoseMarine&ll=47.96418157398037,33.441354649990835" target="_blank">
-    Відкрити в Apple Maps (iOS)
-  </a>
+  <button class="map-btn" onclick="openMap()">Відкрити карту</button>
 </div>
 
-<div class="open-map">
-  <a href="https://www.google.com/maps?q=47.96418157398037,33.441354649990835" target="_blank">
-    Відкрити в Google Maps
-  </a>
-</div>
 </div>
 
 <script>
+function openMap() {
+  const lat = "47.96418157398037";
+  const lng = "33.441354649990835";
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+  if (isIOS) {
+    window.open(`https://maps.apple.com/?ll=${lat},${lng}`);
+  } else {
+    window.open(`https://www.google.com/maps?q=${lat},${lng}`);
+  }
+}
 
 const weddingDate = new Date("August 1, 2026 15:00:00").getTime();
 
 const countdown = setInterval(function() {
+  const now = new Date().getTime();
+  const distance = weddingDate - now;
 
-const now = new Date().getTime();
-const distance = weddingDate - now;
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  document.getElementById("countdown").innerHTML =
+    days + " днів " + hours + " год " + minutes + " хв " + seconds + " сек ";
 
-document.getElementById("countdown").innerHTML =
-days + " днів " + hours + " год " +
-minutes + " хв " + seconds + " сек ";
-
-if (distance < 0) {
-clearInterval(countdown);
-document.getElementById("countdown").innerHTML = "💍 Сьогодні наше весілля!";
-}
-
+  if (distance < 0) {
+    clearInterval(countdown);
+    document.getElementById("countdown").innerHTML = "💍 Сьогодні наше весілля!";
+  }
 }, 1000);
-
 </script>
 
 </body>
