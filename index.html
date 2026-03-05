@@ -29,10 +29,7 @@
     font-weight:bold;
   }
 
-  .map{
-    margin-top:25px;
-  }
-
+  .map{ margin-top:25px; }
   .map iframe{
     width:100%;
     height:320px;
@@ -40,10 +37,7 @@
     border-radius:12px;
   }
 
-  .open-map{
-    margin-top:12px;
-  }
-
+  .open-map{ margin-top:12px; }
   .map-btn{
     padding:10px 20px;
     border:none;
@@ -70,14 +64,13 @@
     font-weight:700;
   }
 
-  .rsvp label{
+  .rsvp label.title{
     display:block;
-    margin-top:12px;
+    margin-top:14px;
     font-weight:700;
   }
 
-  .rsvp input,
-  .rsvp select{
+  .rsvp input[type="text"]{
     width:100%;
     padding:10px;
     margin-top:6px;
@@ -85,6 +78,33 @@
     border-radius:8px;
     font-size:14px;
     box-sizing:border-box;
+  }
+
+  .options{
+    margin-top:8px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .option{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 12px;
+    border:1px solid #eee;
+    border-radius:10px;
+    cursor:pointer;
+    user-select:none;
+  }
+
+  .option input{
+    transform: scale(1.15);
+    cursor:pointer;
+  }
+
+  .option span{
+    font-size:14px;
   }
 
   .rsvp button{
@@ -97,10 +117,6 @@
     color:white;
     font-size:16px;
     cursor:pointer;
-  }
-
-  .rsvp button:active{
-    transform: translateY(1px);
   }
 
   .note{
@@ -143,31 +159,56 @@
     <button class="map-btn" onclick="openMap()">Відкрити карту</button>
   </div>
 
-  <!-- RSVP FORM (beautiful on-site) -->
+  <!-- RSVP FORM -->
   <div class="rsvp" id="rsvp">
     <h2>Підтвердіть вашу присутність</h2>
 
     <!-- ЗАМІНИ XXXXX НА СВІЙ Formspree ID -->
     <form action="https://formspree.io/f/XXXXX" method="POST">
-      <label>Імʼя та прізвище</label>
+
+      <label class="title">Імʼя та прізвище</label>
       <input type="text" name="name" required />
 
-      <label>Чи будете присутні на весіллі?</label>
-      <select name="attendance" required>
-        <option value="">Оберіть</option>
-        <option value="Так, буду">Так, буду</option>
-        <option value="На жаль, не зможу">На жаль, не зможу</option>
-      </select>
+      <label class="title">Чи будете присутні на весіллі?</label>
+      <div class="options">
+        <label class="option">
+          <input type="radio" name="attendance" value="Так, буду" required />
+          <span>Так, буду</span>
+        </label>
 
-      <label>Який алкоголь ви оберете?</label>
-      <select name="alcohol">
-        <option value="">Оберіть</option>
-        <option value="Вино">Вино</option>
-        <option value="Горілка">Горілка</option>
-        <option value="Коньяк">Коньяк</option>
-        <option value="Шампанське">Шампанське</option>
-        <option value="Не вживаю алкоголь">Не вживаю алкоголь</option>
-      </select>
+        <label class="option">
+          <input type="radio" name="attendance" value="На жаль, не зможу" />
+          <span>На жаль, не зможу</span>
+        </label>
+      </div>
+
+      <label class="title">Який алкоголь ви оберете? (можна декілька)</label>
+      <div class="options">
+        <label class="option">
+          <input type="checkbox" name="alcohol[]" value="Вино" />
+          <span>Вино</span>
+        </label>
+
+        <label class="option">
+          <input type="checkbox" name="alcohol[]" value="Горілка" />
+          <span>Горілка</span>
+        </label>
+
+        <label class="option">
+          <input type="checkbox" name="alcohol[]" value="Коньяк" />
+          <span>Коньяк</span>
+        </label>
+
+        <label class="option">
+          <input type="checkbox" name="alcohol[]" value="Шампанське" />
+          <span>Шампанське</span>
+        </label>
+
+        <label class="option">
+          <input type="checkbox" name="alcohol[]" value="Не вживаю алкоголь" />
+          <span>Не вживаю алкоголь</span>
+        </label>
+      </div>
 
       <button type="submit">Підтвердити</button>
       <div class="note">Після відправки відповідь буде збережена.</div>
