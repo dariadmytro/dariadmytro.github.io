@@ -214,10 +214,17 @@ h2{
   align-items:center;
   justify-content:center;
   font-size:24px;
-  color:red;
-  opacity:0.9;
+  color:#ff3b3b;
+  animation: heartbeat 1.6s infinite;
   z-index:1;
 }
+
+  @keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.15); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 </style>
 </head>
 
