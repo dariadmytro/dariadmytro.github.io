@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
 --accent:#b45a76;
 --glass1:rgba(255,255,255,0.18);
@@ -27,7 +26,6 @@ text-align:center;
 }
 
 /* background slideshow */
-
 .bg{
 position:fixed;
 inset:0;
@@ -38,7 +36,6 @@ background-repeat:no-repeat;
 transform:scale(1.1);
 transition:opacity 1s ease;
 }
-
 .bg-overlay{
 position:fixed;
 inset:0;
@@ -47,7 +44,6 @@ background:rgba(0,0,0,0.35);
 }
 
 /* layout */
-
 .container{
 padding:30px 16px;
 max-width:850px;
@@ -65,24 +61,18 @@ opacity:0;
 transform:translateY(18px);
 transition:opacity 800ms ease,transform 800ms ease;
 }
-
 .card.revealed{
 opacity:1;
 transform:translateY(0);
 }
 
 /* titles */
-
 .hero-title{
 font-family:"Great Vibes",cursive;
 font-size:54px;
 margin:0;
 }
-
-.hero-sub{
-margin-top:6px;
-}
-
+.hero-sub{margin-top:6px;}
 .timer{
 font-size:28px;
 margin-top:14px;
@@ -90,14 +80,12 @@ font-weight:bold;
 }
 
 /* map */
-
 .map iframe{
 width:100%;
 height:320px;
 border:0;
 border-radius:12px;
 }
-
 .map-btn{
 margin-top:12px;
 padding:10px 20px;
@@ -110,7 +98,6 @@ cursor:pointer;
 }
 
 /* RSVP */
-
 .rsvp{
 margin-top:30px;
 padding:20px;
@@ -120,7 +107,6 @@ border-radius:12px;
 text-align:left;
 position:relative;
 }
-
 .rsvp::before{
 content:"";
 position:absolute;
@@ -131,13 +117,11 @@ height:42px;
 background:url("images/rings.png") no-repeat center;
 background-size:contain;
 }
-
 .rsvp h2{
 text-align:center;
 margin:0 0 12px;
 padding-left:50px;
 }
-
 .rsvp input[type="text"]{
 width:100%;
 padding:10px;
@@ -145,7 +129,6 @@ margin-top:6px;
 border-radius:10px;
 border:1px solid #ddd;
 }
-
 .option{
 display:flex;
 align-items:center;
@@ -155,7 +138,6 @@ margin-top:6px;
 background:rgba(255,255,255,0.1);
 border-radius:10px;
 }
-
 .rsvp button{
 margin-top:16px;
 width:100%;
@@ -167,9 +149,24 @@ color:white;
 font-size:16px;
 cursor:pointer;
 }
+.rsvp button:disabled{
+opacity:0.7;
+cursor:not-allowed;
+}
+
+/* success box */
+.success{
+display:none;
+margin-top:14px;
+padding:14px;
+border-radius:12px;
+background:rgba(255,255,255,0.14);
+border:1px solid rgba(255,255,255,0.25);
+text-align:center;
+}
+.success.show{display:block;}
 
 /* calendar */
-
 .mini-cal{
 max-width:340px;
 margin:18px auto 10px;
@@ -177,23 +174,17 @@ padding:14px;
 background:rgba(255,255,255,0.10);
 border-radius:16px;
 }
-
 .cal-grid{
 display:grid;
 grid-template-columns:repeat(7,1fr);
 gap:6px;
 }
-
 .day{
 padding:8px 0;
 border-radius:12px;
 background:rgba(255,255,255,0.08);
 }
-
-.day.heart{
-position:relative;
-}
-
+.day.heart{position:relative;}
 .day.heart::after{
 content:"❤";
 position:absolute;
@@ -204,7 +195,6 @@ justify-content:center;
 color:#ff3b3b;
 animation:heartbeat 1.6s infinite;
 }
-
 @keyframes heartbeat{
 0%{transform:scale(1)}
 25%{transform:scale(1.15)}
@@ -214,7 +204,6 @@ animation:heartbeat 1.6s infinite;
 }
 
 /* intro curtain */
-
 .intro{
 position:fixed;
 inset:0;
@@ -225,75 +214,47 @@ align-items:center;
 justify-content:center;
 color:white;
 }
-
-.curtain{
-position:absolute;
-inset:0;
-}
-
+.curtain{position:absolute;inset:0;}
 .curtain-panel{
-position:absolute;
-top:0;
-bottom:0;
-width:50%;
+position:absolute;top:0;bottom:0;width:50%;
 background-image:url("images/photo1.jpg");
 background-repeat:no-repeat;
 background-size:200% 100%;
 transition:transform 900ms cubic-bezier(.2,.9,.2,1);
 }
-
-.curtain-panel.left{
-left:0;
-background-position:0% center;
-}
-
-.curtain-panel.right{
-right:0;
-background-position:100% center;
-}
-
-.intro.open .curtain-panel.left{
-transform:translateX(-105%);
-}
-
-.intro.open .curtain-panel.right{
-transform:translateX(105%);
-}
+.curtain-panel.left{left:0;background-position:0% center;}
+.curtain-panel.right{right:0;background-position:100% center;}
+.intro.open .curtain-panel.left{transform:translateX(-105%);}
+.intro.open .curtain-panel.right{transform:translateX(105%);}
 
 .intro-title{
 font-family:"Great Vibes",cursive;
 font-size:70px;
 }
-
 .swipe{
 margin-top:30px;
 animation:swipeMove 1.8s infinite;
 }
-
 @keyframes swipeMove{
 0%{transform:translateY(0)}
 50%{transform:translateY(-12px)}
 100%{transform:translateY(0)}
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="intro" id="intro">
-
-<div class="curtain">
-<div class="curtain-panel left"></div>
-<div class="curtain-panel right"></div>
-</div>
-
-<div>
-<h1 class="intro-title">Daria & Dmytro</h1>
-<p>01 серпня 2026</p>
-<div class="swipe">⬆ свайпніть вгору</div>
-</div>
-
+  <div class="curtain">
+    <div class="curtain-panel left"></div>
+    <div class="curtain-panel right"></div>
+  </div>
+  <div>
+    <h1 class="intro-title">Daria & Dmytro</h1>
+    <p>01 серпня 2026</p>
+    <div class="swipe">⬆ свайпніть вгору</div>
+  </div>
 </div>
 
 <div class="bg" id="bg"></div>
@@ -308,11 +269,11 @@ animation:swipeMove 1.8s infinite;
 <p>Ми будемо раді бачити вас на нашому весіллі ❤️</p>
 
 <div class="mini-cal">
-<div class="cal-grid">
-<div></div><div></div><div></div><div></div><div></div>
-<div class="day heart">1</div>
-<div class="day">2</div>
-</div>
+  <div class="cal-grid">
+    <div></div><div></div><div></div><div></div><div></div>
+    <div class="day heart">1</div>
+    <div class="day">2</div>
+  </div>
 </div>
 
 <div class="timer" id="countdown"></div>
@@ -320,7 +281,7 @@ animation:swipeMove 1.8s infinite;
 <p>📍 Ресторан «RoseMarine», Кривий Ріг</p>
 
 <div class="map">
-<iframe src="https://www.google.com/maps?q=47.96447237791111,33.441974116157695&z=17&output=embed"></iframe>
+  <iframe src="https://www.google.com/maps?q=47.96447237791111,33.441974116157695&z=17&output=embed"></iframe>
 </div>
 
 <button class="map-btn" onclick="openMap()">Відкрити карту</button>
@@ -328,24 +289,25 @@ animation:swipeMove 1.8s infinite;
 <div class="rsvp">
 <h2>Підтвердіть вашу присутність</h2>
 
-<form action="https://formspree.io/f/xeerjolk" method="POST">
+<form id="rsvpForm" action="https://formspree.io/f/xeerjolk" method="POST">
 
 <label>Імʼя та прізвище</label>
 <input type="text" name="name" required>
 
 <label>Чи будете присутні?</label>
-
-<label class="option"><input type="radio" name="attendance" value="Буду">Буду</label>
+<label class="option"><input type="radio" name="attendance" value="Буду" required>Буду</label>
 <label class="option"><input type="radio" name="attendance" value="Не зможу">Не зможу</label>
 
-<label>Який алкоголь оберете?</label>
-
+<label>Який алкоголь оберете? (можна декілька)</label>
 <label class="option"><input type="checkbox" name="alcohol[]" value="Вино">Вино</label>
 <label class="option"><input type="checkbox" name="alcohol[]" value="Горілка">Горілка</label>
 <label class="option"><input type="checkbox" name="alcohol[]" value="Коньяк">Коньяк</label>
 <label class="option"><input type="checkbox" name="alcohol[]" value="Шампанське">Шампанське</label>
 
-<button type="submit">Підтвердити</button>
+<button id="sendBtn" type="submit">Підтвердити</button>
+
+<div class="success" id="successBox">Дякуємо! Ми отримали вашу відповідь ❤️</div>
+<div class="success" id="errorBox">Щось пішло не так 😕 Спробуйте ще раз.</div>
 
 </form>
 </div>
@@ -354,7 +316,7 @@ animation:swipeMove 1.8s infinite;
 </div>
 
 <script>
-
+/* intro */
 const intro=document.getElementById("intro");
 const mainCard=document.getElementById("mainCard");
 
@@ -365,50 +327,91 @@ setTimeout(()=>{intro.style.display="none"},1200);
 }
 
 let startY=0;
+intro.addEventListener("touchstart",e=>{ startY=e.touches[0].clientY; }, {passive:true});
+intro.addEventListener("touchmove",e=>{ if(startY-e.touches[0].clientY>50) hideIntro(); }, {passive:true});
+window.addEventListener("wheel",e=>{ if(e.deltaY>10) hideIntro(); }, {passive:true});
 
-intro.addEventListener("touchstart",e=>{
-startY=e.touches[0].clientY;
-});
-
-intro.addEventListener("touchmove",e=>{
-if(startY-e.touches[0].clientY>50) hideIntro();
-});
-
-window.addEventListener("wheel",e=>{
-if(e.deltaY>10) hideIntro();
-});
-
+/* map */
 function openMap(){
-window.open("https://www.google.com/maps?q=47.96447237791111,33.441974116157695");
+  const lat="47.96447237791111";
+  const lng="33.441974116157695";
+  const label=encodeURIComponent("RoseMarine, Кривий Ріг");
+  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+
+  if(isIOS){
+    window.open(`https://maps.apple.com/?q=${label}&ll=${lat},${lng}&z=17`);
+  }else{
+    window.open(`https://www.google.com/maps?q=${lat},${lng}`);
+  }
 }
 
+/* countdown */
 const weddingDate=new Date("August 1, 2026 15:00:00").getTime();
-
 setInterval(()=>{
-const now=new Date().getTime();
-const d=weddingDate-now;
+  const now=new Date().getTime();
+  const d=weddingDate-now;
 
-const days=Math.floor(d/(1000*60*60*24));
-const hours=Math.floor((d%(1000*60*60*24))/(1000*60*60));
-const minutes=Math.floor((d%(1000*60*60))/(1000*60));
-const seconds=Math.floor((d%(1000*60))/1000);
+  const days=Math.floor(d/(1000*60*60*24));
+  const hours=Math.floor((d%(1000*60*60*24))/(1000*60*60));
+  const minutes=Math.floor((d%(1000*60*60))/(1000*60));
+  const seconds=Math.floor((d%(1000*60))/1000);
 
-document.getElementById("countdown").innerHTML=
-days+" днів "+hours+" год "+minutes+" хв "+seconds+" сек ";
+  document.getElementById("countdown").innerHTML =
+    d<0 ? "💍 Сьогодні наше весілля!" : (days+" днів "+hours+" год "+minutes+" хв "+seconds+" сек ");
 },1000);
 
+/* background photos */
 const photos=["images/photo1.jpg","images/photo2.jpg","images/photo3.jpg"];
 const bg=document.getElementById("bg");
 let i=0;
 
 function setBg(){
-bg.style.backgroundImage=`url(${photos[i]})`;
-i=(i+1)%photos.length;
+  bg.style.opacity=0;
+  setTimeout(()=>{
+    bg.style.backgroundImage=`url('${photos[i]}')`;
+    bg.style.opacity=1;
+    i=(i+1)%photos.length;
+  },300);
 }
-
 setBg();
 setInterval(setBg,7000);
 
+/* RSVP submit (no redirect) */
+const form = document.getElementById("rsvpForm");
+const sendBtn = document.getElementById("sendBtn");
+const successBox = document.getElementById("successBox");
+const errorBox = document.getElementById("errorBox");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  successBox.classList.remove("show");
+  errorBox.classList.remove("show");
+
+  sendBtn.disabled = true;
+  sendBtn.textContent = "Відправляємо...";
+
+  try{
+    const formData = new FormData(form);
+
+    const res = await fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: { "Accept": "application/json" }
+    });
+
+    if(res.ok){
+      successBox.classList.add("show");
+      form.reset();
+    }else{
+      errorBox.classList.add("show");
+    }
+  }catch(err){
+    errorBox.classList.add("show");
+  }finally{
+    sendBtn.disabled = false;
+    sendBtn.textContent = "Підтвердити";
+  }
+});
 </script>
 
 </body>
