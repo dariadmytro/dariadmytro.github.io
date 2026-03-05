@@ -1,17 +1,76 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>Daria & Dmytro — Запрошення</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daria & Dmytro – Запрошення</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #f8e1e7, #ffffff);
+    color: #333;
+}
+
+.container {
+    padding: 40px 20px;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-weight: normal;
+}
+
+.timer {
+    font-size: 28px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+</style>
 </head>
+
 <body>
-  <h1>💍 Daria & Dmytro</h1>
-  <h2>01 серпня 2026 • 15:00</h2>
 
-  <p>Ми будемо раді бачити вас на нашому весіллі 💖</p>
+<div class="container">
+    <h1>💍 Daria & Dmytro</h1>
+    <h2>01 серпня 2026 • 15:00</h2>
 
-  <p>📍 Ресторан «Магелан», Кривий Ріг</p>
+    <p>Ми будемо раді бачити вас на нашому весіллі ❤️</p>
 
-  <p>⏳ Таймер, карта, форма та фото — скоро тут зʼявляться</p>
+    <div class="timer" id="countdown"></div>
+
+    <p>📍 Ресторан «Магелан», Кривий Ріг</p>
+</div>
+
+<script>
+const weddingDate = new Date("August 1, 2026 15:00:00").getTime();
+
+const countdown = setInterval(function() {
+
+    const now = new Date().getTime();
+    const distance = weddingDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML =
+        days + " днів " + hours + " год " +
+        minutes + " хв " + seconds + " сек ";
+
+    if (distance < 0) {
+        clearInterval(countdown);
+        document.getElementById("countdown").innerHTML = "💍 Сьогодні наше весілля!";
+    }
+
+}, 1000);
+</script>
+
 </body>
 </html>
