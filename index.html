@@ -1054,7 +1054,82 @@
                     font-size: 22px;
                 }
             }
-        </style>
+        
+/* ===== RSVP PREMIUM: Attendance + Drinks (stable, no :has) ===== */
+.pill-group{
+    display:flex;
+    gap:12px;
+    width:100%;
+    margin-top:10px;
+}
+@media (max-width: 420px){
+    .pill-group{ flex-direction:column; }
+}
+.pill{ flex:1; margin:0; position:relative; }
+.pill input{ position:absolute; opacity:0; pointer-events:none; }
+
+.pill span{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    min-height:52px;
+    padding:12px 14px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.22);
+    background:rgba(255,255,255,0.08);
+    color:rgba(255,255,255,0.92);
+    text-align:center;
+    line-height:1.2;
+    cursor:pointer;
+    transition: transform .18s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+    box-sizing:border-box;
+}
+.pill span:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+    border-color: rgba(255,255,255,0.38);
+}
+.pill input:checked + span{
+    background:rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.44);
+}
+
+/* Alcohol chips */
+.chip-group{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:8px;
+}
+.chip{ position:relative; margin:0; }
+.chip input{ position:absolute; opacity:0; pointer-events:none; }
+
+.chip span{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px 14px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.08);
+    color:rgba(255,255,255,0.90);
+    cursor:pointer;
+    transition: transform .18s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+    user-select:none;
+    font-size:13px;
+    line-height:1.15;
+}
+.chip span:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.10);
+    border-color: rgba(255,255,255,0.32);
+}
+.chip input:checked + span{
+    background:rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.44);
+}
+</style>
     </head>
     <body>
         <div class="envelope-overlay" id="envelope">
@@ -1451,59 +1526,53 @@
                         <div class="form-group">
                             <label class="form-label"
                                 >Чи плануєте бути на весіллі?</label
-                            ><select class="form-select" id="guestAttend" name="attend">
-                                <option value="" disabled selected>
-                                    Оберіть відповідь
-                                </option>
-                                <option value="yes">
-                                    Так, із задоволенням!
-                                </option>
-                                <option value="no">На жаль, не зможу</option>
-                            </select>
+                            ><div class="pill-group" role="radiogroup" aria-label="Присутність">
+    <label class="pill">
+        <input type="radio" name="attend" value="yes" required>
+        <span>Так, буду</span>
+    </label>
+
+    <label class="pill">
+        <input type="radio" name="attend" value="no">
+        <span>Не зможу</span>
+    </label>
+</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label"
                                 >Побажання по алкогольним напоям</label
                             >
-                            <div class="checkbox-group">
-                                <label class="checkbox-label"
-                                    ><input
-                                        type="checkbox" name="drinks[]"
-                                        value="champagne" /><span
-                                        >Шампанське</span
-                                    >
-                                    <div class="checkmark-custom"></div
-                                ></label>
-                                <label class="checkbox-label"
-                                    ><input type="checkbox" name="drinks[]" value="wine" /><span
-                                        >Вино</span
-                                    >
-                                    <div class="checkmark-custom"></div
-                                ></label>
-                                <label class="checkbox-label"
-                                    ><input
-                                        type="checkbox" name="drinks[]"
-                                        value="whiskey" /><span>Віскі</span>
-                                    <div class="checkmark-custom"></div
-                                ></label>
-                                <label class="checkbox-label"
-                                    ><input
-                                        type="checkbox" name="drinks[]"
-                                        value="vodka" /><span>Горілка</span>
-                                    <div class="checkmark-custom"></div
-                                ></label>
-                                <label class="checkbox-label"
-                                    ><input
-                                        type="checkbox" name="drinks[]"
-                                        value="cognac" /><span>Коньяк</span>
-                                    <div class="checkmark-custom"></div
-                                ></label>
-                                <label class="checkbox-label"
-                                    ><input
-                                        type="checkbox" name="drinks[]"
-                                        value="cognac" /><span>Не вживаю</span>
-                                    <div class="checkmark-custom"></div
-                                ></label></div>
+                            <div class="chip-group" aria-label="Алкоголь">
+    <label class="chip">
+        <input type="checkbox" name="drinks[]" value="champagne">
+        <span>🥂 Шампанське</span>
+    </label>
+
+    <label class="chip">
+        <input type="checkbox" name="drinks[]" value="wine">
+        <span>🍷 Вино</span>
+    </label>
+
+    <label class="chip">
+        <input type="checkbox" name="drinks[]" value="whiskey">
+        <span>🥃 Віскі</span>
+    </label>
+
+    <label class="chip">
+        <input type="checkbox" name="drinks[]" value="vodka">
+        <span>🍸 Горілка</span>
+    </label>
+
+    <label class="chip">
+        <input type="checkbox" name="drinks[]" value="cognac">
+        <span>🟤 Коньяк</span>
+    </label>
+
+    <label class="chip chip--none">
+        <input type="checkbox" name="drinks[]" value="none">
+        <span>🚫 Не вживаю</span>
+    </label>
+</div>
                         <div class="form-group">
                             <label class="form-label"
                                 >Побажання або алергії на їжу</label
@@ -1697,6 +1766,22 @@ function openEnvelope(){
                     alert("Не вдалося відправити. Спробуйте ще раз 🙏");
                 }
             }
-        </script>
+        
+
+// RSVP: "Не вживаю" робить вибір напоїв взаємовиключним
+(() => {
+    const none = document.querySelector('input[name="drinks[]"][value="none"]');
+    if (!none) return;
+    const all = Array.from(document.querySelectorAll('input[name="drinks[]"]')).filter(i => i !== none);
+
+    none.addEventListener("change", () => {
+        if (none.checked) all.forEach(i => (i.checked = false));
+    });
+
+    all.forEach(i => i.addEventListener("change", () => {
+        if (i.checked) none.checked = false;
+    }));
+})();
+</script>
     </body>
 </html>
