@@ -59,7 +59,7 @@ h2{
 
 .timer{
   font-size:28px;
-  margin-top:20px;
+  margin-top:14px;
   font-weight:bold;
 }
 
@@ -150,72 +150,72 @@ h2{
   cursor:pointer;
 }
 
-  /* Mini calendar */
+/* Mini calendar */
 .mini-cal{
-  max-width: 340px;
-  margin: 18px auto 10px;
-  padding: 14px 14px 12px;
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.22);
-  border-radius: 16px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+  max-width:340px;
+  margin:18px auto 10px;
+  padding:14px 14px 12px;
+  background:rgba(255,255,255,0.10);
+  border:1px solid rgba(255,255,255,0.22);
+  border-radius:16px;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 8px 22px rgba(0,0,0,0.12);
 }
 
 .cal-title{
-  font-weight: 700;
-  margin-bottom: 10px;
-  letter-spacing: 0.5px;
+  font-weight:700;
+  margin-bottom:10px;
+  letter-spacing:0.5px;
 }
 
 .cal-grid{
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  display:grid;
+  grid-template-columns:repeat(7, 1fr);
+  gap:6px;
 }
 
 .dow{
-  font-size: 12px;
-  opacity: 0.8;
-  padding: 6px 0;
+  font-size:12px;
+  opacity:0.8;
+  padding:6px 0;
 }
 
 .day{
-  padding: 9px 0;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  font-size: 14px;
+  padding:9px 0;
+  border-radius:12px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12);
+  font-size:14px;
 }
 
 .day.empty{
-  background: transparent;
-  border: none;
+  background:transparent;
+  border:none;
 }
 
 .day.heart{
-  position: relative;
-  font-weight: 800;
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.28);
+  position:relative;
+  font-weight:800;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.28);
 }
 
 .day.heart span{
-  position: relative;
-  z-index: 2;
+  position:relative;
+  z-index:2;
 }
 
 .day.heart::after{
-  content: "❤";
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  opacity: 0.35; /* “обведено” сердечком */
-  z-index: 1;
+  content:"❤";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  opacity:0.35;
+  z-index:1;
 }
 </style>
 </head>
@@ -233,9 +233,42 @@ h2{
 
     <p>Ми будемо раді бачити вас на нашому весіллі ❤️</p>
 
-    <p style="margin-top:20px;font-size:20px;">
+    <p style="margin-top:20px;font-size:20px;margin-bottom:0;">
       ✨ До нашого весілля залишилось всього ✨
     </p>
+
+    <!-- Calendar (August 2026) -->
+    <div class="mini-cal">
+      <div class="cal-title">Серпень 2026</div>
+
+      <div class="cal-grid">
+        <div class="dow">Пн</div><div class="dow">Вт</div><div class="dow">Ср</div>
+        <div class="dow">Чт</div><div class="dow">Пт</div><div class="dow">Сб</div><div class="dow">Нд</div>
+      </div>
+
+      <div class="cal-grid" style="margin-top:6px;">
+        <!-- Серпень 2026 починається в суботу -->
+        <div class="day empty"></div><div class="day empty"></div><div class="day empty"></div>
+        <div class="day empty"></div><div class="day empty"></div>
+        <div class="day heart"><span>1</span></div>
+        <div class="day">2</div>
+
+        <div class="day">3</div><div class="day">4</div><div class="day">5</div>
+        <div class="day">6</div><div class="day">7</div><div class="day">8</div><div class="day">9</div>
+
+        <div class="day">10</div><div class="day">11</div><div class="day">12</div>
+        <div class="day">13</div><div class="day">14</div><div class="day">15</div><div class="day">16</div>
+
+        <div class="day">17</div><div class="day">18</div><div class="day">19</div>
+        <div class="day">20</div><div class="day">21</div><div class="day">22</div><div class="day">23</div>
+
+        <div class="day">24</div><div class="day">25</div><div class="day">26</div>
+        <div class="day">27</div><div class="day">28</div><div class="day">29</div><div class="day">30</div>
+
+        <div class="day">31</div><div class="day empty"></div><div class="day empty"></div>
+        <div class="day empty"></div><div class="day empty"></div><div class="day empty"></div><div class="day empty"></div>
+      </div>
+    </div>
 
     <div class="timer" id="countdown"></div>
 
