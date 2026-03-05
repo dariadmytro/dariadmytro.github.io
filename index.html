@@ -5,196 +5,204 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Дарія & Дмитро – Запрошення</title>
 
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
-  --accent:#b45a76;
-  --glass1: rgba(255,255,255,0.18);
-  --glass2: rgba(255,255,255,0.12);
+--accent:#b45a76;
+--glass1:rgba(255,255,255,0.18);
+--glass2:rgba(255,255,255,0.12);
 }
 
-*{ box-sizing:border-box; }
+*{box-sizing:border-box;}
 
 body{
-  margin:0;
-  font-family:"Cormorant Garamond", serif;
-  color:#1f1f1f;
-  text-align:center;
+margin:0;
+font-family:"Montserrat",Arial,sans-serif;
+color:#1f1f1f;
+text-align:center;
 }
 
 /* background slideshow */
+
 .bg{
-  position:fixed;
-  inset:0;
-  z-index:-2;
-  background-position:center;
-  background-size:cover;
-  background-repeat:no-repeat;
-  transform:scale(1.1);
-  transition:opacity 1s ease;
+position:fixed;
+inset:0;
+z-index:-2;
+background-position:center;
+background-size:cover;
+background-repeat:no-repeat;
+transform:scale(1.1);
+transition:opacity 1s ease;
 }
 
 .bg-overlay{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  background:rgba(0,0,0,0.35);
+position:fixed;
+inset:0;
+z-index:-1;
+background:rgba(0,0,0,0.35);
 }
 
+/* layout */
+
 .container{
-  padding:30px 16px;
-  max-width:850px;
-  margin:auto;
+padding:30px 16px;
+max-width:850px;
+margin:auto;
 }
 
 .card{
-  background:var(--glass1);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,0.25);
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.18);
-  padding:26px 18px;
-  opacity:0;
-  transform:translateY(18px);
-  transition:opacity 800ms ease, transform 800ms ease;
+background:var(--glass1);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,0.25);
+border-radius:18px;
+box-shadow:0 10px 30px rgba(0,0,0,0.18);
+padding:26px 18px;
+opacity:0;
+transform:translateY(18px);
+transition:opacity 800ms ease,transform 800ms ease;
 }
 
 .card.revealed{
-  opacity:1;
-  transform:translateY(0);
+opacity:1;
+transform:translateY(0);
 }
 
+/* titles */
+
 .hero-title{
-  font-family:"Allura", cursive;
-  font-size:72px;
-  margin:0;
+font-family:"Great Vibes",cursive;
+font-size:54px;
+margin:0;
 }
 
 .hero-sub{
-  font-size:20px;
-  margin-top:5px;
+margin-top:6px;
 }
 
 .timer{
-  font-size:28px;
-  margin-top:14px;
-  font-weight:600;
+font-size:28px;
+margin-top:14px;
+font-weight:bold;
 }
 
 /* map */
+
 .map iframe{
-  width:100%;
-  height:320px;
-  border-radius:12px;
-  border:0;
+width:100%;
+height:320px;
+border:0;
+border-radius:12px;
 }
 
 .map-btn{
-  margin-top:12px;
-  padding:10px 20px;
-  border:none;
-  border-radius:10px;
-  background:var(--accent);
-  color:white;
-  font-size:16px;
-  cursor:pointer;
+margin-top:12px;
+padding:10px 20px;
+border:none;
+border-radius:10px;
+background:var(--accent);
+color:white;
+font-size:16px;
+cursor:pointer;
 }
 
 /* RSVP */
+
 .rsvp{
-  margin-top:30px;
-  padding:20px;
-  background:var(--glass2);
-  border:1px solid rgba(255,255,255,0.25);
-  border-radius:12px;
-  text-align:left;
-  position:relative;
+margin-top:30px;
+padding:20px;
+background:var(--glass2);
+border:1px solid rgba(255,255,255,0.25);
+border-radius:12px;
+text-align:left;
+position:relative;
 }
 
 .rsvp::before{
-  content:"";
-  position:absolute;
-  top:10px;
-  left:10px;
-  width:42px;
-  height:42px;
-  background:url("images/rings.png") no-repeat center;
-  background-size:contain;
+content:"";
+position:absolute;
+top:10px;
+left:10px;
+width:42px;
+height:42px;
+background:url("images/rings.png") no-repeat center;
+background-size:contain;
 }
 
 .rsvp h2{
-  text-align:center;
-  margin:0 0 12px;
-  padding-left:50px;
+text-align:center;
+margin:0 0 12px;
+padding-left:50px;
 }
 
 .rsvp input[type="text"]{
-  width:100%;
-  padding:10px;
-  margin-top:6px;
-  border-radius:10px;
-  border:1px solid #ddd;
+width:100%;
+padding:10px;
+margin-top:6px;
+border-radius:10px;
+border:1px solid #ddd;
 }
 
 .option{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px;
-  margin-top:6px;
-  background:rgba(255,255,255,0.1);
-  border-radius:10px;
+display:flex;
+align-items:center;
+gap:10px;
+padding:10px;
+margin-top:6px;
+background:rgba(255,255,255,0.1);
+border-radius:10px;
 }
 
 .rsvp button{
-  margin-top:16px;
-  width:100%;
-  padding:12px;
-  background:var(--accent);
-  border:none;
-  border-radius:12px;
-  color:white;
-  font-size:16px;
+margin-top:16px;
+width:100%;
+padding:12px;
+background:var(--accent);
+border:none;
+border-radius:12px;
+color:white;
+font-size:16px;
+cursor:pointer;
 }
 
 /* calendar */
+
 .mini-cal{
-  max-width:340px;
-  margin:18px auto 10px;
-  padding:14px;
-  background:rgba(255,255,255,0.10);
-  border-radius:16px;
+max-width:340px;
+margin:18px auto 10px;
+padding:14px;
+background:rgba(255,255,255,0.10);
+border-radius:16px;
 }
 
 .cal-grid{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:6px;
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:6px;
 }
 
 .day{
-  padding:8px 0;
-  border-radius:12px;
-  background:rgba(255,255,255,0.08);
+padding:8px 0;
+border-radius:12px;
+background:rgba(255,255,255,0.08);
 }
 
 .day.heart{
-  position:relative;
+position:relative;
 }
 
 .day.heart::after{
-  content:"❤";
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#ff3b3b;
-  animation:heartbeat 1.6s infinite;
+content:"❤";
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#ff3b3b;
+animation:heartbeat 1.6s infinite;
 }
 
 @keyframes heartbeat{
@@ -205,60 +213,61 @@ body{
 100%{transform:scale(1)}
 }
 
-/* INTRO curtain */
+/* intro curtain */
+
 .intro{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
+position:fixed;
+inset:0;
+z-index:9999;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
 }
 
 .curtain{
-  position:absolute;
-  inset:0;
+position:absolute;
+inset:0;
 }
 
 .curtain-panel{
-  position:absolute;
-  top:0;
-  bottom:0;
-  width:50%;
-  background-image:url("images/photo1.jpg");
-  background-repeat:no-repeat;
-  background-size:200% 100%;
-  transition:transform 900ms cubic-bezier(.2,.9,.2,1);
+position:absolute;
+top:0;
+bottom:0;
+width:50%;
+background-image:url("images/photo1.jpg");
+background-repeat:no-repeat;
+background-size:200% 100%;
+transition:transform 900ms cubic-bezier(.2,.9,.2,1);
 }
 
 .curtain-panel.left{
-  left:0;
-  background-position:0% center;
+left:0;
+background-position:0% center;
 }
 
 .curtain-panel.right{
-  right:0;
-  background-position:100% center;
+right:0;
+background-position:100% center;
 }
 
 .intro.open .curtain-panel.left{
-  transform:translateX(-105%);
+transform:translateX(-105%);
 }
 
 .intro.open .curtain-panel.right{
-  transform:translateX(105%);
+transform:translateX(105%);
 }
 
 .intro-title{
-  font-family:"Allura", cursive;
-  font-size:90px;
+font-family:"Great Vibes",cursive;
+font-size:70px;
 }
 
 .swipe{
-  margin-top:30px;
-  animation:swipeMove 1.8s infinite;
+margin-top:30px;
+animation:swipeMove 1.8s infinite;
 }
 
 @keyframes swipeMove{
@@ -266,13 +275,14 @@ body{
 50%{transform:translateY(-12px)}
 100%{transform:translateY(0)}
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- intro -->
 <div class="intro" id="intro">
+
 <div class="curtain">
 <div class="curtain-panel left"></div>
 <div class="curtain-panel right"></div>
@@ -283,6 +293,7 @@ body{
 <p>01 серпня 2026</p>
 <div class="swipe">⬆ свайпніть вгору</div>
 </div>
+
 </div>
 
 <div class="bg" id="bg"></div>
@@ -343,6 +354,7 @@ body{
 </div>
 
 <script>
+
 const intro=document.getElementById("intro");
 const mainCard=document.getElementById("mainCard");
 
@@ -396,6 +408,7 @@ i=(i+1)%photos.length;
 
 setBg();
 setInterval(setBg,7000);
+
 </script>
 
 </body>
