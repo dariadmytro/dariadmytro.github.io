@@ -946,7 +946,7 @@
                 margin: 4px 0;
             }
 
-            
+
             /* PREMIUM LIGHT SWEEP ON OPEN */
 .envelope-overlay::before{
     content:"";
@@ -1054,7 +1054,7 @@
                     font-size: 22px;
                 }
             }
-        
+
 /* ===== RSVP PREMIUM: Attendance + Drinks (stable, no :has) ===== */
 .pill-group{
     display:flex;
@@ -1361,6 +1361,21 @@
   .cd-block{ min-width: 78px; padding: 16px 14px 14px; border-radius: 16px; }
   .cd-number{ font-size: 48px; }
   .cd-colon{ margin-top: 10px; }
+}
+
+/* === Subtle petals on open === */
+#petalsCanvas{
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998; /* under envelope (9999), over page */
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+#petalsCanvas.show{
+  opacity: 1;
 }
 
 </style>
@@ -1838,7 +1853,7 @@
                 <div class="footer-love anim-down">З любов'ю</div>
                 <div class="footer-names anim-up">
                     Дмитро <span class="footer-amp">&</span> Дарія
-                    
+
                 </div>
             </footer>
         </div>
@@ -1917,6 +1932,11 @@
 }
 
 function openEnvelope(){
+    // subtle petals burst
+    setTimeout(()=>{
+    startPetals(2600);
+    },300);
+
     const envelope = document.getElementById("envelope");
     const main = document.getElementById("mainContent");
 
@@ -2001,7 +2021,7 @@ if (!name) {
                     alert("Не вдалося відправити. Спробуйте ще раз 🙏");
                 }
             }
-        
+
 
 // RSVP: "Не вживаю" робить вибір напоїв взаємовиключним
 (() => {
@@ -2065,6 +2085,184 @@ document.addEventListener("keydown", (e) => {
   if(e.key === "Escape") closeThankYou();
 });
 
+
+/* === Petals effect (subtle, lightweight) === */
+let __petals = { running:false, raf:0, endAt:0, petals:[], ctx:null, canvas:null, dpr:1 };
+
+function startPetals(durationMs = 2600){
+  try{
+    const canvas = document.getElementById("petalsCanvas");
+    if(!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    __petals.canvas = canvas; __petals.ctx = ctx; __petals.dpr = dpr;
+    resizePetalsCanvas();
+
+    __petals.petals = [];
+    const now = performance.now();
+    __petals.endAt = now + durationMs;
+    __petals.running = true;
+
+    canvas.classList.add("show");
+
+    // spawn a small burst
+    const isMobile = window.innerWidth < 700;
+    const count = isMobile ? 24 : 36;
+
+    for(let i=0;i<count;i++) __petals.petals.push(makePetal());
+
+    cancelAnimationFrame(__petals.raf);
+    __petals.raf = requestAnimationFrame(tickPetals);
+  }catch(e){}
+}
+
+function stopPetals(){
+  const c = __petals.canvas;
+  __petals.running = false;
+  cancelAnimationFrame(__petals.raf);
+  if(c) c.classList.remove("show");
+}
+
+function resizePetalsCanvas(){
+  const c = __petals.canvas;
+  if(!c) return;
+  const dpr = __petals.dpr || 1;
+  const w = Math.floor(window.innerWidth * dpr);
+  const h = Math.floor(window.innerHeight * dpr);
+  if(c.width !== w || c.height !== h){
+    c.width = w; c.height = h;
+  }
+}
+
+function makePetal(){
+  const dpr = __petals.dpr || 1;
+  const w = window.innerWidth * dpr;
+  const h = window.innerHeight * dpr;
+
+  const kind = Math.random() < 0.72 ? "petal" : "sparkle";
+
+  const size = (kind === "petal" ? (6 + Math.random()*10) : (1.8 + Math.random()*2.6)) * dpr;
+  const x = Math.random() * w;
+  const y = -30 * dpr - Math.random()*h*0.35;
+
+  const drift = (Math.random()*1.0 - 0.5) * dpr;
+  const speed = (kind === "petal" ? (0.9 + Math.random()*1.8) : (0.6 + Math.random()*1.2)) * dpr;
+  const rot = Math.random() * Math.PI * 2;
+  const rotSpeed = (Math.random()*0.08 - 0.04);
+
+  // soft palette: blush + ivory + lavender
+  const petalColors = ["rgba(255, 235, 242, 0.78)", "rgba(245, 240, 230, 0.72)", "rgba(238, 227, 243, 0.78)", "rgba(209, 193, 219, 0.70)"];
+  const sparkleColors = ["rgba(255,255,255,0.65)", "rgba(212, 180, 138, 0.28)", "rgba(225, 232, 216, 0.35)"];
+
+  const color = (kind === "petal")
+    ? petalColors[(Math.random()*petalColors.length)|0]
+    : sparkleColors[(Math.random()*sparkleColors.length)|0];
+
+  return {
+    kind,
+    x,y,size,
+    drift, speed,
+    rot, rotSpeed,
+    wobble: Math.random()*2.8,
+    wobbleSpeed: 0.009 + Math.random()*0.020,
+    color,
+    life: 1,
+    tw: Math.random()*6.28
+  };
+}
+
+function drawPetal(p, t){
+  const ctx = __petals.ctx;
+  const dpr = __petals.dpr || 1;
+
+  if(p.kind === "sparkle"){
+    ctx.save();
+    ctx.translate(p.x, p.y);
+
+    const pulse = 0.55 + 0.45*Math.sin(t*0.006 + p.tw);
+    const r = p.size * (0.9 + 0.6*pulse);
+
+    ctx.globalAlpha = 0.55 * pulse;
+    ctx.fillStyle = p.color;
+
+    // soft glow
+    ctx.beginPath();
+    ctx.arc(0, 0, r*2.4, 0, Math.PI*2);
+    ctx.fill();
+
+    // core
+    ctx.globalAlpha = 0.9 * pulse;
+    ctx.fillStyle = "rgba(255,255,255,0.75)";
+    ctx.beginPath();
+    ctx.arc(0, 0, r, 0, Math.PI*2);
+    ctx.fill();
+
+    ctx.restore();
+    return;
+  }
+
+  ctx.save();
+  ctx.translate(p.x, p.y);
+  ctx.rotate(p.rot);
+  const s = p.size;
+
+  ctx.fillStyle = p.color;
+  ctx.beginPath();
+  // leaf/petal shape
+  ctx.moveTo(0, -s*0.6);
+  ctx.quadraticCurveTo(s*0.95, -s*0.15, 0, s*0.95);
+  ctx.quadraticCurveTo(-s*0.95, -s*0.15, 0, -s*0.6);
+  ctx.closePath();
+  ctx.fill();
+
+  // subtle highlight
+  ctx.globalAlpha = 0.20;
+  ctx.fillStyle = "rgba(255,255,255,0.95)";
+  ctx.beginPath();
+  ctx.ellipse(s*0.12, -s*0.10, s*0.22, s*0.40, 0.4, 0, Math.PI*2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function tickPetals(t){
+  if(!__petals.running) return;
+  const ctx = __petals.ctx;
+  const c = __petals.canvas;
+  if(!ctx || !c) return;
+
+  resizePetalsCanvas();
+  const dpr = __petals.dpr || 1;
+  const w = c.width, h = c.height;
+
+  ctx.clearRect(0,0,w,h);
+
+  // add a few new petals over time (very subtle)
+  if(__petals.petals.length < 58 && Math.random() < 0.22){
+    __petals.petals.push(makePetal());
+  }
+
+  for(const p of __petals.petals){
+    p.y += p.speed;
+    p.x += p.drift + Math.sin((t* p.wobbleSpeed) + p.wobble) * 0.55 * dpr;
+    p.rot += p.rotSpeed;
+
+    drawPetal(p, t);
+  }
+
+  // recycle petals that left the screen
+  __petals.petals = __petals.petals.filter(p => p.y < h + 40*dpr);
+
+  if(t >= __petals.endAt){
+    stopPetals();
+    return;
+  }
+  __petals.raf = requestAnimationFrame(tickPetals);
+}
+
+window.addEventListener("resize", () => {
+  if(__petals.running) resizePetalsCanvas();
+});
 </script>
     <!-- THANK YOU POPUP -->
 <div class="thankyou-overlay" id="thankyouOverlay" aria-hidden="true">
@@ -2083,5 +2281,8 @@ document.addEventListener("keydown", (e) => {
   </div>
 </div>
 
-</body>
+
+        <canvas id="petalsCanvas" aria-hidden="true"></canvas>
+
+    </body>
 </html>
