@@ -1400,56 +1400,6 @@ transform:scale(1.1);
 background:rgba(255,255,255,0.25);
 }
 
-/* === Music button: premium tooltip + pulse when playing === */
-#musicBtn{
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 10000;
-  user-select: none;
-}
-
-#musicBtn::after{
-  content: "MUSIC";
-  position: absolute;
-  right: 54px;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 8px 10px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.20);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  font-size: 9px;
-  letter-spacing: 3px;
-  color: rgba(255,255,255,0.92);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .25s ease, transform .25s ease;
-}
-
-#musicBtn:hover::after{
-  opacity: 1;
-  transform: translateY(-50%) translateX(-2px);
-}
-
-#musicBtn.playing{
-  animation: musicPulse 1.6s ease-in-out infinite;
-}
-
-@keyframes musicPulse{
-  0%,100% { transform: scale(1); box-shadow: 0 0 0 rgba(255,255,255,0.0); }
-  50%     { transform: scale(1.06); box-shadow: 0 18px 50px rgba(255,255,255,0.12); }
-}
-
 </style>
     </head>
     <body>
@@ -2003,24 +1953,26 @@ background:rgba(255,255,255,0.25);
     }
 }
 
-function openEnvelope(){
-  const envelopeEl = document.getElementById("envelope");
-  const main = document.getElementById("mainContent");
-  if(!envelopeEl || !main) return;
+function openEnvelope() {
 
-  // start visuals first
-  envelopeEl.classList.add("opening");
+startMusic();
 
-  // start music without blocking
-  try{ if(typeof startMusic === "function") startMusic(); }catch(e){}
+// subtle petals burst
+    setTimeout(()=>{
+    startPetals(2600);
+    },300);
 
-  // petals (if available)
-  try{ if(typeof startPetals === "function") setTimeout(()=>startPetals(2600), 280); }catch(e){}
+    const envelope = document.getElementById("envelope");
+    const main = document.getElementById("mainContent");
 
-  setTimeout(()=>{
-    envelopeEl.classList.add("hidden");
-    main.classList.add("visible");
-  },700);
+    playOpenSound();
+    envelope.classList.add("opening");
+
+    setTimeout(()=>{
+        envelope.classList.add("hidden");
+        main.classList.add("visible");
+        document.body.style.overflow = "auto";
+    }, 650);
 }
             document.body.style.overflow = "hidden";
             function updateCountdown() {
@@ -2335,21 +2287,18 @@ function tickPetals(t){
 
 window.addEventListener("resize", () => {
   if(__petals.running) resizePetalsCanvas();
-});
-            const music = document.getElementById("bgMusic");
-const musicBtn = document.getElementById("musicBtn");
-
+});// === Background music (safe init) ===
+let music = null;
+let musicBtn = null;
 let musicPlaying = false;
 
 function startMusic(){
-  // Safe start (never block opening animation if audio is unavailable)
+  // Never block opening animation if music elements or file are missing
   if(!music) return;
   try{
     music.volume = 0;
     const p = music.play();
-    if(p && typeof p.then === "function"){
-      p.catch(()=>{ /* ignore autoplay blocks */ });
-    }
+    if(p && typeof p.catch === "function") p.catch(()=>{});
     let vol = 0;
     const fade = setInterval(()=>{
       vol += 0.02;
@@ -2358,36 +2307,37 @@ function startMusic(){
         clearInterval(fade);
       }
       if(music) music.volume = vol;
-    }, 120);
+    },120);
     musicPlaying = true;
     if(musicBtn) musicBtn.classList.add("playing");
-  }catch(e){
-    // ignore
+  }catch(e){}
+}
+
+function toggleMusic(){
+  if(!music || !musicBtn) return;
+  try{
+    if(musicPlaying){
+      music.pause();
+      musicBtn.innerHTML = "🔇";
+      musicBtn.classList.remove("playing");
+      musicPlaying = false;
+    }else{
+      const p = music.play();
+      if(p && typeof p.catch === "function") p.catch(()=>{});
+      musicBtn.innerHTML = "🎵";
+      musicBtn.classList.add("playing");
+      musicPlaying = true;
+    }
+  }catch(e){}
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  music = document.getElementById("bgMusic");
+  musicBtn = document.getElementById("musicBtn");
+  if(musicBtn){
+    musicBtn.onclick = (e) => { e.preventDefault(); toggleMusic(); };
   }
-}
-
-music.volume = vol;
-
-},120);
-
-musicPlaying = true;
-
-}
-
-musicBtn.onclick = () => {
-
-if(musicPlaying){
-music.pause();
-musicBtn.innerHTML = "🔇";
-musicPlaying = false;
-}
-else{
-music.play();
-musicBtn.innerHTML = "🎵";
-musicPlaying = true;
-}
-
-};
+});
 </script>
     <!-- THANK YOU POPUP -->
 <div class="thankyou-overlay" id="thankyouOverlay" aria-hidden="true">
