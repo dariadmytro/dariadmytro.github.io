@@ -1400,6 +1400,27 @@ transform:scale(1.1);
 background:rgba(255,255,255,0.25);
 }
 
+
+/* GOLD GLOW EFFECT */
+#goldGlow{
+position:fixed;
+inset:0;
+pointer-events:none;
+opacity:0;
+z-index:9997;
+background:radial-gradient(circle at 50% 40%, rgba(255,215,140,0.45), rgba(255,215,140,0.15) 40%, transparent 70%);
+transition:opacity 0.8s ease;
+}
+#goldGlow.show{
+opacity:1;
+animation:goldFade 1.6s ease forwards;
+}
+@keyframes goldFade{
+0%{opacity:0;}
+20%{opacity:1;}
+100%{opacity:0;}
+}
+
 </style>
     </head>
     <body>
@@ -1956,6 +1977,7 @@ background:rgba(255,255,255,0.25);
 function openEnvelope() {
 
 startMusic();
+playGoldGlow();
 
 // subtle petals burst
     setTimeout(()=>{
@@ -2338,6 +2360,14 @@ document.addEventListener("DOMContentLoaded", () => {
     musicBtn.onclick = (e) => { e.preventDefault(); toggleMusic(); };
   }
 });
+
+function playGoldGlow(){
+const glow=document.getElementById("goldGlow");
+if(!glow) return;
+glow.classList.add("show");
+setTimeout(()=>{glow.classList.remove("show");},1600);
+}
+
 </script>
     <!-- THANK YOU POPUP -->
 <div class="thankyou-overlay" id="thankyouOverlay" aria-hidden="true">
@@ -2362,5 +2392,6 @@ document.addEventListener("DOMContentLoaded", () => {
 <source src="music.mp3" type="audio/mpeg">
 </audio>
         <div id="musicBtn">🎵</div>
-    </body>
+    <div id="goldGlow"></div>
+</body>
 </html>
