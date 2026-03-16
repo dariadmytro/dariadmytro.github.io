@@ -225,7 +225,7 @@
                 font-weight: 300;
                 letter-spacing: 4px;
                 text-transform: uppercase;
-                font-size: 11px;
+                font-size: 10px;
                 color: var(--text-light);
                 margin-bottom: 28px;
             }
@@ -260,7 +260,7 @@
                 font-weight: 300;
                 letter-spacing: 3px;
                 text-transform: uppercase;
-                font-size: 11px;
+                font-size: 10px;
                 cursor: pointer;
                 transition: all 0.4s ease;
             }
@@ -434,7 +434,7 @@
                 transition: transform 8s ease;
             }
             .photo-overlay:hover img {
-                transform: scale(1.04);
+                transform: scale(1.06);
             }
             .photo-overlay::after {
                 content: "";
@@ -605,7 +605,7 @@
             }
 
             .cal-day.highlight::after {
-                content: "Додати в календар";
+                content: attr(data-tooltip);
                 position: absolute;
                 left: 50%;
                 bottom: calc(100% + 10px);
@@ -731,7 +731,7 @@
                 border: 1px solid var(--amber);
                 color: var(--amber);
                 text-decoration: none;
-                font-size: 11px;
+                font-size: 10px;
                 letter-spacing: 3px;
                 text-transform: uppercase;
                 font-weight: 300;
@@ -1690,7 +1690,7 @@
             .calendar-wrap {
                 position: relative;
                 z-index: 1;
-                background: rgba(255, 255, 255, 0.72);
+                background: rgba(255, 255, 255, 0.78);
                 backdrop-filter: blur(4px);
                 border-radius: 18px;
                 padding: 18px 16px 12px;
@@ -1816,7 +1816,7 @@
                 letter-spacing: 1.4px;
                 text-transform: uppercase;
                 color: var(--amber-dark);
-                background: rgba(255, 255, 255, 0.72);
+                background: rgba(255, 255, 255, 0.78);
                 border: 1px solid rgba(154, 141, 167, 0.45);
                 border-radius: 10px;
                 padding: 8px 0;
@@ -1862,8 +1862,128 @@
 }
 </style>
 
+
+<style>
+.lang-switch {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 10001;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(116, 102, 120, 0.16);
+    box-shadow: 0 12px 26px rgba(33, 22, 40, 0.16);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+.lang-option {
+    min-width: 64px;
+    height: 40px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #6f6576;
+    font-weight: 700;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+.lang-option:hover {
+    background: rgba(255,255,255,0.55);
+}
+.lang-option:active {
+    transform: scale(0.98);
+}
+.lang-option.active {
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(247,243,248,0.92));
+    color: #252b35;
+    box-shadow: 0 6px 16px rgba(25, 19, 31, 0.10);
+}
+.lang-option span {
+    pointer-events: none;
+}
+.flag {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(74, 67, 79, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
+    flex: 0 0 auto;
+}
+.flag-ua {
+    background: linear-gradient(180deg, #1f7ae0 0 50%, #ffd84d 50% 100%);
+}
+.flag-sl {
+    background: linear-gradient(180deg, #ffffff 0 33.33%, #2459d3 33.33% 66.66%, #d83b32 66.66% 100%);
+}
+.flag-sl::after {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 6px;
+    height: 8px;
+    background: linear-gradient(180deg, #2c57bf 0 72%, #d83b32 72% 100%);
+    border-radius: 3px 3px 4px 4px;
+    clip-path: polygon(0 0, 100% 0, 100% 73%, 50% 100%, 0 73%);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.95);
+}
+.flag-sl::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 4px;
+    height: 3px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(247,243,248,0.92));
+    clip-path: polygon(0 100%, 30% 35%, 52% 75%, 75% 18%, 100% 100%);
+    z-index: 1;
+}
+@media (max-width: 600px) {
+    .lang-switch {
+        top: 14px;
+        right: 14px;
+        padding: 5px;
+        gap: 5px;
+    }
+    .lang-option {
+        min-width: 58px;
+        height: 38px;
+        padding: 0 12px;
+        font-size: 10px;
+    }
+}
+</style>
+
 </head>
     <body>
+
+        <div class="lang-switch" id="translateBtn" role="group" aria-label="Перемикач мови" data-lang="uk">
+            <button type="button" class="lang-option active" data-lang="uk" aria-label="Українська">
+                <span class="flag flag-ua" aria-hidden="true"></span>
+                <span>UA</span>
+            </button>
+            <button type="button" class="lang-option" data-lang="sl" aria-label="Slovenščina">
+                <span class="flag flag-sl" aria-hidden="true"></span>
+                <span>SI</span>
+            </button>
+        </div>
+
         <div class="envelope-overlay" id="envelope">
             <div class="envelope-card">
                 <div class="envelope-label">Запрошення на весілля</div>
@@ -1891,7 +2011,7 @@
                         style="
                             letter-spacing: 6px;
                             text-transform: uppercase;
-                            font-size: 11px;
+                            font-size: 10px;
                             color: var(--amber-light);
                             margin-bottom: 24px;
                             font-weight: 400;
@@ -1930,7 +2050,7 @@
                         У нашому житті настає чарівна мить — день, коли ми
                         стаємо однією родиною. Ми мріємо розділити цю радість
                         саме з вами, адже ви — ті люди, які наповнюють наше
-                        життя теплом та любов'ю.
+                        життя теплом та любов\'ю.
                     </p>
                 </div>
             </section>
@@ -1957,7 +2077,7 @@
                                 <div class="cal-day empty"></div>
                                 <button
                                     aria-label="Додати 1 серпня 2026 до календаря"
-                                    class="cal-day highlight"
+                                    class="cal-day highlight" data-tooltip="Додати в календар"
                                     onclick="addWeddingDateToCalendar()"
                                     type="button"
                                 >
@@ -2244,7 +2364,7 @@
                         <p class="anim-up d2">
                             Якщо ви хочете подарувати нам цінний та потрібний
                             подарунок, ми будемо дуже вдячні за вклад у бюджет
-                            нашої молодої сім'ї.
+                            нашої молодої сім\'ї.
                         </p>
                     </div>
                 </div>
@@ -2280,23 +2400,23 @@
                     >
                         <div class="form-group">
                             <label class="form-label"
-                                >Ваше ім'я та прізвище</label
+                                >Ваше ім\'я та прізвище</label
                             ><input
                                 class="form-input"
                                 id="guestName"
                                 name="name"
-                                placeholder="Введіть ваше ім'я"
+                                placeholder="Введіть ваше ім\'я"
                                 type="text"
                             />
                         </div>
                         <div class="form-group" id="plusGuestField" style="display: none">
                             <label class="form-label"
-                                >Ім'я гостя, який прийде з вами</label
+                                >Ім\'я гостя, який прийде з вами</label
                             ><input
                                 class="form-input"
                                 id="plusGuestName"
                                 name="plus_guest_name"
-                                placeholder="Якщо будете не самі — вкажіть ім'я гостя"
+                                placeholder="Якщо будете не самі — вкажіть ім\'я гостя"
                                 type="text"
                             />
                         </div>
@@ -2410,7 +2530,7 @@
                 </div>
             </section>
             <footer class="footer">
-                <div class="footer-love anim-down">З любов'ю</div>
+                <div class="footer-love anim-down">З любов\'ю</div>
                 <div class="footer-names anim-up">
                     Дмитро <span class="footer-amp">&amp;</span> Дарія
                 </div>
@@ -2683,11 +2803,11 @@
                 );
                 const attend = attendEl ? attendEl.value : "";
                 if (!name) {
-                    alert("Будь ласка, введіть ваше ім'я");
+                    alert((window.formAlerts && window.formAlerts.name) || "Будь ласка, введіть ваше ім\'я");
                     return;
                 }
                 if (!attend) {
-                    alert("Будь ласка, оберіть чи плануєте бути (Так/Ні)");
+                    alert((window.formAlerts && window.formAlerts.attend) || "Будь ласка, оберіть чи плануєте бути (Так/Ні)");
                     return;
                 }
 
@@ -2709,7 +2829,7 @@
                         .classList.add("show");
                     showThankYou();
                 } catch (e) {
-                    alert("Не вдалося відправити. Спробуйте ще раз 🙏");
+                    alert((window.formAlerts && window.formAlerts.submitError) || "Не вдалося відправити. Спробуйте ще раз 🙏");
                 }
             }
 
@@ -3054,7 +3174,213 @@
                 } catch (e) {}
             }
 
-            document.addEventListener("DOMContentLoaded", () => {
+    
+        const i18n = {
+            sl: {
+                pageTitle: 'Dmitro & Darija — Poročno vabilo',
+                calendarTooltip: 'Dodaj v koledar',
+                alertName: 'Prosimo, vnesite svoje ime',
+                alertAttend: 'Prosimo, izberite, ali se boste udeležili (Da/Ne)',
+                alertSubmitError: 'Pošiljanje ni uspelo. Poskusite znova 🙏',
+                translateAria: 'Vrni stran v ukrajinščino',
+                texts: {
+                    'Дмитро & Дарія — Запрошення на весілля': 'Dmitro & Darija — Poročno vabilo',
+                    'Запрошення на весілля': 'Poročno vabilo',
+                    'Відкрити': 'Odpri',
+                    'Ми одружуємось': 'Poročiva se',
+                    '01 серпня 2026': '01. avgust 2026',
+                    'гортай': 'podrsaj navzdol',
+                    'Запрошення': 'Vabilo',
+                    'Любі друзі та рідні!': 'Dragi prijatelji in družina!',
+                    'У нашому житті настає чарівна мить — день, коли ми стаємо однією родиною. Ми мріємо розділити цю радість саме з вами, адже ви — ті люди, які наповнюють наше життя теплом та любов\'ю.': 'V najinem življenju prihaja čaroben trenutek — dan, ko postaneva ena družina. To veselje si želiva deliti prav z vami, saj ste vi tisti ljudje, ki najino življenje polnite s toplino in ljubeznijo.',
+                    'У нашому житті настає чарівна мить — день, коли ми стаємо однією родиною. Ми мріємо розділити цю радість саме з вами, адже ви — ті люди, які наповнюють наше життя теплом та любов’ю.': 'V najinem življenju prihaja čaroben trenutek — dan, ko postaneva ena družina. To veselje si želiva deliti prav z vami, saj ste vi tisti ljudje, ki najino življenje polnite s toplino in ljubeznijo.',
+                    'Ваше ім\'я та прізвище': 'Vaše ime in priimek',
+                    'Ваші побажання': 'Vaše želje',
+                    'Ваші побажання...': 'Vaše želje...',
+                    'Напишіть ваші побажання або алергії': 'Napišite svoje želje ali alergije',
+                    'Дмитро': 'Dmitro',
+                    'Дарія': 'Darija',
+                    'Тицяй на сердечко, щоб не забути♥': 'Klikni na srček, da ne pozabiš ♥',
+                    'Серпень 2026': 'Avgust 2026',
+                    'Пн': 'Po',
+                    'Вт': 'To',
+                    'Ср': 'Sr',
+                    'Чт': 'Če',
+                    'Пт': 'Pe',
+                    'Сб': 'So',
+                    'Нд': 'Ne',
+                    'Зворотній відлік': 'Odštevanje',
+                    'Чекаємо на вас': 'Veseliva se vas',
+                    'Днів': 'Dni',
+                    'Годин': 'Ure',
+                    'Хвилин': 'Minute',
+                    'Секунд': 'Sekunde',
+                    'Локація': 'Lokacija',
+                    'Місце святкування': 'Kraj praznovanja',
+                    'Ресторан «RoseMarine»': 'Restavracija «RoseMarine»',
+                    'Кривий Ріг': 'Krivi Rih',
+                    'Ресторан': 'Restavracija',
+                    'Подивитись на мапі': 'Poglej na zemljevidu',
+                    'Програма дня': 'Program dneva',
+                    'Таймінг': 'Urnik',
+                    'Церемонія': 'Obred',
+                    'Святкова вечеря': 'Svečana večerja',
+                    'Вечірка та танці': 'Zabava in ples',
+                    'Торт та десерти': 'Torta in sladice',
+                    'Закінчення вечірки': 'Konec zabave',
+                    'Дрес-код': 'Kodeks oblačenja',
+                    'Палітра свята': 'Barvna paleta praznovanja',
+                    'Ми будемо щасливі, якщо ви підтримаєте атмосферу нашого дня та оберете вбрання у теплих природних відтінках:': 'Zelo vesela bova, če podprete vzdušje najinega dne in izberete oblačila v toplih naravnih odtenkih:',
+                    'Важливо': 'Pomembno',
+                    'Деталі': 'Podrobnosti',
+                    'Просимо вас не дарувати нам квіти, ми не встигнемо насолодитися їх красою.': 'Prosiva vas, da nama ne podarjate cvetja, saj ne bova utegnila uživati v njegovi lepoti.',
+                    'Приємним компліментом для нас буде, якщо ви замість квітів вирішите подарувати нам пляшку алкогольного напою для нашої колекції, яку ми відкриємо на najbližjem najinem skupnem praznovanju.': 'Lepa pozornost za naju bo, če se namesto cvetja odločite podariti steklenico alkoholne pijače za najino zbirko, ki jo bova odprla ob najinem naslednjem skupnem praznovanju.',
+                    'Приємним компліментом для нас буде, якщо ви замість квітів вирішите подарувати нам пляшку алкогольного напою для нашої колекції, яку ми відкриємо на найближчому нашому сумісному святі.': 'Lepa pozornost za naju bo, če se namesto cvetja odločite podariti steklenico alkoholne pijače za najino zbirko, ki jo bova odprla ob najinem naslednjem skupnem praznovanju.',
+                    'Якщо ви хочете подарувати нам цінний та потрібний подарунок, ми будемо дуже вдячні за вклад у бюджет нашої молодої сім\'ї.': 'Če nama želite podariti dragoceno in uporabno darilo, vam bova zelo hvaležna za prispevek v proračun najine mlade družine.',
+                    'Підтвердження': 'Potrditev',
+                    'Анкета гостя': 'Obrazec za gosta',
+                    'Будь ласка, підтвердьте свою присутність до 1 липня 2026 року.': 'Prosiva, potrdite svojo prisotnost do 1. julija 2026.',
+                    'Ваше ім\'я та прізвище': 'Vaše ime in priimek',
+                    'Ім\'я гостя, який прийде з вами': 'Ime gosta, ki pride z vami',
+                    'Чи плануєте бути на весіллі?': 'Ali se nameravate udeležiti poroke?',
+                    'Буду/Будемо': 'Bom/Bomo',
+                    'Нажаль, не зможу': 'Žal ne bom mogel/mogla',
+                    'Побажання по алкогольним напоям': 'Želje glede alkoholnih pijač',
+                    '🥂 Шампанське': '🥂 Šampanjec',
+                    '🍷 Вино': '🍷 Vino',
+                    '🥃 Віскі': '🥃 Viski',
+                    '🍸 Горілка': '🍸 Vodka',
+                    '🟤 Коньяк': '🟤 Konjak',
+                    '🚫 Не вживаю': '🚫 Ne pijem',
+                    'Побажання або алергії на їжу': 'Želje ali alergije glede hrane',
+                    'Відправити': 'Pošlji',
+                    'Дякуємо!': 'Hvala!',
+                    'Вашу відповідь збережено.': 'Vaš odgovor je shranjen.',
+                    'Ми з нетерпінням чекаємо на зустріч!': 'Z veseljem se veseliva srečanja!',
+                    'З любов\'ю': 'Z ljubeznijo',
+                    'Дякуємо, це дуже важливо для нас!': 'Hvala, to nama veliko pomeni!',
+                    'Закрити': 'Zapri'
+                },
+                placeholders: {
+                    guestName: 'Vaše ime in priimek',
+                    plusGuestName: 'Ime gosta, ki pride z vami',
+                    wishes: 'Vaše želje, posebnosti ali alergije'
+                }
+            }
+        };
+
+        const originalState = {
+            title: document.title,
+            translateAria: 'Prevedi stran v slovenščino',
+            calendarTooltip: 'Додати в календар',
+            alertName: 'Будь ласка, введіть ваше ім\'я',
+            alertAttend: 'Будь ласка, оберіть чи плануєте бути (Так/Ні)',
+            alertSubmitError: 'Не вдалося відправити. Спробуйте ще раз 🙏'
+        };
+
+        function translateVisibleText(map, reverse = false) {
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+                    const parent = node.parentElement;
+                    if (!parent) return NodeFilter.FILTER_REJECT;
+                    if (["SCRIPT", "STYLE", "NOSCRIPT"].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            });
+
+            const normalizeKey = (value) => value
+                .replace(/\\'/g, "'")
+                .replace(/[’`]/g, "'")
+                .replace(/\s+/g, ' ')
+                .trim();
+
+            const reverseMap = reverse
+                ? Object.fromEntries(Object.entries(map).map(([uk, sl]) => [normalizeKey(sl), uk]))
+                : null;
+
+            const activeMap = reverse ? reverseMap : Object.fromEntries(Object.entries(map).map(([uk, sl]) => [normalizeKey(uk), sl]));
+            const nodes = [];
+            while (walker.nextNode()) nodes.push(walker.currentNode);
+            nodes.forEach((node) => {
+                const normalized = normalizeKey(node.nodeValue);
+                if (activeMap[normalized]) {
+                    const leading = node.nodeValue.match(/^\s*/)?.[0] || '';
+                    const trailing = node.nodeValue.match(/\s*$/)?.[0] || '';
+                    node.nodeValue = leading + activeMap[normalized] + trailing;
+                }
+            });
+        }
+
+        function setPlaceholders(lang) {
+            const placeholders = lang === 'sl' ? i18n.sl.placeholders : {
+                guestName: "Ваше ім\'я та прізвище",
+                plusGuestName: "Ім\'я гостя, який прийде з вами",
+                wishes: "Ваші побажання..."
+            };
+            const guestName = document.getElementById('guestName');
+            const plusGuestName = document.getElementById('plusGuestName');
+            const wishes = document.getElementById('wishes');
+            const guestNotes = document.getElementById('guestNotes');
+            if (guestName) guestName.placeholder = placeholders.guestName;
+            if (plusGuestName) plusGuestName.placeholder = placeholders.plusGuestName;
+            if (wishes) wishes.placeholder = placeholders.wishes;
+            if (guestNotes) guestNotes.placeholder = placeholders.wishes;
+        }
+
+        function setCalendarTooltip(text) {
+            document.querySelectorAll('.cal-day.highlight').forEach((el) => {
+                el.setAttribute('data-tooltip', text);
+            });
+        }
+
+        function updateLanguageSwitch(lang) {
+            const btn = document.getElementById('translateBtn');
+            if (btn) btn.dataset.lang = lang;
+            document.querySelectorAll('.lang-option').forEach((el) => {
+                el.classList.toggle('active', el.dataset.lang === lang);
+                el.setAttribute('aria-pressed', el.dataset.lang === lang ? 'true' : 'false');
+            });
+        }
+
+        let currentLang = 'uk';
+
+        function applyTranslation(lang) {
+            const btn = document.getElementById('translateBtn');
+            if (lang === 'sl') {
+                translateVisibleText(i18n.sl.texts, false);
+                document.title = i18n.sl.pageTitle;
+                setPlaceholders('sl');
+                setCalendarTooltip(i18n.sl.calendarTooltip);
+                setEventLanguage('sl');
+                window.formAlerts = {
+                    name: i18n.sl.alertName,
+                    attend: i18n.sl.alertAttend,
+                    submitError: i18n.sl.alertSubmitError
+                };
+                if (btn) btn.setAttribute('aria-label', i18n.sl.translateAria);
+                updateLanguageSwitch('sl');
+                currentLang = 'sl';
+                return;
+            }
+
+            translateVisibleText(i18n.sl.texts, true);
+            document.title = originalState.title;
+            setPlaceholders('uk');
+            setCalendarTooltip(originalState.calendarTooltip);
+            setEventLanguage('uk');
+            window.formAlerts = {
+                name: originalState.alertName,
+                attend: originalState.alertAttend,
+                submitError: originalState.alertSubmitError
+            };
+            if (btn) btn.setAttribute('aria-label', originalState.translateAria);
+            updateLanguageSwitch('uk');
+            currentLang = 'uk';
+        }
+
+
+        document.addEventListener("DOMContentLoaded", () => {
                 music = document.getElementById("bgMusic");
                 musicBtn = document.getElementById("musicBtn");
                 if (musicBtn) {
@@ -3064,7 +3390,28 @@
                     };
                 }
 
-                const plusGuestField = document.getElementById("plusGuestField");
+                const translateBtn = document.getElementById("translateBtn");
+                if (translateBtn) {
+                    translateBtn.querySelectorAll('.lang-option').forEach((option) => {
+                        option.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            applyTranslation(option.dataset.lang || 'uk');
+                        });
+                    });
+
+                    translateBtn.addEventListener('keydown', (e) => {
+                        if (e.key === 'ArrowLeft') {
+                            e.preventDefault();
+                            applyTranslation('uk');
+                        }
+                        if (e.key === 'ArrowRight') {
+                            e.preventDefault();
+                            applyTranslation('sl');
+                        }
+                    });
+                }
+
+            const plusGuestField = document.getElementById("plusGuestField");
                 const plusGuestInput = document.getElementById("plusGuestName");
                 const attendYes = document.querySelector('input[name="attend"][value="yes"]');
                 const attendNo = document.querySelector('input[name="attend"][value="no"]');
