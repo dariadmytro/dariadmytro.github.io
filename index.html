@@ -529,26 +529,67 @@
             .cal-day.empty {
                 visibility: hidden;
             }
+            @keyframes heartBeatDate {
+                0%,
+                100% {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 0.92;
+                }
+                14% {
+                    transform: translate(-50%, -50%) scale(1.12);
+                    opacity: 1;
+                }
+                28% {
+                    transform: translate(-50%, -50%) scale(0.98);
+                }
+                42% {
+                    transform: translate(-50%, -50%) scale(1.17);
+                    opacity: 1;
+                }
+                70% {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 0.92;
+                }
+            }
             .cal-day.highlight{
-            position:relative;
-            color:var(--amber-dark);
-            font-weight:400;
+                position:relative;
+                color:var(--amber-dark);
+                font-weight:400;
+                cursor:pointer;
+                user-select:none;
+                -webkit-tap-highlight-color: transparent;
+                transition: transform .25s ease, color .25s ease;
+                appearance:none;
+                -webkit-appearance:none;
+                border:none;
+                background:transparent;
+                font-family:inherit;
+            }
+
+            .cal-day.highlight:hover,
+            .cal-day.highlight:focus-visible {
+                transform: translateY(-1px);
+                color: var(--text);
+                outline: none;
             }
 
             .cal-day.highlight::before{
-            content:"♡";
-            position:absolute;
-            left:50%;
-            top:50%;
-            transform:translate(-50%,-50%);
-            font-size:42px;
-            color:#e74c3c;
-            z-index:0;
+                content:"♡";
+                position:absolute;
+                left:50%;
+                top:50%;
+                transform:translate(-50%,-50%);
+                font-size:42px;
+                color:#e74c3c;
+                z-index:0;
+                animation: heartBeatDate 1.9s ease-in-out infinite;
+                transform-origin: center;
+                text-shadow: 0 0 16px rgba(231, 76, 60, 0.14);
             }
 
             .cal-day.highlight span{
-            position:relative;
-            z-index:1;
+                position:relative;
+                z-index:1;
             }
 
             /* COUNTDOWN */
@@ -1483,7 +1524,7 @@ background:rgba(255,255,255,0.25);
                             <div class="cal-day empty"></div>
                             <div class="cal-day empty"></div>
                             <div class="cal-day empty"></div>
-                            <div class="cal-day highlight"><span>1</span></div>
+                            <button type="button" class="cal-day highlight" onclick="addWeddingDateToCalendar()" aria-label="Додати 1 серпня 2026 до календаря"><span>1</span></button>
                             <div class="cal-day">2</div>
                             <div class="cal-day">3</div>
                             <div class="cal-day">4</div>
@@ -1967,6 +2008,106 @@ background:rgba(255,255,255,0.25);
     }catch(e){
         // ignore (unsupported or blocked)
     }
+}
+
+const WEDDING_EVENT = {
+  title: "Весілля Дмитра та Дарії",
+  description: "Весілля Дмитра та Дарії. Будемо дуже раді розділити цей день разом з вами!",
+  location: "Ресторан «RoseMarine», Кривий Ріг",
+  start: new Date("2026-08-01T15:00:00"),
+  end: new Date("2026-08-01T23:00:00")
+};
+
+function padCalendar(value){
+  return String(value).padStart(2, "0");
+}
+
+function formatICSDate(date){
+  return date.getUTCFullYear() +
+    padCalendar(date.getUTCMonth() + 1) +
+    padCalendar(date.getUTCDate()) + "T" +
+    padCalendar(date.getUTCHours()) +
+    padCalendar(date.getUTCMinutes()) +
+    padCalendar(date.getUTCSeconds()) + "Z";
+}
+
+function escapeICS(value){
+  return String(value || "")
+    .replace(/\\/g, "\\\\")
+    .replace(/\r?\n/g, "\\n")
+    .replace(/,/g, "\\,")
+    .replace(/;/g, "\\;");
+}
+
+function buildICS(){
+  const stamp = formatICSDate(new Date());
+  const uid = "wedding-dmytro-dariia-20260801@invite";
+  return [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Wedding Invite//UA//EN",
+    "CALSCALE:GREGORIAN",
+    "BEGIN:VEVENT",
+    "UID:" + uid,
+    "DTSTAMP:" + stamp,
+    "DTSTART:" + formatICSDate(WEDDING_EVENT.start),
+    "DTEND:" + formatICSDate(WEDDING_EVENT.end),
+    "SUMMARY:" + escapeICS(WEDDING_EVENT.title),
+    "DESCRIPTION:" + escapeICS(WEDDING_EVENT.description),
+    "LOCATION:" + escapeICS(WEDDING_EVENT.location),
+    "BEGIN:VALARM",
+    "TRIGGER:-P1D",
+    "ACTION:DISPLAY",
+    "DESCRIPTION:Нагадування про весілля",
+    "END:VALARM",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  ].join("\r\n");
+}
+
+function downloadICSFile(){
+  const ics = buildICS();
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "wedding-2026-08-01.ics";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+function openGoogleCalendar(){
+  const startUtc = formatICSDate(WEDDING_EVENT.start);
+  const endUtc = formatICSDate(WEDDING_EVENT.end);
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: WEDDING_EVENT.title,
+    dates: startUtc + "/" + endUtc,
+    details: WEDDING_EVENT.description,
+    location: WEDDING_EVENT.location
+  });
+  window.open("https://calendar.google.com/calendar/render?" + params.toString(), "_blank");
+}
+
+function addWeddingDateToCalendar(){
+  const ua = navigator.userAgent || "";
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const isAndroid = /Android/i.test(ua);
+
+  if(isAndroid){
+    openGoogleCalendar();
+    return;
+  }
+
+  downloadICSFile();
+
+  if(!isIOS){
+    setTimeout(() => {
+      try { openGoogleCalendar(); } catch(e) {}
+    }, 350);
+  }
 }
 
 function openEnvelope() {
