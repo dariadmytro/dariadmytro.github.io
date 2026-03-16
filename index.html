@@ -1417,17 +1417,20 @@ transform:scale(1.1);
 background:rgba(255,255,255,0.25);
 }
 
-
-/* === Shared background for calendar section + following photo === */
-.calendar-section{
+</style>
+    <style>
+/* Shared background for calendar section AND the following arch-hands photo */
+.calendar-section,
+.photo-overlay{
     position: relative;
-    overflow: hidden;
     background-image: url("calendar-bg.jpg");
     background-size: cover;
     background-position: center;
 }
 
-.calendar-section::before{
+/* blur + darken background */
+.calendar-section::before,
+.photo-overlay::before{
     content:"";
     position:absolute;
     inset:0;
@@ -1436,13 +1439,13 @@ background:rgba(255,255,255,0.25);
     z-index:0;
 }
 
-.calendar-section > *{
+.calendar-section > *,
+.photo-overlay > *{
     position: relative;
     z-index:1;
 }
-
 </style>
-    </head>
+</head>
     <body>
         <div class="envelope-overlay" id="envelope">
             <div class="envelope-card">
@@ -1473,7 +1476,7 @@ background:rgba(255,255,255,0.25);
             </section>
 
             <!-- INVITATION -->
-            <section class="invitation-section calendar-section">
+            <section class="invitation-section">
                 <div class="section-inner">
                     <div class="section-label anim-down">Запрошення</div>
                     <h2 class="section-title anim-up">Любі друзі та рідні!</h2>
