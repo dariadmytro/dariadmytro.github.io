@@ -1661,7 +1661,6 @@
                 overflow: hidden;
                 padding: 35px;
                 border-radius: 25px;
-                background: linear-gradient(145deg, #eee3f3, #e1e8d8);
                 box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
                 max-width: 420px;
                 margin: 40px auto;
@@ -1787,6 +1786,33 @@
                 width: auto;
                 height: auto;
             }
+            /* фон для календаря і фото рук */
+.calendar-section{
+    position: relative;
+    overflow: hidden;
+
+    background-image: url("calendar-bg.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+/* розмиття */
+.calendar-section::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.25);
+
+    z-index:0;
+}
+
+/* контент поверх */
+.calendar-section > *{
+    position: relative;
+    z-index:1;
+}
         </style>
         <style>
             .cal-day:not(.empty):not(.highlight) {
