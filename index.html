@@ -2278,16 +2278,18 @@
                         method="POST"
                         onsubmit="submitForm(event)"
                     >
-                        <div class="form-group" id="guestField" style="display:none;">
-                            <label class="form-label">Ім'я гостя, який прийде з вами</label>
-                            <input class="form-input"
+                        <div class="form-group">
+                            <label class="form-label"
+                                >Ваше ім'я та прізвище</label
+                            ><input
+                                class="form-input"
+                                id="guestName"
+                                name="name"
+                                placeholder="Введіть ваше ім'я"
                                 type="text"
-                                name="guest_name"
-                                placeholder="Напишіть ім'я гостя">
-                        </div>
                             />
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="plusGuestField" style="display: none">
                             <label class="form-label"
                                 >Ім'я гостя, який прийде з вами</label
                             ><input
@@ -3061,6 +3063,22 @@
                         toggleMusic();
                     };
                 }
+
+                const plusGuestField = document.getElementById("plusGuestField");
+                const plusGuestInput = document.getElementById("plusGuestName");
+                const attendYes = document.querySelector('input[name="attend"][value="yes"]');
+                const attendNo = document.querySelector('input[name="attend"][value="no"]');
+
+                function togglePlusGuestField() {
+                    if (!plusGuestField || !attendYes) return;
+                    const shouldShow = attendYes.checked;
+                    plusGuestField.style.display = shouldShow ? "block" : "none";
+                    if (!shouldShow && plusGuestInput) plusGuestInput.value = "";
+                }
+
+                if (attendYes) attendYes.addEventListener("change", togglePlusGuestField);
+                if (attendNo) attendNo.addEventListener("change", togglePlusGuestField);
+                togglePlusGuestField();
             });
         </script>
         <!-- THANK YOU POPUP -->
@@ -3096,27 +3114,5 @@
             <source src="music.mp3" type="audio/mpeg" />
         </audio>
         <div id="musicBtn">🎵</div>
-        <script>
-            document.addEventListener("DOMContentLoaded", function(){
-
-const guestField = document.getElementById("guestField");
-
-const attendYes = document.querySelector('input[value="yes"]');
-const attendNo = document.querySelector('input[value="no"]');
-
-function toggleGuestField(){
-    if(attendYes.checked){
-        guestField.style.display = "block";
-    } else {
-        guestField.style.display = "none";
-    }
-}
-
-attendYes.addEventListener("change", toggleGuestField);
-attendNo.addEventListener("change", toggleGuestField);
-
-});
-            </script>
-            
     </body>
 </html>
