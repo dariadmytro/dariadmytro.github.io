@@ -713,29 +713,66 @@
             /* LOCATION */
            .location-section {
                 position: relative;
+                overflow: hidden;
                 background-image: url("photo5.png");
                 background-size: cover;
                 background-position: center;
                 background-repeat: no-repeat;
-                background-color: var(--white);
             }
+
+/* розмите фото + затемнення */
             .location-section::before {
                 content: "";
                 position: absolute;
                 inset: 0;
-                background: rgba(0, 0, 0, 0.25);
+                background-image: inherit;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                filter: blur(8px);
+                transform: scale(1.08);
+                z-index: 0;
             }
 
+            .location-section::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.30);
+                z-index: 0;
+            }
+
+/* щоб контент був поверх фону */
             .location-section .section-inner {
                 position: relative;
                 z-index: 1;
             }
+
+/* колір тексту */
+            .location-section .section-label {
+                color: rgba(255, 255, 255, 0.75);
             }
+
+            .location-section .section-title {
+                color: #ffffff;
+            }
+
+            .location-section .section-divider {
+                background: rgba(255, 255, 255, 0.75);
+            }
+
             .location-venue {
                 font-family: "Great Vibes", cursive;
                 font-size: 30px;
-                color: var(--chocolate);
+                color: #ffffff;
                 margin-bottom: 8px;
+                text-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
+            }
+
+            .location-address {
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.88);
+                margin-bottom: 24px;
             }
             .location-address {
                 font-size: 14px;
