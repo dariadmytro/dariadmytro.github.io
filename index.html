@@ -711,8 +711,25 @@
             }
 
             /* LOCATION */
-            .location-section {
-                background: var(--white);
+           .location-section {
+                position: relative;
+                background-image: url("photo5");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-color: var(--white);
+            }
+            .location-section::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.25);
+            }
+
+            .location-section .section-inner {
+                position: relative;
+                z-index: 1;
+            }
             }
             .location-venue {
                 font-family: "Great Vibes", cursive;
