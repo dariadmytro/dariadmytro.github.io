@@ -4203,6 +4203,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let wheelLock = false;
     let touchStartX = 0;
     let touchStartY = 0;
+    let lastFocusedElement = null;
 
     const storyItems = storyLinks.map(function (link) {
         const img = link.querySelector('img');
@@ -4239,15 +4240,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function openStoryFixed(index) {
+        lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
         showStoryByIndex(index);
+        lightbox.removeAttribute('inert');
         lightbox.classList.add('show');
-        lightbox.setAttribute('aria-hidden', 'false');
         document.body.classList.add('story-lightbox-open');
+        setTimeout(function () {
+            closeBtn.focus({ preventScroll: true });
+        }, 20);
     }
 
     function closeStoryFixed() {
+        if (document.activeElement && lightbox.contains(document.activeElement)) {
+            if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+                lastFocusedElement.focus({ preventScroll: true });
+            } else {
+                document.body.focus();
+            }
+        }
         lightbox.classList.remove('show');
-        lightbox.setAttribute('aria-hidden', 'true');
+        lightbox.setAttribute('inert', '');
         document.body.classList.remove('story-lightbox-open');
         setTimeout(function () {
             lightboxImg.src = '';
@@ -4383,7 +4395,7 @@ document.addEventListener('DOMContentLoaded', function () {
         </audio>
         <div id="musicBtn">🎵</div>
     
-        <div class="story-lightbox-fixed" id="storyLightboxFixed" aria-hidden="true">
+        <div class="story-lightbox-fixed" id="storyLightboxFixed" inert>
             <div class="story-lightbox-fixed-inner">
                 <button class="story-lightbox-fixed-nav prev" id="storyLightboxPrev" type="button" aria-label="Попереднє фото">‹</button>
                 <div class="story-lightbox-fixed-stage" id="storyLightboxFixedStage">
