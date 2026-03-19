@@ -4086,6 +4086,20 @@ body.story-lightbox-open {
             if (counter) counter.dataset.label = 'Фото';
         }
 
+
+        function setEventLanguage(lang) {
+            if (lang === 'sl') {
+                WEDDING_EVENT.title = 'Poroka Dmitra in Darije';
+                WEDDING_EVENT.description = 'Poroka Dmitra in Darije. Zelo bova vesela, da ta dan deliva z vami!';
+                WEDDING_EVENT.location = 'Restavracija «RoseMarine», Krivi Rih';
+                return;
+            }
+
+            WEDDING_EVENT.title = 'Весілля Дмитра та Дарії';
+            WEDDING_EVENT.description = 'Весілля Дмитра та Дарії. Будемо дуже раді розділити цей день разом з вами!';
+            WEDDING_EVENT.location = 'Ресторан «RoseMarine», Кривий Ріг';
+        }
+
         function applyTranslation(lang) {
             const btn = document.getElementById('translateBtn');
             if (lang === 'sl') {
