@@ -1177,6 +1177,63 @@
             }
 
             /* RESPONSIVE */
+
+            .story-modal {
+                position: fixed;
+                inset: 0;
+                z-index: 100000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: opacity 0.25s ease, visibility 0.25s ease;
+            }
+            .story-modal:target {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+            }
+            .story-modal-backdrop {
+                position: absolute;
+                inset: 0;
+                display: block;
+                background: rgba(20, 18, 24, 0.82);
+                backdrop-filter: blur(8px);
+            }
+            .story-modal-content {
+                position: relative;
+                z-index: 1;
+                max-width: min(1000px, 94vw);
+                max-height: 90vh;
+                animation: scaleIn 0.35s ease;
+            }
+            .story-modal-content img {
+                display: block;
+                max-width: 100%;
+                max-height: 90vh;
+                border-radius: 22px;
+                box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+            }
+            .story-modal-close {
+                position: absolute;
+                top: -14px;
+                right: -14px;
+                width: 42px;
+                height: 42px;
+                border: none;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.92);
+                color: #2f2a35;
+                font-size: 24px;
+                line-height: 42px;
+                text-align: center;
+                text-decoration: none;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+            }
+
             @media (max-width: 700px) {
                 section {
                     padding: 72px 16px;
@@ -2621,7 +2678,7 @@
                 <div class="story-marquee anim-up d2">
                     <div class="story-track">
                         <article class="story-card">
-                            <a class="story-photo-link" href="img1.jpg">
+                            <a class="story-photo-link" href="#story-modal-1">
                                 <img src="img1.jpg" alt="Наше найперше спільне фото" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2630,7 +2687,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img2.jpg">
+                            <a class="story-photo-link" href="#story-modal-2">
                                 <img src="img2.jpg" alt="Ранні моменти разом" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2639,7 +2696,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img3.jpg">
+                            <a class="story-photo-link" href="#story-modal-3">
                                 <img src="img3.jpg" alt="Ще один теплий спогад" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2648,7 +2705,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img4.jpg">
+                            <a class="story-photo-link" href="#story-modal-4">
                                 <img src="img4.jpg" alt="Наші емоції та почуття" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2657,7 +2714,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img5.jpg">
+                            <a class="story-photo-link" href="#story-modal-5">
                                 <img src="img5.jpg" alt="Особливий день для нас" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2666,7 +2723,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img6.jpg">
+                            <a class="story-photo-link" href="#story-modal-6">
                                 <img src="img6.jpg" alt="Ми стаємо ближчими" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2675,7 +2732,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img7.jpg">
+                            <a class="story-photo-link" href="#story-modal-7">
                                 <img src="img7.jpg" alt="Один із важливих спогадів" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2684,7 +2741,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img8.jpg">
+                            <a class="story-photo-link" href="#story-modal-8">
                                 <img src="img8.jpg" alt="Ще одна важлива мить" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2693,7 +2750,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img9.jpg">
+                            <a class="story-photo-link" href="#story-modal-9">
                                 <img src="img9.jpg" alt="Один із найтепліших моментів" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2702,7 +2759,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img10.jpg">
+                            <a class="story-photo-link" href="#story-modal-10">
                                 <img src="img10.jpg" alt="Найновіше фото нашої історії" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2712,7 +2769,7 @@
                         </article>
 
                         <article class="story-card">
-                            <a class="story-photo-link" href="img1.jpg">
+                            <a class="story-photo-link" href="#story-modal-1">
                                 <img src="img1.jpg" alt="Наше найперше спільне фото" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2721,7 +2778,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img2.jpg">
+                            <a class="story-photo-link" href="#story-modal-2">
                                 <img src="img2.jpg" alt="Ранні моменти разом" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2730,7 +2787,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img3.jpg">
+                            <a class="story-photo-link" href="#story-modal-3">
                                 <img src="img3.jpg" alt="Ще один теплий спогад" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2739,7 +2796,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img4.jpg">
+                            <a class="story-photo-link" href="#story-modal-4">
                                 <img src="img4.jpg" alt="Наші емоції та почуття" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2748,7 +2805,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img5.jpg">
+                            <a class="story-photo-link" href="#story-modal-5">
                                 <img src="img5.jpg" alt="Особливий день для нас" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2757,7 +2814,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img6.jpg">
+                            <a class="story-photo-link" href="#story-modal-6">
                                 <img src="img6.jpg" alt="Ми стаємо ближчими" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2766,7 +2823,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img7.jpg">
+                            <a class="story-photo-link" href="#story-modal-7">
                                 <img src="img7.jpg" alt="Один із важливих спогадів" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2775,7 +2832,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img8.jpg">
+                            <a class="story-photo-link" href="#story-modal-8">
                                 <img src="img8.jpg" alt="Ще одна важлива мить" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2784,7 +2841,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img9.jpg">
+                            <a class="story-photo-link" href="#story-modal-9">
                                 <img src="img9.jpg" alt="Один із найтепліших моментів" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2793,7 +2850,7 @@
                             </div>
                         </article>
                         <article class="story-card">
-                            <a class="story-photo-link" href="img10.jpg">
+                            <a class="story-photo-link" href="#story-modal-10">
                                 <img src="img10.jpg" alt="Найновіше фото нашої історії" class="story-photo" />
                             </a>
                             <div class="story-meta">
@@ -2808,13 +2865,77 @@
                     <div class="story-hint anim-up d3">натисни на фото, щоб збільшити</div>
                 </div>
             </section>
-
-            <div class="story-lightbox" id="storyLightbox">
-                <div class="story-lightbox-inner">
-                    <button class="story-lightbox-close" type="button" aria-label="Закрити" onclick="closeStoryLightbox()">×</button>
-                    <img id="storyLightboxImg" class="story-lightbox-img" src="" alt="Збільшене фото нашої історії" />
+            <div class="story-modal" id="story-modal-1">
+                <a href="#story" class="story-modal-backdrop" aria-label="Закрити"></a>
+                <div class="story-modal-content">
+                    <a href="#story" class="story-modal-close" aria-label="Закрити">×</a>
+                    <img src="img1.jpg" alt="Фото нашої історії 1" />
                 </div>
             </div>
+            <div class="story-modal" id="story-modal-2">
+                <a href="#story" class="story-modal-backdrop" aria-label="Закрити"></a>
+                <div class="story-modal-content">
+                    <a href="#story" class="story-modal-close" aria-label="Закрити">×</a>
+                    <img src="img2.jpg" alt="Фото нашої історії 2" />
+                </div>
+            </div>
+            <div class="story-modal" id="story-modal-3">
+                <a href="#story" class="story-modal-backdrop" aria-label="Закрити"></a>
+                <div class="story-modal-content">
+                    <a href="#story" class="story-modal-close" aria-label="Закрити">×</a>
+                    <img src="img3.jpg" alt="Фото нашої історії 3" />
+                </div>
+            </div>
+            <div class="story-modal" id="story-modal-4">
+                <a href="#story" class="story-modal-backdrop" aria-label="Закрити"></a>
+                <div class="story-modal-content">
+                    <a href="#story" class="story-modal-close" aria-label="Закрити">×</a>
+                    <img src="img4.jpg" alt="Фото нашої історії 4" />
+                </div>
+            </div>
+            <div class="story-modal" id="story-modal-5">
+                <a href="#story" class="story-modal-backdrop" aria-label="Закрити"></a>
+                <div class="story-modal-content">
+                    <a href="#story" class="story-modal-close" aria-label="Закрити">×</a>
+                    <img src="img5.jpg" alt="Фото нашої історії 5" />
+                </div>
+            </div>
+            <div class="story-modal" id="story-modal-6">
+                <a href="#story" class="story-modal-backdrop" aria-label="Закрити"></a>
+                <div class="story-modal-content">
+                    <a href="#story" class="story-modal-close" aria-label="Закрити">×</a>
+                    <img src="img6.jpg" alt="Фото нашої історії 6" />
+                </div>
+            </div>
+            <div class="story-modal" id="story-modal-7">
+                <a href="#story" class="story-modal-backdrop" aria-label="Закрити"></a>
+                <div class="story-modal-content">
+                    <a href="#story" class="story-modal-close" aria-label="Закрити">×</a>
+                    <img src="img7.jpg" alt="Фото нашої історії 7" />
+                </div>
+            </div>
+            <div class="story-modal" id="story-modal-8">
+                <a href="#story" class="story-modal-backdrop" aria-label="Закрити"></a>
+                <div class="story-modal-content">
+                    <a href="#story" class="story-modal-close" aria-label="Закрити">×</a>
+                    <img src="img8.jpg" alt="Фото нашої історії 8" />
+                </div>
+            </div>
+            <div class="story-modal" id="story-modal-9">
+                <a href="#story" class="story-modal-backdrop" aria-label="Закрити"></a>
+                <div class="story-modal-content">
+                    <a href="#story" class="story-modal-close" aria-label="Закрити">×</a>
+                    <img src="img9.jpg" alt="Фото нашої історії 9" />
+                </div>
+            </div>
+            <div class="story-modal" id="story-modal-10">
+                <a href="#story" class="story-modal-backdrop" aria-label="Закрити"></a>
+                <div class="story-modal-content">
+                    <a href="#story" class="story-modal-close" aria-label="Закрити">×</a>
+                    <img src="img10.jpg" alt="Фото нашої історії 10" />
+                </div>
+            </div>
+
 
             <!-- RSVP -->
             <section class="rsvp-section" id="rsvp">
@@ -3861,55 +3982,6 @@
                 if (attendYes) attendYes.addEventListener("change", togglePlusGuestField);
                 if (attendNo) attendNo.addEventListener("change", togglePlusGuestField);
                 togglePlusGuestField();
-            });
-
-            function openStoryLightbox(src) {
-                const lightbox = document.getElementById("storyLightbox");
-                const img = document.getElementById("storyLightboxImg");
-
-                if (!lightbox || !img) return;
-
-                img.src = src;
-                lightbox.classList.add("show");
-                document.body.style.overflow = "hidden";
-            }
-
-            function closeStoryLightbox() {
-                const lightbox = document.getElementById("storyLightbox");
-                const img = document.getElementById("storyLightboxImg");
-
-                if (!lightbox || !img) return;
-
-                lightbox.classList.remove("show");
-                document.body.style.overflow = "";
-
-                setTimeout(() => {
-                    img.removeAttribute("src");
-                }, 200);
-            }
-
-            document.addEventListener("DOMContentLoaded", function () {
-                document.querySelectorAll(".story-photo-link").forEach(function (link) {
-                    link.addEventListener("click", function (e) {
-                        e.preventDefault();
-                        openStoryLightbox(this.getAttribute("href"));
-                    });
-                });
-
-                const storyLightbox = document.getElementById("storyLightbox");
-                if (storyLightbox) {
-                    storyLightbox.addEventListener("click", function (e) {
-                        if (e.target === this) {
-                            closeStoryLightbox();
-                        }
-                    });
-                }
-            });
-
-            document.addEventListener("keydown", function (e) {
-                if (e.key === "Escape") {
-                    closeStoryLightbox();
-                }
             });
 </script>
         <!-- THANK YOU POPUP -->
