@@ -2039,7 +2039,159 @@
 }
 </style>
 
-</head>
+
+        <style>
+            /* ===== LOVE STORY / PHOTO TIMELINE ===== */
+            .story-section {
+                background: linear-gradient(180deg, var(--white) 0%, var(--cream) 100%);
+                overflow: hidden;
+            }
+            .story-note {
+                font-size: 14px;
+                color: var(--text-light);
+                max-width: 560px;
+                margin: 0 auto 34px;
+                line-height: 1.8;
+                text-align: center;
+            }
+            .story-marquee {
+                position: relative;
+                width: 100%;
+                overflow: hidden;
+                margin-top: 10px;
+                -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+                mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+            }
+            .story-track {
+                display: flex;
+                align-items: center;
+                gap: 18px;
+                width: max-content;
+                animation: storyScroll 45s linear infinite;
+                padding: 8px 0;
+            }
+            .story-marquee:hover .story-track {
+                animation-play-state: paused;
+            }
+            @keyframes storyScroll {
+                from { transform: translateX(0); }
+                to { transform: translateX(-50%); }
+            }
+            .story-card {
+                flex: 0 0 auto;
+                width: 260px;
+                border-radius: 26px;
+                overflow: hidden;
+                background: rgba(255, 255, 255, 0.82);
+                border: 1px solid rgba(117, 138, 131, 0.16);
+                box-shadow: 0 14px 38px rgba(63, 58, 68, 0.12);
+                backdrop-filter: blur(6px);
+                transition: transform 0.35s ease, box-shadow 0.35s ease;
+            }
+            .story-card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 20px 48px rgba(63, 58, 68, 0.18);
+            }
+            .story-photo-btn {
+                all: unset;
+                display: block;
+                width: 100%;
+                cursor: pointer;
+            }
+            .story-photo {
+                width: 100%;
+                height: 340px;
+                object-fit: cover;
+                display: block;
+            }
+            .story-meta {
+                padding: 14px 16px 18px;
+                text-align: center;
+            }
+            .story-date {
+                display: block;
+                font-size: 11px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: var(--amber);
+                margin-bottom: 8px;
+            }
+            .story-caption {
+                font-size: 14px;
+                color: var(--text);
+                line-height: 1.5;
+            }
+            .story-hint {
+                margin-top: 18px;
+                font-size: 11px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: var(--text-light);
+                opacity: 0.8;
+                text-align: center;
+            }
+            .story-lightbox {
+                position: fixed;
+                inset: 0;
+                z-index: 10050;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+                background: rgba(20, 18, 24, 0.82);
+                backdrop-filter: blur(8px);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+            }
+            .story-lightbox.show {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            .story-lightbox-inner {
+                position: relative;
+                max-width: min(1000px, 94vw);
+                max-height: 90vh;
+                animation: scaleIn 0.35s ease;
+            }
+            .story-lightbox-img {
+                display: block;
+                max-width: 100%;
+                max-height: 90vh;
+                border-radius: 22px;
+                box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+            }
+            .story-lightbox-close {
+                position: absolute;
+                top: -14px;
+                right: -14px;
+                width: 42px;
+                height: 42px;
+                border: none;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.92);
+                color: #2f2a35;
+                font-size: 24px;
+                line-height: 1;
+                cursor: pointer;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+            }
+            @media (max-width: 700px) {
+                .story-card {
+                    width: 210px;
+                    border-radius: 22px;
+                }
+                .story-photo {
+                    height: 280px;
+                }
+                .story-track {
+                    gap: 14px;
+                    animation-duration: 36s;
+                }
+            }
+        </style>
+
+    </head>
     <body>
 
         <div class="lang-switch" id="translateBtn" role="group" aria-label="Перемикач мови" data-lang="uk">
@@ -2452,6 +2604,216 @@
                     </div>
                 </div>
             </div>
+
+            <!-- LOVE STORY -->
+            <section class="story-section" id="story">
+                <div class="section-inner">
+                    <div class="section-label anim-down">Наша історія</div>
+                    <h2 class="section-title anim-up">З чого все починалось</h2>
+                    <div class="section-divider anim-scale"></div>
+                    <p class="story-note anim-up d1">
+                        Найтепліші моменти нашої історії — від найперших спільних фото до сьогодні.
+                    </p>
+                </div>
+
+                <div class="story-marquee anim-up d2">
+                    <div class="story-track">
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img1.jpg')">
+                                <img src="img1.jpg" alt="Наше найперше спільне фото" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Початок</span>
+                                <div class="story-caption">Перші спогади нашої історії</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img2.jpg')">
+                                <img src="img2.jpg" alt="Ранні моменти разом" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Далі</span>
+                                <div class="story-caption">Моменти, з яких усе ставало ближчим</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img3.jpg')">
+                                <img src="img3.jpg" alt="Ще один теплий спогад" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Разом</span>
+                                <div class="story-caption">Щасливі моменти, які ми берегли</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img4.jpg')">
+                                <img src="img4.jpg" alt="Наші емоції та почуття" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Тепло</span>
+                                <div class="story-caption">Ще одна сторінка нашої історії</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img5.jpg')">
+                                <img src="img5.jpg" alt="Особливий день для нас" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Ближче</span>
+                                <div class="story-caption">Ті миті, які хочеться проживати знову</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img6.jpg')">
+                                <img src="img6.jpg" alt="Ми стаємо ближчими" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Щасливо</span>
+                                <div class="story-caption">Крок за кроком до нашого спільного дня</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img7.jpg')">
+                                <img src="img7.jpg" alt="Один із важливих спогадів" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Ніжно</span>
+                                <div class="story-caption">Особливі спогади, що залишаються назавжди</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img8.jpg')">
+                                <img src="img8.jpg" alt="Ще одна важлива мить" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Разом</span>
+                                <div class="story-caption">Час, коли ми розуміли — це назавжди</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img9.jpg')">
+                                <img src="img9.jpg" alt="Один із найтепліших моментів" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Мрії</span>
+                                <div class="story-caption">Наші мрії вже стали частиною спільного шляху</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img10.jpg')">
+                                <img src="img10.jpg" alt="Найновіше фото нашої історії" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Сьогодні</span>
+                                <div class="story-caption">І ось ми тут — на шляху до нашого дня</div>
+                            </div>
+                        </article>
+
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img1.jpg')">
+                                <img src="img1.jpg" alt="Наше найперше спільне фото" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Початок</span>
+                                <div class="story-caption">Перші спогади нашої історії</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img2.jpg')">
+                                <img src="img2.jpg" alt="Ранні моменти разом" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Далі</span>
+                                <div class="story-caption">Моменти, з яких усе ставало ближчим</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img3.jpg')">
+                                <img src="img3.jpg" alt="Ще один теплий спогад" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Разом</span>
+                                <div class="story-caption">Щасливі моменти, які ми берегли</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img4.jpg')">
+                                <img src="img4.jpg" alt="Наші емоції та почуття" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Тепло</span>
+                                <div class="story-caption">Ще одна сторінка нашої історії</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img5.jpg')">
+                                <img src="img5.jpg" alt="Особливий день для нас" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Ближче</span>
+                                <div class="story-caption">Ті миті, які хочеться проживати знову</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img6.jpg')">
+                                <img src="img6.jpg" alt="Ми стаємо ближчими" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Щасливо</span>
+                                <div class="story-caption">Крок за кроком до нашого спільного дня</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img7.jpg')">
+                                <img src="img7.jpg" alt="Один із важливих спогадів" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Ніжно</span>
+                                <div class="story-caption">Особливі спогади, що залишаються назавжди</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img8.jpg')">
+                                <img src="img8.jpg" alt="Ще одна важлива мить" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Разом</span>
+                                <div class="story-caption">Час, коли ми розуміли — це назавжди</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img9.jpg')">
+                                <img src="img9.jpg" alt="Один із найтепліших моментів" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Мрії</span>
+                                <div class="story-caption">Наші мрії вже стали частиною спільного шляху</div>
+                            </div>
+                        </article>
+                        <article class="story-card">
+                            <button class="story-photo-btn" type="button" onclick="openStoryLightbox('img10.jpg')">
+                                <img src="img10.jpg" alt="Найновіше фото нашої історії" class="story-photo" />
+                            </button>
+                            <div class="story-meta">
+                                <span class="story-date">Сьогодні</span>
+                                <div class="story-caption">І ось ми тут — на шляху до нашого дня</div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="section-inner">
+                    <div class="story-hint anim-up d3">натисни на фото, щоб збільшити</div>
+                </div>
+            </section>
+
+            <div class="story-lightbox" id="storyLightbox" onclick="closeStoryLightbox(event)">
+                <div class="story-lightbox-inner">
+                    <button class="story-lightbox-close" type="button" aria-label="Закрити" onclick="closeStoryLightbox(event)">×</button>
+                    <img id="storyLightboxImg" class="story-lightbox-img" src="" alt="Збільшене фото нашої історії" />
+                </div>
+            </div>
+
             <!-- RSVP -->
             <section class="rsvp-section" id="rsvp">
                 <div class="section-inner">
@@ -3498,6 +3860,41 @@
                 if (attendNo) attendNo.addEventListener("change", togglePlusGuestField);
                 togglePlusGuestField();
             });
+
+            function openStoryLightbox(src) {
+                const lightbox = document.getElementById("storyLightbox");
+                const img = document.getElementById("storyLightboxImg");
+                if (!lightbox || !img) return;
+                img.src = src;
+                lightbox.classList.add("show");
+                document.body.style.overflow = "hidden";
+            }
+
+            function closeStoryLightbox(event) {
+                const lightbox = document.getElementById("storyLightbox");
+                const img = document.getElementById("storyLightboxImg");
+                if (!lightbox || !img) return;
+
+                if (event) {
+                    event.stopPropagation();
+                    const isOverlay = event.target === lightbox;
+                    const isClose = event.target.classList && event.target.classList.contains("story-lightbox-close");
+                    if (!isOverlay && !isClose) return;
+                }
+
+                lightbox.classList.remove("show");
+                document.body.style.overflow = "";
+                setTimeout(() => {
+                    img.src = "";
+                }, 250);
+            }
+
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape") {
+                    closeStoryLightbox();
+                }
+            });
+
         </script>
         <!-- THANK YOU POPUP -->
         <div aria-hidden="true" class="thankyou-overlay" id="thankyouOverlay">
