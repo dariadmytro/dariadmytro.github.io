@@ -2274,25 +2274,47 @@
 }
 .story-lightbox-fixed-inner {
     position: relative;
-    max-width: min(1000px, 94vw);
-    max-height: 90vh;
+    width: min(1120px, 96vw);
+    height: min(92vh, 980px);
     display: flex;
     align-items: center;
     justify-content: center;
 }
+.story-lightbox-fixed-stage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: 24px;
+    border-radius: 24px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.45) transparent;
+}
+.story-lightbox-fixed-stage::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+.story-lightbox-fixed-stage::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.38);
+    border-radius: 999px;
+}
 .story-lightbox-fixed-img {
     display: block;
-    max-width: 100%;
-    max-height: 90vh;
+    max-width: none;
+    max-height: none;
+    width: auto;
+    height: auto;
     border-radius: 22px;
     box-shadow: 0 24px 80px rgba(0,0,0,0.4);
 }
-.story-lightbox-fixed-close {
+.story-lightbox-fixed-close,
+.story-lightbox-fixed-nav {
     position: absolute;
-    top: -14px;
-    right: -14px;
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 46px;
     border: none;
     border-radius: 50%;
     background: rgba(255,255,255,0.96);
@@ -2301,9 +2323,64 @@
     line-height: 1;
     cursor: pointer;
     box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.story-lightbox-fixed-close {
+    top: -10px;
+    right: -10px;
+}
+.story-lightbox-fixed-nav.prev {
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.story-lightbox-fixed-nav.next {
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.story-lightbox-fixed-counter {
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.88);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 body.story-lightbox-open {
     overflow: hidden !important;
+}
+@media (max-width: 700px) {
+    .story-lightbox-fixed-inner {
+        width: 100vw;
+        height: 100vh;
+    }
+    .story-lightbox-fixed-stage {
+        padding: 72px 14px 52px;
+        border-radius: 0;
+    }
+    .story-lightbox-fixed-close {
+        top: 12px;
+        right: 12px;
+    }
+    .story-lightbox-fixed-nav.prev {
+        left: 8px;
+    }
+    .story-lightbox-fixed-nav.next {
+        right: 8px;
+    }
+    .story-lightbox-fixed-close,
+    .story-lightbox-fixed-nav {
+        width: 42px;
+        height: 42px;
+    }
+    .story-lightbox-fixed-counter {
+        bottom: 12px;
+    }
 }
 </style>
 
@@ -3796,6 +3873,10 @@ body.story-lightbox-open {
                 alertAttend: 'Prosimo, izberite, ali se boste udeležili (Da/Ne)',
                 alertSubmitError: 'Pošiljanje ni uspelo. Poskusite znova 🙏',
                 translateAria: 'Vrni stran v ukrajinščino',
+                storyPrev: 'Prejšnja fotografija',
+                storyNext: 'Naslednja fotografija',
+                storyClose: 'Zapri fotografijo',
+                storyCounter: 'Fotografija',
                 texts: {
                     'Дмитро & Дарія — Запрошення на весілля': 'Dmitro & Darija — Poročno vabilo',
                     'Запрошення на весілля': 'Poročno vabilo',
@@ -3872,6 +3953,29 @@ body.story-lightbox-open {
                     'Ми з нетерпінням чекаємо на зустріч!': 'Z veseljem se veseliva srečanja!',
                     'З любов\'ю': 'Z ljubeznijo',
                     'Дякуємо, це дуже важливо для нас!': 'Hvala, to nama veliko pomeni!',
+                    'Наша історія': 'Najina zgodba',
+                    'З чого все починалось': 'Kako se je vse začelo',
+                    'Найтепліші моменти нашої історії — від найперших спільних фото до сьогодні.': 'Najtoplejši trenutki najine zgodbe — od prvih skupnih fotografij do danes.',
+                    'Початок': 'Začetek',
+                    'Перші спогади нашої історії': 'Prvi spomini najine zgodbe',
+                    'Далі': 'Nadaljevanje',
+                    'Моменти, з яких усе ставало ближчим': 'Trenutki, ko sva si postajala vse bližja',
+                    'Разом': 'Skupaj',
+                    'Щасливі моменти, які ми берегли': 'Srečni trenutki, ki sva jih skrbno hranila',
+                    'Тепло': 'Toplina',
+                    'Ще одна сторінка нашої історії': 'Še ena stran najine zgodbe',
+                    'Ближче': 'Bližje',
+                    'Ті миті, які хочеться проживати знову': 'Trenutki, ki jih želiš doživeti znova',
+                    'Щасливо': 'Srečno',
+                    'Крок за кроком до нашого спільного дня': 'Korak za korakom do najinega skupnega dne',
+                    'Ніжно': 'Nežno',
+                    'Особливі спогади, що залишаються назавжди': 'Posebni spomini, ki ostanejo za vedno',
+                    'Час, коли ми розуміли — це назавжди': 'Čas, ko sva vedela — to je za vedno',
+                    'Мрії': 'Sanje',
+                    'Наші мрії вже стали частиною спільного шляху': 'Najine sanje so že postale del skupne poti',
+                    'Сьогодні': 'Danes',
+                    'І ось ми тут — на шляху до нашого дня': 'In tukaj sva — na poti do najinega dne',
+                    'натисни на фото, щоб збільшити': 'klikni fotografijo za povečavo',
                     'Закрити': 'Zapri'
                 },
                 placeholders: {
@@ -3888,7 +3992,10 @@ body.story-lightbox-open {
             calendarTooltip: 'Додати в календар',
             alertName: "Будь ласка, введіть ваше ім'я",
             alertAttend: 'Будь ласка, оберіть чи плануєте бути (Так/Ні)',
-            alertSubmitError: 'Не вдалося відправити. Спробуйте ще раз 🙏'
+            alertSubmitError: 'Не вдалося відправити. Спробуйте ще раз 🙏',
+            storyPrevOriginal: 'Попереднє фото',
+            storyNextOriginal: 'Наступне фото',
+            storyCloseOriginal: 'Закрити'
         };
 
         function translateVisibleText(map, reverse = false) {
@@ -3958,6 +4065,27 @@ body.story-lightbox-open {
 
         let currentLang = 'uk';
 
+
+        function updateStoryLightboxLanguage(lang) {
+            const prevBtn = document.getElementById('storyLightboxPrev');
+            const nextBtn = document.getElementById('storyLightboxNext');
+            const closeBtn = document.getElementById('storyLightboxFixedClose');
+            const counter = document.getElementById('storyLightboxCounter');
+
+            if (lang === 'sl') {
+                if (prevBtn) prevBtn.setAttribute('aria-label', i18n.sl.storyPrev);
+                if (nextBtn) nextBtn.setAttribute('aria-label', i18n.sl.storyNext);
+                if (closeBtn) closeBtn.setAttribute('aria-label', i18n.sl.storyClose);
+                if (counter) counter.dataset.label = i18n.sl.storyCounter;
+                return;
+            }
+
+            if (prevBtn) prevBtn.setAttribute('aria-label', originalState.storyPrevOriginal);
+            if (nextBtn) nextBtn.setAttribute('aria-label', originalState.storyNextOriginal);
+            if (closeBtn) closeBtn.setAttribute('aria-label', originalState.storyCloseOriginal);
+            if (counter) counter.dataset.label = 'Фото';
+        }
+
         function applyTranslation(lang) {
             const btn = document.getElementById('translateBtn');
             if (lang === 'sl') {
@@ -3972,6 +4100,7 @@ body.story-lightbox-open {
                     submitError: i18n.sl.alertSubmitError
                 };
                 if (btn) btn.setAttribute('aria-label', i18n.sl.translateAria);
+                updateStoryLightboxLanguage('sl');
                 updateLanguageSwitch('sl');
                 currentLang = 'sl';
                 return;
@@ -3988,6 +4117,7 @@ body.story-lightbox-open {
                 submitError: originalState.alertSubmitError
             };
             if (btn) btn.setAttribute('aria-label', originalState.translateAria);
+            updateStoryLightboxLanguage('uk');
             updateLanguageSwitch('uk');
             currentLang = 'uk';
         }
@@ -4044,16 +4174,58 @@ body.story-lightbox-open {
         
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const storyLinks = document.querySelectorAll('.story-photo-link[data-story-full]');
+    const storyLinks = Array.from(document.querySelectorAll('.story-photo-link[data-story-full]')).slice(0, 10);
     const lightbox = document.getElementById('storyLightboxFixed');
+    const stage = document.getElementById('storyLightboxFixedStage');
     const lightboxImg = document.getElementById('storyLightboxFixedImg');
     const closeBtn = document.getElementById('storyLightboxFixedClose');
+    const prevBtn = document.getElementById('storyLightboxPrev');
+    const nextBtn = document.getElementById('storyLightboxNext');
+    const counter = document.getElementById('storyLightboxCounter');
 
-    if (!storyLinks.length || !lightbox || !lightboxImg || !closeBtn) return;
+    if (!storyLinks.length || !lightbox || !stage || !lightboxImg || !closeBtn || !prevBtn || !nextBtn || !counter) return;
 
-    function openStoryFixed(src, altText) {
-        lightboxImg.src = src;
-        lightboxImg.alt = altText || 'Збільшене фото нашої історії';
+    let currentIndex = 0;
+    let wheelLock = false;
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    const storyItems = storyLinks.map(function (link) {
+        const img = link.querySelector('img');
+        return {
+            src: link.getAttribute('data-story-full') || link.getAttribute('href'),
+            alt: img ? img.alt : 'Збільшене фото нашої історії'
+        };
+    });
+
+    function fitImageForViewport() {
+        const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+        const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+        const isMobile = vw <= 700;
+        lightboxImg.style.maxWidth = isMobile ? 'none' : 'min(92vw, 1800px)';
+        lightboxImg.style.maxHeight = isMobile ? 'none' : 'min(86vh, 1400px)';
+        lightboxImg.style.width = isMobile ? 'auto' : 'auto';
+        lightboxImg.style.height = isMobile ? 'auto' : 'auto';
+    }
+
+    function updateCounter() {
+        const label = counter.dataset.label || 'Фото';
+        counter.textContent = label + ' ' + (currentIndex + 1) + ' / ' + storyItems.length;
+    }
+
+    function showStoryByIndex(index) {
+        currentIndex = (index + storyItems.length) % storyItems.length;
+        const item = storyItems[currentIndex];
+        lightboxImg.src = item.src;
+        lightboxImg.alt = item.alt;
+        fitImageForViewport();
+        stage.scrollTop = 0;
+        stage.scrollLeft = 0;
+        updateCounter();
+    }
+
+    function openStoryFixed(index) {
+        showStoryByIndex(index);
         lightbox.classList.add('show');
         lightbox.setAttribute('aria-hidden', 'false');
         document.body.classList.add('story-lightbox-open');
@@ -4068,12 +4240,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 180);
     }
 
-    storyLinks.forEach(function (link) {
+    function nextStory() {
+        showStoryByIndex(currentIndex + 1);
+    }
+
+    function prevStory() {
+        showStoryByIndex(currentIndex - 1);
+    }
+
+    storyLinks.forEach(function (link, index) {
         link.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            const img = link.querySelector('img');
-            openStoryFixed(link.getAttribute('data-story-full') || link.getAttribute('href'), img ? img.alt : '');
+            openStoryFixed(index);
         });
     });
 
@@ -4082,17 +4261,77 @@ document.addEventListener('DOMContentLoaded', function () {
         closeStoryFixed();
     });
 
+    prevBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        prevStory();
+    });
+
+    nextBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        nextStory();
+    });
+
     lightbox.addEventListener('click', function (e) {
         if (e.target === lightbox) {
             closeStoryFixed();
         }
     });
 
+    stage.addEventListener('wheel', function (e) {
+        if (!lightbox.classList.contains('show')) return;
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 16) {
+            e.preventDefault();
+            if (wheelLock) return;
+            wheelLock = true;
+            if (e.deltaX > 0) {
+                nextStory();
+            } else {
+                prevStory();
+            }
+            setTimeout(function () {
+                wheelLock = false;
+            }, 240);
+        }
+    }, { passive: false });
+
+    stage.addEventListener('touchstart', function (e) {
+        const touch = e.changedTouches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+    }, { passive: true });
+
+    stage.addEventListener('touchend', function (e) {
+        const touch = e.changedTouches[0];
+        const dx = touch.clientX - touchStartX;
+        const dy = touch.clientY - touchStartY;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+            if (dx < 0) {
+                nextStory();
+            } else {
+                prevStory();
+            }
+        }
+    }, { passive: true });
+
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && lightbox.classList.contains('show')) {
+        if (!lightbox.classList.contains('show')) return;
+        if (e.key === 'Escape') {
             closeStoryFixed();
+        } else if (e.key === 'ArrowRight') {
+            nextStory();
+        } else if (e.key === 'ArrowLeft') {
+            prevStory();
         }
     });
+
+    window.addEventListener('resize', function () {
+        if (lightbox.classList.contains('show')) {
+            fitImageForViewport();
+        }
+    });
+
+    updateStoryLightboxLanguage('uk');
+    updateCounter();
 });
 </script>
 
@@ -4132,8 +4371,13 @@ document.addEventListener('DOMContentLoaded', function () {
     
         <div class="story-lightbox-fixed" id="storyLightboxFixed" aria-hidden="true">
             <div class="story-lightbox-fixed-inner">
+                <button class="story-lightbox-fixed-nav prev" id="storyLightboxPrev" type="button" aria-label="Попереднє фото">‹</button>
+                <div class="story-lightbox-fixed-stage" id="storyLightboxFixedStage">
+                    <img class="story-lightbox-fixed-img" id="storyLightboxFixedImg" src="" alt="Збільшене фото нашої історії" />
+                </div>
+                <button class="story-lightbox-fixed-nav next" id="storyLightboxNext" type="button" aria-label="Наступне фото">›</button>
                 <button class="story-lightbox-fixed-close" id="storyLightboxFixedClose" type="button" aria-label="Закрити">×</button>
-                <img class="story-lightbox-fixed-img" id="storyLightboxFixedImg" src="" alt="Збільшене фото нашої історії" />
+                <div class="story-lightbox-fixed-counter" id="storyLightboxCounter" data-label="Фото">Фото 1 / 10</div>
             </div>
         </div>
 
