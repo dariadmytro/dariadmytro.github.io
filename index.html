@@ -2116,8 +2116,14 @@
                 width: 100%;
                 overflow: hidden;
                 margin-top: 10px;
+                cursor: grab;
+                user-select: none;
+                touch-action: pan-y;
                 -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
                 mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+            }
+            .story-marquee.dragging {
+                cursor: grabbing;
             }
             .story-track {
                 display: flex;
@@ -2126,8 +2132,10 @@
                 width: max-content;
                 animation: storyScroll 45s linear infinite;
                 padding: 8px 0;
+                will-change: transform;
             }
-            .story-marquee:hover .story-track {
+            .story-marquee:hover .story-track,
+            .story-marquee.paused .story-track {
                 animation-play-state: paused;
             }
             @keyframes storyScroll {
@@ -2809,8 +2817,8 @@ body.story-lightbox-open {
                     </p>
                 </div>
 
-                <div class="story-marquee anim-up d2">
-                    <div class="story-track">
+                <div class="story-marquee anim-up d2" id="storyMarquee">
+                    <div class="story-track" id="storyTrack">
                         <article class="story-card">
                             <a class="story-photo-link" href="img1.jpg" data-story-full="img1.jpg">
                                 <img src="img1.jpg" alt="Наше найперше спільне фото" class="story-photo" />
@@ -4120,6 +4128,81 @@ document.addEventListener('DOMContentLoaded', function () {
     let isDraggingStage = false;
     let lastFocusedElement = null;
 
+    const marquee = document.getElementById('storyMarquee');
+    const track = document.getElementById('storyTrack');
+    let isDraggingMarquee = false;
+    let marqueeStartX = 0;
+    let marqueeStartTranslate = 0;
+    let currentTranslate = 0;
+    let resumeMarqueeTimeout = null;
+
+    function getTrackTranslateX() {
+        const style = window.getComputedStyle(track);
+        const transform = style.transform || style.webkitTransform || 'none';
+        if (!transform || transform === 'none') return 0;
+        try {
+            const matrix = new DOMMatrixReadOnly(transform);
+            return matrix.m41;
+        } catch (error) {
+            const match = transform.match(/matrix\(([^)]+)\)/);
+            if (match) {
+                const parts = match[1].split(',').map(function (item) { return parseFloat(item.trim()); });
+                return parts[4] || 0;
+            }
+            return 0;
+        }
+    }
+
+    function pauseMarqueeForDrag() {
+        if (!marquee || !track) return;
+        marquee.classList.add('paused');
+        currentTranslate = getTrackTranslateX();
+        track.style.animation = 'none';
+        track.style.transform = 'translateX(' + currentTranslate + 'px)';
+    }
+
+    function resumeMarqueeAuto() {
+        if (!marquee || !track) return;
+        marquee.classList.remove('dragging');
+        marquee.classList.remove('paused');
+        track.style.animation = '';
+        track.style.transform = '';
+    }
+
+    function scheduleMarqueeResume() {
+        clearTimeout(resumeMarqueeTimeout);
+        resumeMarqueeTimeout = setTimeout(function () {
+            if (!isDraggingMarquee) {
+                resumeMarqueeAuto();
+            }
+        }, 1400);
+    }
+
+    function marqueeDragStart(clientX) {
+        if (!marquee || !track) return;
+        isDraggingMarquee = true;
+        marquee.classList.add('dragging');
+        pauseMarqueeForDrag();
+        marqueeStartX = clientX;
+        marqueeStartTranslate = currentTranslate;
+        clearTimeout(resumeMarqueeTimeout);
+    }
+
+    function marqueeDragMove(clientX) {
+        if (!isDraggingMarquee || !track) return;
+        const delta = clientX - marqueeStartX;
+        currentTranslate = marqueeStartTranslate + delta;
+        track.style.transform = 'translateX(' + currentTranslate + 'px)';
+    }
+
+    function marqueeDragEnd() {
+        if (!isDraggingMarquee) return;
+        isDraggingMarquee = false;
+        marquee.classList.remove('dragging');
+        scheduleMarqueeResume();
+    }
+
+
     const storyItems = storyLinks.map(function (link) {
         const img = link.querySelector('img');
         return {
@@ -4302,6 +4385,45 @@ document.addEventListener('DOMContentLoaded', function () {
             fitImageForViewport();
         }
     });
+
+
+    if (marquee && track) {
+        marquee.addEventListener('mousedown', function (e) {
+            if (e.button !== 0) return;
+            marqueeDragStart(e.clientX);
+            e.preventDefault();
+        });
+
+        window.addEventListener('mousemove', function (e) {
+            marqueeDragMove(e.clientX);
+        });
+
+        window.addEventListener('mouseup', function () {
+            marqueeDragEnd();
+        });
+
+        marquee.addEventListener('mouseleave', function () {
+            marqueeDragEnd();
+        });
+
+        marquee.addEventListener('touchstart', function (e) {
+            if (!e.touches.length) return;
+            marqueeDragStart(e.touches[0].clientX);
+        }, { passive: true });
+
+        marquee.addEventListener('touchmove', function (e) {
+            if (!e.touches.length) return;
+            marqueeDragMove(e.touches[0].clientX);
+        }, { passive: true });
+
+        marquee.addEventListener('touchend', function () {
+            marqueeDragEnd();
+        });
+
+        marquee.addEventListener('touchcancel', function () {
+            marqueeDragEnd();
+        });
+    }
 
     updateStoryLightboxLanguage('uk');
     updateCounter();
