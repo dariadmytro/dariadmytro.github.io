@@ -2311,8 +2311,8 @@
 }
 .story-lightbox-fixed-img {
     display: block;
-    max-width: min(72vw, 860px);
-    max-height: 74vh;
+    max-width: min(82vw, 760px);
+    max-height: 76vh;
     width: auto;
     height: auto;
     border-radius: 22px;
@@ -4179,9 +4179,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function fitImageForViewport() {
         const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         const isMobile = vw <= 700;
-        lightboxImg.style.maxWidth = 'none';
-        lightboxImg.style.maxHeight = 'none';
-        lightboxImg.style.width = isMobile ? '185vw' : '140vw';
+        lightboxImg.style.width = isMobile ? '88vw' : '78vw';
+        lightboxImg.style.maxWidth = isMobile ? '88vw' : '760px';
+        lightboxImg.style.maxHeight = isMobile ? '72vh' : '76vh';
         lightboxImg.style.height = 'auto';
     }
 
